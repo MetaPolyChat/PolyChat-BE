@@ -1,18 +1,37 @@
 package com.polychat.polychatbe.inerest.command.domain.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
-@Entity(name="Interest")
-@Table(name="TBL_INTEREST")
+@Entity
+@Table(name="TBL_INEREST")
 public class Interest {
 
     @Id
-    @Column(name="INTEREST_ID")
-    private long interestId;
+    @Column(name="INEREST_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long interestId;
+
 
     @Column(name="INTEREST_NAME")
     private String interestName;
+
+    public Interest() {}
+
+    public Interest(String interestName) {}
+
+    public Long getInterestId() {
+        return interestId;
+    }
+
+    public String getInterestName() {
+        return interestName;
+    }
+
+    @Override
+    public String toString() {
+        return "Interest{" +
+                "interestId=" + interestId +
+                ", interestName='" + interestName + '\'' +
+                '}';
+    }
 }
