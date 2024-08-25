@@ -9,7 +9,7 @@ public class FriendRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Integer friendRequestId;
+    private Long friendRequestId;
 
     @Column
     private int sender;
@@ -29,7 +29,7 @@ public class FriendRequest {
         this.status = status;
     }
 
-    public Integer getFriendRequestId() {
+    public Long getFriendRequestId() {
         return friendRequestId;
     }
 

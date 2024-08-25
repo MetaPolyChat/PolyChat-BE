@@ -27,17 +27,16 @@ public class FriendRequestTest {
     @DisplayName("친구 요청 등록 테스트")
     @ParameterizedTest
     @CsvSource({"1,2", "2,3", "4,3"})
-    //@Transactional
+    @Transactional
     public void addFriendRequestTest(int senderId, int receiverId){
 
         Assertions.assertDoesNotThrow(
                 ()->{
                     friendRequestService.addFriendRequest(
-                            new FriendRequestDTO(senderId, receiverId)
+                            new FriendRequestDTO(senderId, receiverId, RequestStatus.PENDING)
                     );
                 }
         );
-
     }
 
     @DisplayName("자신 친구 요청 등록 테스트")
@@ -49,7 +48,7 @@ public class FriendRequestTest {
                 IllegalArgumentException.class,
                 ()->{
                     friendRequestService.addFriendRequest(
-                            new FriendRequestDTO(senderId, receiverId)
+                            new FriendRequestDTO(senderId, receiverId, RequestStatus.PENDING)
                     );
                 }
         );
@@ -69,7 +68,6 @@ public class FriendRequestTest {
                 Arguments.of(2,RequestStatus.ACCEPTED)
         );
     }
-
 
     @DisplayName("친구 요청 미수락 테스트")
     @ParameterizedTest
@@ -101,5 +99,17 @@ public class FriendRequestTest {
 
     }
 
+    @DisplayName("친구 요청 삭제 테스트")
+    @ParameterizedTest
+    @ValueSource(ints = {1,3})
+    @Transactional
+    void removeRequestTest(int requestId){
+        Assertions.assertDoesNotThrow(
+                () ->{
+                    friendRequestService.deleteFriendRequest(requestId);
+                }
+        );
+        System.out.println(friendRequestSearchService.findAllFriendRequest());
+    }
 
 }
