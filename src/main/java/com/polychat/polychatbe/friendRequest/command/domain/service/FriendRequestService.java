@@ -43,11 +43,6 @@ public class FriendRequestService {
                 .orElseThrow(()-> new IllegalArgumentException("존재하지 않는 친구 신청입니다."));
 
         friendRequest.setStatus(friendRequestStatusDTO.getStatus());
-        if(friendRequestStatusDTO.getStatus() == RequestStatus.ACCEPTED) {
-            friendService.addFriend(1, 1);
-
-            //friendService.addFriend(friendRequest.getSender(), friendRequest.getReceiver());
-        }
     }
 
     @Transactional

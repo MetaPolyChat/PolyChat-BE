@@ -1,6 +1,7 @@
 package com.polychat.polychatbe.friend.query.service;
 
 import com.polychat.polychatbe.friend.command.application.dto.FriendResponseDTO;
+import com.polychat.polychatbe.friend.command.application.dto.FriendUserDTO;
 import com.polychat.polychatbe.friend.command.domain.model.Friend;
 import com.polychat.polychatbe.friend.command.domain.model.FriendUserId;
 import com.polychat.polychatbe.friend.query.repository.FriendSearchRepository;
@@ -38,6 +39,19 @@ public class FriendSearchService {
 
     }
 
+    public List<FriendResponseDTO> findUserFriend(int userId){
+        List <Friend> friendList= friendSearchRepository.findByUser1(
+                new FriendUserId(userId)
+        );
+
+        return friendList.stream()
+                .map((friend)->new FriendResponseDTO(
+                        friend.getFriendId(),
+                        friend.getUser1().getFriendUserId(),
+                        friend.getUser2().getFriendUserId()
+                )).toList();
+    }
+
     public FriendResponseDTO findFriendByUserId(int user1, int user2){
         Friend friendInfo = friendSearchRepository.findByUser1AndUser2(
                 new FriendUserId(user1),
@@ -48,6 +62,10 @@ public class FriendSearchService {
                 friendInfo.getUser1().getFriendUserId(),
                 friendInfo.getUser2().getFriendUserId()
         );
+    }
+
+    public FriendResponseDTO findFriendByUserInfo(FriendUserDTO frienduserInfo) {
+        return this.findFriendByUserId(frienduserInfo.getUser1(), frienduserInfo.getUser2());
     }
 
 }
