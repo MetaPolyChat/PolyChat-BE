@@ -9,12 +9,12 @@ Create Database server and WebRTC server
 
 The following tools were used in this project:
 
-[![My Skills](https://skillicons.dev/icons?i=spring,js)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=spring,node.js)](https://skillicons.dev)
 
 
 ## :white_check_mark: Requirements ##
 
-Before starting :checkered_flag:, you need to have [Git](https://git-scm.com), [Swift](https://www.swift.com/) and [Xcode](https://developer.apple.com/xcode/) installed.
+Before starting, you need to have [Node.js](https://nodejs.org/), [Gradle](https://gradle.org/) installed.
 
 WebRTC
 ```bash
