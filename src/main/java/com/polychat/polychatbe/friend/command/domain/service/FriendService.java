@@ -1,19 +1,22 @@
 package com.polychat.polychatbe.friend.command.domain.service;
 
-import com.polychat.polychatbe.friend.command.application.dto.FriendResponseDTO;
+import com.polychat.polychatbe.friend.command.application.dto.FriendUserDTO;
 import com.polychat.polychatbe.friend.command.domain.model.Friend;
 import com.polychat.polychatbe.friend.command.domain.model.FriendUserId;
 import com.polychat.polychatbe.friend.command.domain.repository.FriendRepository;
+import com.polychat.polychatbe.friend.query.service.FriendSearchService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FriendService {
 
+    private final FriendSearchService friendSearchService;
     private FriendRepository friendRepository;
 
-    public FriendService(FriendRepository friendRepository) {
+    public FriendService(FriendRepository friendRepository, FriendSearchService friendSearchService) {
         this.friendRepository = friendRepository;
+        this.friendSearchService = friendSearchService;
     }
 
     @Transactional
@@ -28,17 +31,16 @@ public class FriendService {
                 new FriendUserId(user2)
         );
 
-        Friend friendInfo2 = new Friend(
-                new FriendUserId(user2),
-                new FriendUserId(user1)
-        );
-
         friendRepository.save(friendInfo1);
-        friendRepository.save(friendInfo2);
     }
 
     @Transactional
-    public void deleteFriend(int user1, int user2) {
+    public void deleteFriendById(long friendId){
+        friendRepository.deleteById(friendId);
+    }
+
+    @Transactional
+    public void deleteFriendByUserId(int user1, int user2) {
 
         friendRepository.deleteByUser1AndUser2(
                 new FriendUserId(user1),
@@ -46,6 +48,13 @@ public class FriendService {
         );
     }
 
+    @Transactional
+    public void addFriend(FriendUserDTO friendUserDTO) {
+        this.addFriend(friendUserDTO.getUser1(), friendUserDTO.getUser2());
+    }
 
-//    public addFriend()
+    @Transactional
+    public void deleteFriendByUserId(FriendUserDTO friendUserDTO) {
+        this.deleteFriendByUserId(friendUserDTO.getUser1(), friendUserDTO.getUser2());
+    }
 }

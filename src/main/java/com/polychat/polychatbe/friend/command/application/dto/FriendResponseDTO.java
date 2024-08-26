@@ -1,49 +1,13 @@
 package com.polychat.polychatbe.friend.command.application.dto;
 
+import lombok.Data;
+
+@Data
 public class FriendResponseDTO {
+    //친구 db의 primary key에 대응하는 변수
+    private final long friendId;
+    
+    private final int userId1;
+    private final int userId2;
 
-    private int friendId;
-    private int userId1;
-    private int userId2;
-
-    public FriendResponseDTO() {}
-
-    public FriendResponseDTO(int friendId, int userId1, int userId2) {
-        this.friendId = friendId;
-        this.userId1 = userId1;
-        this.userId2 = userId2;
-    }
-
-    public int getFriendId() {
-        return friendId;
-    }
-
-    public void setFriendId(int friendId) {
-        this.friendId = friendId;
-    }
-
-    public int getUserId1() {
-        return userId1;
-    }
-
-    public void setUserId1(int userId1) {
-        this.userId1 = userId1;
-    }
-
-    public int getUserId2() {
-        return userId2;
-    }
-
-    public void setUserId2(int userId2) {
-        this.userId2 = userId2;
-    }
-
-    @Override
-    public String toString() {
-        return "friendResponseDTO{" +
-                "friendId=" + friendId +
-                ", userId1=" + userId1 +
-                ", userId2=" + userId2 +
-                '}';
-    }
 }

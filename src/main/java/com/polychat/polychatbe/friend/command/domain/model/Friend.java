@@ -8,8 +8,7 @@ public class Friend {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private Integer friendId;
+    private Long friendId;
 
     @Embedded
     @AttributeOverride(name="friendUserId", column = @Column(name="USER1"))
@@ -26,7 +25,7 @@ public class Friend {
         this.user2 = user2;
     }
 
-    public Integer getFriendId() {
+    public Long getFriendId() {
         return friendId;
     }
 
