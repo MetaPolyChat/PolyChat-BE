@@ -9,7 +9,7 @@ Create Database server and WebRTC server
 
 The following tools were used in this project:
 
-[![My Skills](https://skillicons.dev/icons?i=spring,node.js)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=spring,nodejs)](https://skillicons.dev)
 
 
 ## :white_check_mark: Requirements ##
