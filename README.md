@@ -32,10 +32,13 @@ Enter the relevant API keys to run the project.
 API: yourkey
 ```
 
-## Home ##
+## Login ##
 
 
-## Coming Soon & Search ##
+## Map & Home ##
 
 
-## Downloads & Details ##
+## Live Chatting ##
+
+
+## Music ##
