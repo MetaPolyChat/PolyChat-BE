@@ -8,41 +8,41 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties;
 public class UserInterest {
 
     @Id
-    @Column(name = "REF_INTEREST_ID")
+    @Column(name = "REF_INTEREST_NO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ref_interest_id;
+    private Long refInterestNo;
 
-    @Column(name = "USER_ID")
-    private Long userId;
+    @Column(name = "USER_NO")
+    private Long userNo;
 
-    @Column(name = "INTEREST_ID")
-    private Long interestId;
+    @Column(name = "INTEREST_NO")
+    private Long interestNo;
 
     public UserInterest() {}
 
-    public UserInterest(Long userId, Long interestId) {
-        this.userId = userId;
-        this.interestId = interestId;
+    public UserInterest(Long userNo, Long interestNo) {
+        this.userNo = userNo;
+        this.interestNo = interestNo;
     }
 
-    public Long getRef_interest_id() {
-        return ref_interest_id;
+    public Long getRefInterestNo() {
+        return refInterestNo;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getUserNo() {
+        return userNo;
     }
 
-    public Long getInterestId() {
-        return interestId;
+    public Long getInterestNo() {
+        return interestNo;
     }
 
     @Override
     public String toString() {
         return "UserInterest{" +
-                "ref_interest_id=" + ref_interest_id +
-                ", userId=" + userId +
-                ", interestId=" + interestId +
+                "refInterestNo=" + refInterestNo +
+                ", userNo=" + userNo +
+                ", interestNo=" + interestNo +
                 '}';
     }
 }

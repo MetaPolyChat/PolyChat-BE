@@ -7,9 +7,9 @@ import jakarta.persistence.*;
 public class Interest {
 
     @Id
-    @Column(name="INEREST_ID")
+    @Column(name="INEREST_NO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long interestId;
+    private Long interestNo;
 
 
     @Column(name="INTEREST_NAME")
@@ -19,8 +19,8 @@ public class Interest {
 
     public Interest(String interestName) {}
 
-    public Long getInterestId() {
-        return interestId;
+    public Long getInterestNo() {
+        return interestNo;
     }
 
     public String getInterestName() {
@@ -30,7 +30,7 @@ public class Interest {
     @Override
     public String toString() {
         return "Interest{" +
-                "interestId=" + interestId +
+                "interestId=" + interestNo +
                 ", interestName='" + interestName + '\'' +
                 '}';
     }

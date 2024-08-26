@@ -23,23 +23,18 @@ public class InterestService {
     }
 
 
-    @Transactional
+    @Transactional  // 관심사 종류 등록
     public void registInterest(String InterestName) {   // 유효한 문자열인지 검증 필요
         interestRepository.save(new Interest(InterestName));
     }
 
-    @Transactional
-    public void registUserInterest(Long userId, Long interestId) {  // 존재하는 관심사인지 검증 필요
-        userInterestRepository.save(new UserInterest(userId, interestId));
-//        UserInterest userInterest = new UserInterest(userId, interestId);
-//        interestRepository.saveUserInterest(userInterest);
+    @Transactional  // 관심사 종류 삭제
+    public void removeInterest(Interest interest) {
+        List<UserInterest> userInterests = userInterestRepository.findByInterestNo(interest.getInterestNo());
+        if (userInterests.isEmpty()) {
+            throw new IllegalArgumentException();   // 발생시킬 에러 내용 작성
+        }
+        interestRepository.deleteById(interest.getInterestNo());
+        userInterestRepository.deleteAll(userInterests);    // 해당 관심사를 가지는 모든 유저와의 관계 제거
     }
-
-//    public List<Interest> findUserInterestsByUserId(Long userId) {
-//        return interestRepository.findAllById(userId);
-//    }
-//
-//    public Interest findInterestById(Long interestId) {
-//        return interestRepository.findInterestById(interestId);
-//    }
 }
