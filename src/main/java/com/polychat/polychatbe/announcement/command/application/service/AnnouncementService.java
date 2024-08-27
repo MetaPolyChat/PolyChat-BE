@@ -3,6 +3,7 @@ package com.polychat.polychatbe.announcement.command.application.service;
 import com.polychat.polychatbe.announcement.command.application.dto.AnnounceAddRequest;
 import com.polychat.polychatbe.announcement.command.domain.aggregate.Announcement;
 import com.polychat.polychatbe.announcement.command.domain.repository.AnnouncementRepository;
+import com.polychat.polychatbe.announcement.command.domain.service.AnnouncementDomainService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +12,11 @@ import java.time.LocalDateTime;
 @Service
 public class AnnouncementService {
 
+    private final AnnouncementDomainService announcementDomainService;
     private AnnouncementRepository announcementRepository;
-    public AnnouncementService(AnnouncementRepository announcementRepository) {
+    public AnnouncementService(AnnouncementRepository announcementRepository, AnnouncementDomainService announcementDomainService) {
         this.announcementRepository = announcementRepository;
+        this.announcementDomainService = announcementDomainService;
     }
 
     @Transactional
@@ -39,10 +42,9 @@ public class AnnouncementService {
     }
 
     @Transactional
-    public void deleteAnnouncement(long announcementId) {
-        announcementRepository.deleteById(announcementId);
+    public void deleteAnnouncement(long announcementId, long uploaderId) {
+        announcementDomainService.deleteAnnouncement(announcementId, uploaderId);
     }
-
 
 
 }
