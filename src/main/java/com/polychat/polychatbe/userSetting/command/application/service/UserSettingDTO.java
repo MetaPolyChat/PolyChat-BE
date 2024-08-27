@@ -4,6 +4,7 @@ import com.polychat.polychatbe.userSetting.command.domain.model.ChatMode;
 import com.polychat.polychatbe.userSetting.command.domain.model.UserSetting;
 
 public class UserSettingDTO {
+    private long userId;
     private int musicVolume;
     private int effectVolume;
     private boolean mute;
@@ -13,7 +14,8 @@ public class UserSettingDTO {
     public UserSettingDTO() {
     }
 
-    public UserSettingDTO(int musicVolume, int effectVolume, boolean mute, ChatMode chatMode, boolean enableAi) {
+    public UserSettingDTO(long userId, int musicVolume, int effectVolume, boolean mute, ChatMode chatMode, boolean enableAi) {
+        this.userId = userId;
         this.musicVolume = musicVolume;
         this.effectVolume = effectVolume;
         this.mute = mute;
@@ -23,12 +25,21 @@ public class UserSettingDTO {
 
     public UserSettingDTO(UserSetting userSetting) {
         this(
+                userSetting.getUserId(),
                 userSetting.getMusicVolume(),
                 userSetting.getEffectVolume(),
                 userSetting.isMute(),
                 userSetting.getChatMode(),
                 userSetting.isEnableAi()
         );
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public int getMusicVolume() {
@@ -74,11 +85,24 @@ public class UserSettingDTO {
     @Override
     public String toString() {
         return "UserSettingDTO{" +
-                "musicVolume=" + musicVolume +
+                "userId=" + userId +
+                ", musicVolume=" + musicVolume +
                 ", effectVolume=" + effectVolume +
                 ", mute=" + mute +
                 ", chatMode=" + chatMode +
                 ", enableAi=" + enableAi +
                 '}';
     }
+
+    public UserSettingDTO setDefault(long userId){
+        return new UserSettingDTO(
+                userId,
+                100,
+                100,
+                false,
+                ChatMode.VIDEO,
+                false
+        );
+    }
+
 }
