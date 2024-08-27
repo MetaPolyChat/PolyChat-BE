@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.StringTokenizer;
 
 @Getter
 @Entity
@@ -21,7 +22,8 @@ public class Announcement {
 
     protected Announcement () {}
 
-    public Announcement(long uploaderId, String announcementTitle, String announcementContent, LocalDateTime uploadTime, LocalDateTime lastUpdatedTime) {
+    public Announcement(long uploaderId, String announcementTitle, String announcementContent,
+                        LocalDateTime uploadTime, LocalDateTime lastUpdatedTime) {
         this.uploaderId = uploaderId;
         this.announcementTitle = announcementTitle;
         this.announcementContent = announcementContent;
@@ -29,15 +31,9 @@ public class Announcement {
         this.lastUpdatedTime = lastUpdatedTime;
     }
 
-    public void setAnnouncementTitle(String announcementTitle) {
+    public void updateAnnouncement(String announcementTitle, String announcementContent, LocalDateTime lastUpdatedTime) {
         this.announcementTitle = announcementTitle;
-    }
-
-    public void setAnnouncementContent(String announcementContent) {
         this.announcementContent = announcementContent;
-    }
-
-    public void setLastUpdatedTime(LocalDateTime lastUpdatedTime) {
         this.lastUpdatedTime = lastUpdatedTime;
     }
 }
