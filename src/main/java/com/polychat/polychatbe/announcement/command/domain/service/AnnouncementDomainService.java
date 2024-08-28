@@ -14,11 +14,9 @@ public class AnnouncementDomainService {
         this.announcementRepository = announcementRepository;
     }
 
-    public boolean checkModifyAuthority(Announcement announcement, long requestUploaderId){
-        return announcement.getUploaderId() == requestUploaderId;
+    public boolean isNotAuthorized(Announcement announcement, long requestUploaderId){
+        return announcement.getUploaderId() != requestUploaderId;
     }
-
-
 
 
     @Transactional
@@ -26,7 +24,7 @@ public class AnnouncementDomainService {
         Announcement announcement = announcementRepository.findById(announcementId).orElseThrow(
                 ()-> new IllegalArgumentException("존재하지 않는 아이디"));
 
-        if (!checkModifyAuthority(announcement, uploaderId)){
+        if (isNotAuthorized(announcement, uploaderId)){
             throw new IllegalArgumentException("삭제 권한이 없습니다.");
         }
 
