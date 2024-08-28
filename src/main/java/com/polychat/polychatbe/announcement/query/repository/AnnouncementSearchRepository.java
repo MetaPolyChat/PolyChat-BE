@@ -1,7 +1,14 @@
 package com.polychat.polychatbe.announcement.query.repository;
 
-import com.polychat.polychatbe.announcement.command.domain.aggregate.Announcement;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.polychat.polychatbe.announcement.query.dto.AnnouncementResponseDTO;
+import org.apache.ibatis.annotations.Mapper;
 
-public interface AnnouncementSearchRepository extends JpaRepository<Announcement, Long> {
+import java.util.List;
+
+@Mapper
+public interface AnnouncementSearchRepository {
+
+    List<AnnouncementResponseDTO> findAllAnnouncement();
+
+    AnnouncementResponseDTO findAnnouncementById(Long announcementId);
 }
