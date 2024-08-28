@@ -5,6 +5,8 @@ import com.polychat.polychatbe.userSetting.command.domain.service.UserSettingDom
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service
 public class UserSettingAppService {
 
@@ -21,12 +23,41 @@ public class UserSettingAppService {
 
 
     public void initializeNewUserSetting(long userId) {
-        UserSettingDTO userSettingDTO = new UserSettingDTO();
-        userSettingDomainService.initailizeUserSetting(userSettingDTO.setDefault(userId));
+        try {
+            userSettingDomainService.findUserSetting(userId);
+            throw new IllegalArgumentException("유저 설정이 이미 존재합니다.");
+        }catch (NoSuchElementException e) {
+            UserSettingDTO userSettingDTO = new UserSettingDTO();
+            userSettingDTO.setDefault(userId);
+            userSettingDomainService.createUserSetting(convertDTOToUserSetting(userSettingDTO));
+        }
+    }
+
+    public void makeUserSettingDefault(long userId) {
+        UserSetting userSetting = userSettingDomainService.findUserSetting(userId);
+        UserSettingDTO userSettingDTO = convertUserSettingToDTO(userSetting);
+        userSettingDTO.setDefault(userId);
+        updateUserSetting(userSettingDTO);
     }
 
     public void updateUserSetting(UserSettingDTO userSettingDTO) {
-        UserSetting userSetting = userSettingDomainService.findUserSetting(userSettingDTO.getUserId());
-
+        userSettingDomainService.updateUserSetting(convertDTOToUserSetting(userSettingDTO));
     }
+
+    private UserSetting convertDTOToUserSetting(UserSettingDTO userSettingDTO) {
+        return new UserSetting(
+                userSettingDTO.getUserId(),
+                userSettingDTO.getMusicVolume(),
+                userSettingDTO.getEffectVolume(),
+                userSettingDTO.isMute(),
+                userSettingDTO.getChatMode(),
+                userSettingDTO.isEnableAi()
+        );
+    }
+
+    private UserSettingDTO convertUserSettingToDTO(UserSetting userSetting) {
+        return new UserSettingDTO(userSetting);
+    }
+
 }
+
