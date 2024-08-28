@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.polychat.polychatbe.announcement.query.repository.AnnouncementSearchRepository">
+
+    <resultMap id="announcementMap" type="com.polychat.polychatbe.announcement.query.dto.AnnouncementResponseDTO">
+        <id property="announcementId" column="announcement_id"/>
+        <result property="announcementTitle" column="announcement_title"/>
+        <result property="announcementContent" column="announcement_content"/>
+        <result property="uploaderNo" column="uploader_no"/>
+        <result property="uploaderName" column="uploader_name"/>
+        <result property="uploadTime" column="upload_time"/>
+        <result property="lastUpdatedTime" column="last_updated_time"/>
+
+    </resultMap>
+
+    <select id="findAllAnnouncement" resultMap="announcementMap">
+        SELECT  ANNOUNCEMENT_ID
+              , ANNOUNCEMENT_TITLE
+              , ANNOUNCEMENT_CONTENT
+              , A.UPLOADER_ID AS UPLOADER_ID
+              , B.USER_NAME AS UPLOADER_NAME
+              , UPLOAD_TIME
+              , LAST_UPDATED_TIME
+          FROM
+                TBL_ANNOUNCEMENT A
+          JOIN
+                TBL_USER B
+            ON
+                A.UPLOADER_ID=B.USER_NO
+    </select>
+
+    <select id="findByAnnouncementId" resultMap="announcementMap">
+        SELECT  ANNOUNCEMENT_ID
+             ,  ANNOUNCEMENT_TITLE
+             ,  ANNOUNCEMENT_CONTENT
+             ,  A.UPLOADER_ID AS UPLOADER_ID
+             ,  B.USER_NAME AS UPLOADER_NAME
+             ,  UPLOAD_TIME
+             ,  LAST_UPDATED_TIME
+          FROM
+                TBL_ANNOUNCEMENT A
+         WHERE
+                A.ANNOUNCEMENT_ID = #{announcementId}
+          JOIN
+                TBL_USER B
+            ON
+                A.UPLOADER_ID=B.USER_NO
+    </select>
+
+
+
+</mapper>

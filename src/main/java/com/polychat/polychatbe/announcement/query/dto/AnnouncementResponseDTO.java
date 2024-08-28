@@ -1,11 +1,15 @@
 package com.polychat.polychatbe.announcement.query.dto;
 
 import com.polychat.polychatbe.announcement.command.domain.aggregate.Announcement;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class AnnouncementResponseDTO {
 
     private long announcementId;
@@ -13,23 +17,8 @@ public class AnnouncementResponseDTO {
     private String announcementContent;
     private LocalDateTime uploadTime;
     private LocalDateTime lastUpdatedTime;
+    private long uploaderNo;
+    private String uploaderName;
 
-    public AnnouncementResponseDTO() {
-    }
 
-    public AnnouncementResponseDTO(long announcementId, String announcementTitle, String announcementContent, LocalDateTime uploadTime, LocalDateTime lastUpdatedTime) {
-        this.announcementId = announcementId;
-        this.announcementTitle = announcementTitle;
-        this.announcementContent = announcementContent;
-        this.uploadTime = uploadTime;
-        this.lastUpdatedTime = lastUpdatedTime;
-    }
-
-    public AnnouncementResponseDTO(Announcement announcement){
-        this(announcement.getAnnouncementId(),
-                announcement.getAnnouncementTitle(),
-                announcement.getAnnouncementContent(),
-                announcement.getUploadTime(),
-                announcement.getLastUpdatedTime());
-    }
 }
