@@ -94,15 +94,13 @@ public class UserSettingDTO {
                 '}';
     }
 
-    public UserSettingDTO setDefault(long userId){
-        return new UserSettingDTO(
-                userId,
-                100,
-                100,
-                false,
-                ChatMode.VIDEO,
-                false
-        );
+    public void setDefault(long userId){
+        this.userId = userId;
+        this.musicVolume = 100;
+        this.effectVolume = 100;
+        this.mute = false;
+        this.chatMode = ChatMode.VIDEO;
+        enableAi = false;
     }
 
 }

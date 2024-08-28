@@ -64,6 +64,15 @@ public class UserSetting {
         return enableAi;
     }
 
+    public void updateUserSetting(UserSetting userSetting) {
+        this.userId = userSetting.getUserId();
+        this.musicVolume = userSetting.getMusicVolume();
+        this.effectVolume = userSetting.getEffectVolume();
+        this.mute = userSetting.isMute();
+        this.chatMode = userSetting.getChatMode();
+        this.enableAi = userSetting.isEnableAi();
+    }
+
     @Override
     public String toString() {
         return "userSetting{" +
