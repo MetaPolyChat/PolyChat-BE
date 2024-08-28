@@ -16,8 +16,8 @@ public class UserSettingDomainService {
         this.userSettingRepository = userSettingRepository;
     }
 
-    public UserSetting findUserSetting(long userId) throws NoSuchElementException {
-        UserSetting  userSetting=  userSettingRepository.findById(userId).orElse(null);
+    public UserSetting findUserSetting(long userId) {
+        UserSetting userSetting=  userSettingRepository.findById(userId).orElse(null);
         if (userSetting == null) {
             throw new NoSuchElementException("존재 하지 않는 유저입니다.");
         }else {
