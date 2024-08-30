@@ -36,7 +36,7 @@ public class AnnouncementService {
         Announcement foundAnnouncement = announcementRepository.findById(requestAnnouncementId).orElseThrow(
                 ()-> new IllegalArgumentException("존재하지 않는 아이디"));
 
-        if (!announcementDomainService.checkModifyAuthority(foundAnnouncement, requestAnnouncementId)) {
+        if (announcementDomainService.isNotAuthorized(foundAnnouncement, requestAnnouncementId)) {
             throw new IllegalArgumentException("업데이트 권한이 없습니다.");
         }
 
@@ -48,8 +48,8 @@ public class AnnouncementService {
     }
 
     @Transactional
-    public void deleteAnnouncement(long announcementId, long uploaderId) {
-        announcementDomainService.deleteAnnouncement(announcementId, uploaderId);
+    public void deleteAnnouncement(long announcementId, long uploaderNo) {
+        announcementDomainService.deleteAnnouncement(announcementId, uploaderNo);
     }
 
 
