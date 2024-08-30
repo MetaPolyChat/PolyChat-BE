@@ -1,4 +1,4 @@
-package com.polychat.polychatbe.achievement.command.application.infrastructure;
+package com.polychat.polychatbe.achievement.command.infrastructure;
 
 import com.polychat.polychatbe.achievement.command.domain.service.ImageUploadService;
 import org.springframework.stereotype.Service;

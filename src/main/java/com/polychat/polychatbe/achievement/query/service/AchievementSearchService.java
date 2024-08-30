@@ -2,9 +2,11 @@ package com.polychat.polychatbe.achievement.query.service;
 
 import com.polychat.polychatbe.achievement.query.dto.AchievementResponseDTO;
 import com.polychat.polychatbe.achievement.query.repository.AchievementSearchRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AchievementSearchService {
 
     private AchievementSearchRepository achievementSearchRepository;
@@ -21,7 +23,7 @@ public class AchievementSearchService {
         return achievementSearchRepository.findAllAchievement();
     }
 
-    public AchievementResponseDTO findAchievementById(int id) {
+    public AchievementResponseDTO findAchievementById(long id) {
         return achievementSearchRepository.findAchievementById(id);
     }
 }

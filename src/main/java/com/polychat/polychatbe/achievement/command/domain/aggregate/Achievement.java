@@ -11,7 +11,7 @@ import lombok.ToString;
 public class Achievement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int achievementId;
+    private Long achievementId;
 
     private String achievementName;
     private String achievementDescription;
@@ -19,7 +19,7 @@ public class Achievement {
     private String achievementIconUrl;
     
     // 비활성화시 목록에 보이지 않음
-    private String isActive;
+    private String achievementActive;
 
     protected Achievement() {}
 
@@ -27,7 +27,7 @@ public class Achievement {
         this.achievementName = achievementName;
         this.achievementDescription = achievementDescription;
         this.achievementCondition = achievementCondition;
-        this.isActive = "Y";
+        this.achievementActive = "Y";
     }
 
     public Achievement(String achievementName, String achievementDescription, String achievementCondition, String achievementIconUrl) {
@@ -40,10 +40,10 @@ public class Achievement {
     }
 
     public void activeAchievement() {
-        this.isActive = "Y";
+        this.achievementActive = "Y";
     }
 
     public void deActiveAchievement() {
-        this.isActive = "N";
+        this.achievementActive = "N";
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 public interface AchievementSearchRepository {
 
     long countAchievement();
-    AchievementResponseDTO findAchievementById(Integer achievementId);
+    AchievementResponseDTO findAchievementById(Long achievementId);
     List<AchievementResponseDTO> findAllAchievement();
 
 }
