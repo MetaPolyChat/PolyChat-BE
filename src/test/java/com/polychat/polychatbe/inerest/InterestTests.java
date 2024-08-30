@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.stream.Stream;
 
 @SpringBootTest
-//@Transactional
+@Transactional
 public class InterestTests {
 
     @Autowired
