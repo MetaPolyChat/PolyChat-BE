@@ -18,6 +18,15 @@ public class AchievementDomainService {
     }
 
     @Transactional
+    public void updateAchievement( Achievement modifiedAchievement) {
+        Achievement achievement = achievementRepository.findById(modifiedAchievement.getAchievementId()).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않는 업적")
+        );
+
+        achievement.updateAchievement(modifiedAchievement);
+    }
+
+    @Transactional
     public void uploadImage(Achievement achievement, String fileName, MultipartFile file) {
         try{
             String uploadedUrl = imageUploadService.uploadImage(fileName, file);
