@@ -13,7 +13,7 @@ public class MatchingHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int matchingId;
+    private Long matchingId;
 
     @Getter
     @Column
@@ -47,8 +47,9 @@ public class MatchingHistory {
     @Override
     public String toString() {
         return "MatchingHistory{" +
-                "userNumFirst=" + userNumFoo +
-                ", userNumSecond=" + userNumBar +
+                "matchingId=" + matchingId +
+                ", userNumFoo=" + userNumFoo +
+                ", userNumBar=" + userNumBar +
                 ", matchTime=" + matchTime +
                 ", isAiMatch=" + isAiMatch +
                 '}';
