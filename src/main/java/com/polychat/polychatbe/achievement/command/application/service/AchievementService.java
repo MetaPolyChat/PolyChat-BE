@@ -37,6 +37,19 @@ public class AchievementService {
     }
 
     @Transactional
+    public void updateAchievement(AchievementRequest achievementRequest){
+        Achievement newAchievement = AchievementRequest.achievementWithIdFromDTO(achievementRequest);
+        if (achievementRequest.getAchievementImage() !=null) {
+            achievementDomainService.uploadImage(
+                    newAchievement,
+                    achievementRequest.getAchievementImage().getOriginalFilename(),
+                    achievementRequest.getAchievementImage());
+        }
+
+        achievementDomainService.updateAchievement(newAchievement);
+    }
+
+    @Transactional
     public void deleteAchievement(long achievementId){
         Achievement achievement = achievementRepository.findById(achievementId).orElseThrow(
                 () -> new NoSuchElementException("해당 업적을 찾을 수 없습니다.")

@@ -35,6 +35,28 @@ public class Achievement {
         this.achievementIconUrl = achievementIconUrl;
     }
 
+    public Achievement(Long achievementId, String achievementName, String achievementDescription, String achievementCondition) {
+        this.achievementId = achievementId;
+        this.achievementName = achievementName;
+        this.achievementDescription = achievementDescription;
+        this.achievementCondition = achievementCondition;
+    }
+
+    public void updateAchievement(Achievement newAchievement){
+        this.achievementName =  newAchievement.achievementName!=null?
+                newAchievement.getAchievementName():this.achievementName;
+        this.achievementDescription =  newAchievement.achievementDescription!=null?
+                newAchievement.getAchievementDescription():this.achievementDescription;
+        this.achievementCondition = newAchievement.achievementCondition!=null?
+                newAchievement.getAchievementCondition():this.achievementCondition;
+        this.achievementActive = newAchievement.achievementActive!=null?
+                newAchievement.getAchievementActive():this.achievementActive;
+        this.achievementIconUrl = newAchievement.achievementIconUrl!=null?
+                newAchievement.getAchievementIconUrl():this.achievementIconUrl;
+
+    }
+
+
     public void setAchievementIconUrl(String achievementIconUrl) {
         this.achievementIconUrl = achievementIconUrl;
     }
