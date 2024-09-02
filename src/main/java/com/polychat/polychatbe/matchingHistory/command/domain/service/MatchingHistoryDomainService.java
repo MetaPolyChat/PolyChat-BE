@@ -23,7 +23,7 @@ public class MatchingHistoryDomainService {
 
     //read
     public List<MatchingHistory> findMatchingHistory(Long userId) {
-        return matchingHistoryRepository.findUserNumFooOrUserNumBarByMatchId(userId);
+        return matchingHistoryRepository.findUserNumFooOrUserNumBarByMatchingId(userId);
     }
 
     public MatchingHistory findMatchingHistoryById(Long matchingId) {
