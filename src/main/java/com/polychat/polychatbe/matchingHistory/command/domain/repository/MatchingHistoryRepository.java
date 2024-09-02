@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface MatchingHistoryRepository extends JpaRepository<MatchingHistory, Long> {
-    List<MatchingHistory> findUserNumFooOrUserNumBarByMatchId(Long matchId);
+    List<MatchingHistory> findByUserNumFooOrUserNumBar(Long userNumFoo, Long userNumBar);
 }
