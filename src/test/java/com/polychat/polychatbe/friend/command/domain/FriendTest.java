@@ -1,6 +1,6 @@
 package com.polychat.polychatbe.friend.command.domain;
 
-import com.polychat.polychatbe.friend.command.application.dto.FriendResponseDTO;
+import com.polychat.polychatbe.friend.query.dto.FriendResponseDTO;
 import com.polychat.polychatbe.friend.command.domain.service.FriendRequestAcceptService;
 import com.polychat.polychatbe.friend.command.domain.service.FriendService;
 import com.polychat.polychatbe.friend.query.service.FriendSearchService;
