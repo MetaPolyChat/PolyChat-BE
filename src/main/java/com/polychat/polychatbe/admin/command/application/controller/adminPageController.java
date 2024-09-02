@@ -1,15 +1,17 @@
 package com.polychat.polychatbe.admin.command.application.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class adminPageController {
 
 
     @GetMapping("/admin")
     public String adminPage() {
-        return "Admin Page";
+        return "adminDashboard";
     }
 
 
@@ -17,7 +19,6 @@ public class adminPageController {
     public String adminBlockUser() {
         return "Admin Block User";
     }
-
 
 
     @GetMapping("/admin/logincount") //find, update(count ++)
@@ -29,8 +30,10 @@ public class adminPageController {
     public String adminQuestion() {
         return "Admin Question";
     }
+
     @GetMapping("/user/question") //create
     public String userQuestion() {
         return "Admin Question";
     }
+
 }

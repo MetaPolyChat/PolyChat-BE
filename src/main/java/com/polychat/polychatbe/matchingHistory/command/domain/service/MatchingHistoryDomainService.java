@@ -37,6 +37,7 @@ public class MatchingHistoryDomainService {
     }
 
     //update
+    @Deprecated
     public void updateMatchingHistory(MatchingHistory matchingHistory) {
         throw new IllegalStateException("히스토리는 업데이트 될 수 없습니다.");
 
