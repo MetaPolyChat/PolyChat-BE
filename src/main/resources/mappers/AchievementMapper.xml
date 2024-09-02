@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.polychat.polychatbe.achievement.query.repository.AchievementSearchRepository">
+
+    <resultMap id="achievementMap" type="com.polychat.polychatbe.achievement.query.dto.AchievementResponseDTO">
+        <id property="achievementId" column="achievement_id"/>
+        <result property="achievementName" column="achievement_name"/>
+        <result property="achievementDescription" column="achievement_description"/>
+        <result property="achievementCondition" column="achievement_condition"/>
+        <result property="achievementIconUrl" column="achievement_icon_url"/>
+        <result property="isActive" column="achievement_active"/>
+    </resultMap>
+
+    <select id="countAchievement" resultType="_long">
+        SELECT
+                COUNT(ACHIEVEMENT_ID)
+          FROM
+                TBL_ACHIEVEMENT
+         WHERE
+                ACHIEVEMENT_ACTIVE='Y'
+    </select>
+
+    <select id="findAllAchievement" resultMap="achievementMap">
+        SELECT  ACHIEVEMENT_ID
+              , ACHIEVEMENT_NAME
+              , ACHIEVEMENT_DESCRIPTION
+              , ACHIEVEMENT_CONDITION
+              , ACHIEVEMENT_ICON_URL
+              , ACHIEVEMENT_ACTIVE
+          FROM
+                TBL_ACHIEVEMENT
+         WHERE
+                ACHIEVEMENT_ACTIVE='Y'
+    </select>
+
+    <select id="findAchievementById" parameterType="_long" resultMap="achievementMap">
+        SELECT  ACHIEVEMENT_ID
+              , ACHIEVEMENT_NAME
+              , ACHIEVEMENT_DESCRIPTION
+              , ACHIEVEMENT_CONDITION
+              , ACHIEVEMENT_ICON_URL
+              , ACHIEVEMENT_ACTIVE
+          FROM
+                TBL_ACHIEVEMENT
+         WHERE
+                ACHIEVEMENT_ID = #{achievementId}
+           AND
+                ACHIEVEMENT_ACTIVE = 'Y'
+    </select>
+
+</mapper>
