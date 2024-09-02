@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 @Service
 public class MatchingHistoryDomainService {
 
-    private MatchingHistoryRepository matchingHistoryRepository;
+    private final MatchingHistoryRepository matchingHistoryRepository;
 
     public MatchingHistoryDomainService(MatchingHistoryRepository matchingHistoryRepository) {
         this.matchingHistoryRepository = matchingHistoryRepository;
@@ -23,7 +23,7 @@ public class MatchingHistoryDomainService {
 
     //read
     public List<MatchingHistory> findMatchingHistory(Long userId) {
-        return matchingHistoryRepository.findUserNumFooOrUserNumBarByMatchingId(userId);
+        return matchingHistoryRepository.findByUserNumFooOrUserNumBar(userId,userId);
     }
 
     public MatchingHistory findMatchingHistoryById(Long matchingId) {
@@ -32,9 +32,13 @@ public class MatchingHistoryDomainService {
         );
     }
 
+    public List<MatchingHistory> findAllMatchingHistory() {
+        return matchingHistoryRepository.findAll();
+    }
+
     //update
     public void updateMatchingHistory(MatchingHistory matchingHistory) {
-        throw new IllegalArgumentException("히스토리는 업데이트 될 수 없습니다.");
+        throw new IllegalStateException("히스토리는 업데이트 될 수 없습니다.");
 
     }
 
