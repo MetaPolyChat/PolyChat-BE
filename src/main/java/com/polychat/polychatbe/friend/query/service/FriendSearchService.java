@@ -1,9 +1,11 @@
 package com.polychat.polychatbe.friend.query.service;
 
-import com.polychat.polychatbe.friend.command.application.dto.FriendResponseDTO;
+import com.polychat.polychatbe.friend.query.dto.FriendResponseDTO;
 import com.polychat.polychatbe.friend.command.application.dto.FriendUserDTO;
 import com.polychat.polychatbe.friend.command.domain.model.Friend;
 import com.polychat.polychatbe.friend.command.domain.model.FriendUserId;
+import com.polychat.polychatbe.friend.query.dto.FriendUserInfoDTO;
+import com.polychat.polychatbe.friend.query.repository.FriendMyBatisRepository;
 import com.polychat.polychatbe.friend.query.repository.FriendSearchRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,43 +15,24 @@ import java.util.List;
 public class FriendSearchService {
 
     private FriendSearchRepository friendSearchRepository;
+    private FriendMyBatisRepository friendMyBatisRepository;
 
     public FriendSearchService(FriendSearchRepository friendSearchRepository) {
         this.friendSearchRepository = friendSearchRepository;
     }
 
     public List<FriendResponseDTO> findAllFriend() {
-        List<Friend> friendList = friendSearchRepository.findAll();
-
-        return friendList.stream()
-                .map((friend)->new FriendResponseDTO(
-                        friend.getFriendId(),
-                        friend.getUser1().getFriendUserId(),
-                        friend.getUser2().getFriendUserId()
-                )).toList();
+        return friendMyBatisRepository.findAllFriend();
     }
 
     public FriendResponseDTO findFriendById(int friendId){
-        Friend friendInfo = friendSearchRepository.findById(friendId).orElseThrow(()->new IllegalArgumentException("존재하지 않는 번호입니다."));
-        return new FriendResponseDTO(
-                friendInfo.getFriendId(),
-                friendInfo.getUser1().getFriendUserId(),
-                friendInfo.getUser2().getFriendUserId()
-        );
+        return friendMyBatisRepository.findByFriendId(friendId);
 
     }
 
-    public List<FriendResponseDTO> findUserFriend(int userId){
-        List <Friend> friendList= friendSearchRepository.findByUser1(
-                new FriendUserId(userId)
-        );
+    public List<FriendUserInfoDTO> findUserFriend(int userId) {
 
-        return friendList.stream()
-                .map((friend)->new FriendResponseDTO(
-                        friend.getFriendId(),
-                        friend.getUser1().getFriendUserId(),
-                        friend.getUser2().getFriendUserId()
-                )).toList();
+        return friendMyBatisRepository.findOneUserFriend(new FriendUserId(userId));
     }
 
     public FriendResponseDTO findFriendByUserId(int user1, int user2){
@@ -64,8 +47,8 @@ public class FriendSearchService {
         );
     }
 
-    public FriendResponseDTO findFriendByUserInfo(FriendUserDTO frienduserInfo) {
-        return this.findFriendByUserId(frienduserInfo.getUser1(), frienduserInfo.getUser2());
+    public FriendResponseDTO findFriendByUserInfo(FriendUserDTO friendUserInfo) {
+        return this.findFriendByUserId(friendUserInfo.getUser1(), friendUserInfo.getUser2());
     }
 
 }
