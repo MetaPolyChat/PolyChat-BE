@@ -1,7 +1,6 @@
-package com.polychat.polychatbe.matchingHistory.command.application.service;
+package com.polychat.polychatbe.matchingHistory.command.application.dto;
 
 import com.polychat.polychatbe.matchingHistory.command.domain.model.MatchingHistory;
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
