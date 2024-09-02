@@ -1,4 +1,4 @@
-package com.polychat.polychatbe.friend.command.application.dto;
+package com.polychat.polychatbe.friend.query.dto;
 
 import lombok.Data;
 
