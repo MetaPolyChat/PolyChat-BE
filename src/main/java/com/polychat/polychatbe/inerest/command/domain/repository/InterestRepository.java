@@ -13,5 +13,5 @@ import java.util.Optional;
 
 @Repository
 public interface InterestRepository extends JpaRepository<Interest, Long> {
-    Optional<Interest> findByInterestId(Long interestNo);
+//    Optional<Interest> findByInterestId(Long interestNo);
 }
