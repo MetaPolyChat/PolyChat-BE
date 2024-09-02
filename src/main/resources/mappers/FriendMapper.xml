@@ -55,7 +55,5 @@
                 A.USER2=B.USER_NO
     </select>
 
-<!--    private final String userDescription;-->
-<!--    private final String friendImage;-->
 
 </mapper>
