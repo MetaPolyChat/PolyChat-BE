@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1")
+//@RequestMapping("/api/v1")
 public class AchievementController {
 
     private AchievementService achievementService;
@@ -15,6 +15,7 @@ public class AchievementController {
         this.achievementService = achievementService;
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/achievement")
     public void addAchievement(@RequestBody AchievementRequest achievement) {
 
@@ -24,7 +25,9 @@ public class AchievementController {
         achievementService.addAchievement(achievement);
 
     }
-    
+
+
+    @ResponseStatus(HttpStatus.CREATED)
     @PutMapping("/achievement/{id}")
     public void updateAchievement(@RequestBody AchievementRequest achievement, @PathVariable long id) {
 
@@ -32,6 +35,7 @@ public class AchievementController {
         achievementService.updateAchievement(achievement);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/achievement/{id}")
     public void deleteAchievement(@PathVariable long id){
         achievementService.deleteAchievement(id);
