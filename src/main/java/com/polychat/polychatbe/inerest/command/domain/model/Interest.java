@@ -27,6 +27,11 @@ public class Interest {
         return interestName;
     }
 
+    public void updateInterest(Interest interest) {
+        this.interestNo = interest.getInterestNo();
+        this.interestName = interest.getInterestName();
+    }
+
     @Override
     public String toString() {
         return "Interest{" +

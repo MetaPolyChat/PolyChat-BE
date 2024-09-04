@@ -42,6 +42,17 @@ public class InterestTests {
     }
 
 
+    @DisplayName("관심사 CRUD 테스트")
+    @ParameterizedTest
+    @MethodSource("createUserInterest")
+    public void testInterest(String name) {
 
+
+        Assertions.assertDoesNotThrow(() -> interestService.registInterest(name));
+        Assertions.assertDoesNotThrow(() -> interestService.updateInterest(name));
+        Assertions.assertDoesNotThrow(() -> interestService.findInterestByInterestName(name));
+        Assertions.assertDoesNotThrow(() -> interestService.removeInterest(name));
+
+    }
 
 }
