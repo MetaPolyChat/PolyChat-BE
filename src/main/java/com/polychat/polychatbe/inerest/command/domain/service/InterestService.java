@@ -37,4 +37,24 @@ public class InterestService {
         interestRepository.deleteById(interest.getInterestNo());
         userInterestRepository.deleteAll(userInterests);    // 해당 관심사를 가지는 모든 유저와의 관계 제거
     }
+
+    @Transactional
+    public void updateInterest(String interestName) {
+        Interest interest = interestRepository.findByInterestName(interestName);
+        interest.updateInterest(interest);
+        interestRepository.save(interest);
+    }
+
+    public List<Interest> findAllInterests() {
+        return interestRepository.findAll();
+    }
+
+    public Interest findInterestByInterestNo(Long interestNo) {
+        Interest interest = interestRepository.findById(interestNo).orElseThrow(IllegalArgumentException::new);
+        return interest;
+    }
+
+    public Interest findInterestByInterestName(String interestName) {
+        Interest interest = interestRepository.findByInterestName(interestName);
+    }
 }

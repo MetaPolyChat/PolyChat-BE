@@ -13,5 +13,6 @@ import java.util.Optional;
 
 @Repository
 public interface InterestRepository extends JpaRepository<Interest, Long> {
+    Interest findByInterestName(String interestName);
 //    Optional<Interest> findByInterestId(Long interestNo);
 }
