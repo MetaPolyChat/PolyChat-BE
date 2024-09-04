@@ -32,7 +32,7 @@
                 A.UPLOADER_ID=B.USER_NO
     </select>
 
-    <select id="findByAnnouncementId" resultMap="announcementMap">
+    <select id="findAnnouncementById" resultMap="announcementMap">
         SELECT  ANNOUNCEMENT_ID
              ,  ANNOUNCEMENT_TITLE
              ,  ANNOUNCEMENT_CONTENT
@@ -42,14 +42,12 @@
              ,  LAST_UPDATED_TIME
           FROM
                 TBL_ANNOUNCEMENT A
-         WHERE
-                A.ANNOUNCEMENT_ID = #{announcementId}
-          JOIN
+        LEFT JOIN
                 TBL_USER B
             ON
                 A.UPLOADER_ID=B.USER_NO
+         WHERE
+                A.ANNOUNCEMENT_ID = #{announcementId}
     </select>
-
-
 
 </mapper>
