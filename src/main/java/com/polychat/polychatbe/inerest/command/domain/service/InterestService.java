@@ -45,16 +45,4 @@ public class InterestService {
         interestRepository.save(interest);
     }
 
-    public List<Interest> findAllInterests() {
-        return interestRepository.findAll();
-    }
-
-    public Interest findInterestByInterestNo(Long interestNo) {
-        Interest interest = interestRepository.findById(interestNo).orElseThrow(IllegalArgumentException::new);
-        return interest;
-    }
-
-    public Interest findInterestByInterestName(String interestName) {
-        Interest interest = interestRepository.findByInterestName(interestName);
-    }
 }
