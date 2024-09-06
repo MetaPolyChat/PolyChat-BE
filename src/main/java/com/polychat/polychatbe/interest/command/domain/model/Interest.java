@@ -1,4 +1,4 @@
-package com.polychat.polychatbe.inerest.command.domain.model;
+package com.polychat.polychatbe.interest.command.domain.model;
 
 import jakarta.persistence.*;
 
@@ -7,17 +7,23 @@ import jakarta.persistence.*;
 public class Interest {
 
     @Id
-    @Column(name="INEREST_NO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long interestNo;
 
 
-    @Column(name="INTEREST_NAME")
+//    @Column(name="INTEREST_NAME")
     private String interestName;
 
     public Interest() {}
 
-    public Interest(String interestName) {}
+    public Interest(String interestName) {
+        this.interestName = interestName;
+    }
+
+    public Interest(Long interestNo, String interestName) {
+        this.interestNo = interestNo;
+        this.interestName = interestName;
+    }
 
     public Long getInterestNo() {
         return interestNo;
