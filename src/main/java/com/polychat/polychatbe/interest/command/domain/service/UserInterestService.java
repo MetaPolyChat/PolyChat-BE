@@ -1,15 +1,13 @@
-package com.polychat.polychatbe.inerest.command.domain.service;
+package com.polychat.polychatbe.interest.command.domain.service;
 
-import com.polychat.polychatbe.inerest.command.domain.model.Interest;
-import com.polychat.polychatbe.inerest.command.domain.model.UserInterest;
-import com.polychat.polychatbe.inerest.command.domain.repository.InterestRepository;
-import com.polychat.polychatbe.inerest.command.domain.repository.UserInterestRepository;
+import com.polychat.polychatbe.interest.command.domain.model.Interest;
+import com.polychat.polychatbe.interest.command.domain.model.UserInterest;
+import com.polychat.polychatbe.interest.command.domain.repository.InterestRepository;
+import com.polychat.polychatbe.interest.command.domain.repository.UserInterestRepository;
 import com.polychat.polychatbe.user.command.domain.model.User;
 import com.polychat.polychatbe.user.command.domain.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class UserInterestService {
