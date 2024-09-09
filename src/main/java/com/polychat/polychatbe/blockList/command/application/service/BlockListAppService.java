@@ -15,6 +15,10 @@ public class BlockListAppService {
         this.blockListDomainService = blockListDomainService;
     }
 
+    public List<BlockList> getAllBlockLists() {
+        return blockListDomainService.findAllBlockList();
+    }
+
     public void blockUser(Long userId, Long blockedUserId) {
         blockListDomainService.addToBlockList(userId, blockedUserId);
     }
@@ -24,10 +28,6 @@ public class BlockListAppService {
         if (blockList != null) {
             blockListDomainService.deleteBlockList(blockList.getId());
         }
-    }
-
-    public List<BlockList> getAllBlockLists() {
-        return blockListDomainService.findAllBlockList();
     }
 
     public List<BlockList> getListUserBlockOthers(Long userId) {
