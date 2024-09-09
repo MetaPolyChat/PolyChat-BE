@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserFriendRequestDTO {
-    private int userId;
+    private int receiverId;
     private String userName;
     private RequestStatus status;
 

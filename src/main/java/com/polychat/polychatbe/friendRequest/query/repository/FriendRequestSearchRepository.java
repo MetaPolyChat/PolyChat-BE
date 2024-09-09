@@ -1,11 +1,21 @@
 package com.polychat.polychatbe.friendRequest.query.repository;
 
-import com.polychat.polychatbe.friendRequest.command.domain.model.FriendRequest;
 import com.polychat.polychatbe.friendRequest.query.dto.FriendRequestInfoDTO;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.polychat.polychatbe.friendRequest.query.dto.UserFriendRequestDTO;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface FriendRequestSearchRepository extends JpaRepository<FriendRequest, Long> {
-    List<FriendRequest> findBySender(int sender);
+@Mapper
+public interface FriendRequestSearchRepository {
+
+    Optional<FriendRequestInfoDTO> findFriendRequestById(long requestId);
+
+    List<UserFriendRequestDTO> findFriendRequestBySender(int sender);
+
+    List<FriendRequestInfoDTO> findAllFriendRequest();
+
+
+
 }
