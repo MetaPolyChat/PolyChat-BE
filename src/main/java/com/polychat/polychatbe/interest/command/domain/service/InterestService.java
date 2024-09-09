@@ -1,9 +1,9 @@
-package com.polychat.polychatbe.inerest.command.domain.service;
+package com.polychat.polychatbe.interest.command.domain.service;
 
-import com.polychat.polychatbe.inerest.command.domain.model.Interest;
-import com.polychat.polychatbe.inerest.command.domain.model.UserInterest;
-import com.polychat.polychatbe.inerest.command.domain.repository.InterestRepository;
-import com.polychat.polychatbe.inerest.command.domain.repository.UserInterestRepository;
+import com.polychat.polychatbe.interest.command.domain.model.Interest;
+import com.polychat.polychatbe.interest.command.domain.model.UserInterest;
+import com.polychat.polychatbe.interest.command.domain.repository.InterestRepository;
+import com.polychat.polychatbe.interest.command.domain.repository.UserInterestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,12 +29,12 @@ public class InterestService {
     }
 
     @Transactional  // 관심사 종류 삭제
-    public void removeInterest(Interest interest) {
-        List<UserInterest> userInterests = userInterestRepository.findByInterestNo(interest.getInterestNo());
+    public void removeInterest(Long interestNo) {
+        List<UserInterest> userInterests = userInterestRepository.findAllByInterestNo(interestNo);
         if (userInterests.isEmpty()) {
-            throw new IllegalArgumentException();   // 발생시킬 에러 내용 작성
+            interestRepository.deleteById(interestNo);
+            return;
         }
-        interestRepository.deleteById(interest.getInterestNo());
         userInterestRepository.deleteAll(userInterests);    // 해당 관심사를 가지는 모든 유저와의 관계 제거
     }
 

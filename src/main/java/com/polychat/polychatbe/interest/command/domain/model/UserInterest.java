@@ -1,7 +1,6 @@
-package com.polychat.polychatbe.inerest.command.domain.model;
+package com.polychat.polychatbe.interest.command.domain.model;
 
 import jakarta.persistence.*;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 
 @Entity
 @Table(name="TBL_USER_INTEREST")
@@ -21,6 +20,12 @@ public class UserInterest {
     public UserInterest() {}
 
     public UserInterest(Long userNo, Long interestNo) {
+        this.userNo = userNo;
+        this.interestNo = interestNo;
+    }
+
+    public UserInterest(Long refInterestNo, Long userNo, Long interestNo) {
+        this.refInterestNo = refInterestNo;
         this.userNo = userNo;
         this.interestNo = interestNo;
     }
