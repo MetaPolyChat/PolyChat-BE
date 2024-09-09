@@ -7,7 +7,9 @@ import java.util.List;
 
 @Mapper
 public interface InterestMapper {
-    List<Interest> findAll();
-    Interest findByNo(Long no);
-    Interest findByName(String name);
+    List<Interest> findAllInterests();
+    Interest findInterestByNo(Long interestNo);
+    Interest findInterestByName(String interestName);
+    Long findInterestNoByName(String interestName);
+    String findInterestNameByNo(Long interestNo);
 }
