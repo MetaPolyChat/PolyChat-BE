@@ -29,20 +29,21 @@ public class InterestService {
     }
 
     @Transactional  // 관심사 종류 삭제
-    public void removeInterest(Long interestNo) {
-        List<UserInterest> userInterests = userInterestRepository.findAllByInterestNo(interestNo);
+    public void removeInterest(String interestName) {
+        Interest findInterest = interestRepository.findByInterestName(interestName);
+        List<UserInterest> userInterests = userInterestRepository.findAllByInterestNo(findInterest.getInterestNo());
         if (userInterests.isEmpty()) {
-            interestRepository.deleteById(interestNo);
+            interestRepository.deleteById(findInterest.getInterestNo());
             return;
         }
-        userInterestRepository.deleteAll(userInterests);    // 해당 관심사를 가지는 모든 유저와의 관계 제거
+        userInterestRepository.deleteAll(userInterests);    // 해당 관심사를 가지는 모든 유저의 관심사와의 관계 제거
     }
 
+    // 관심사 업데이트
     @Transactional
     public void updateInterest(String interestName) {
         Interest interest = interestRepository.findByInterestName(interestName);
         interest.updateInterest(interest);
         interestRepository.save(interest);
     }
-
 }

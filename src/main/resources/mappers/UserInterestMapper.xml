@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.polychat.polychatbe.interest.query.repository.UserInterestMapper">
+    <resultMap id="userInterestMap" type="UserInterestDTO">
+        <id property="refInterestNo" column="ref_interest_no"/>
+        <result property="userNo" column="user_no"/>
+        <result property="interestNo" column="interest_no"/>
+    </resultMap>
+
+    <select id="findInterestsByUserId" resultMap="userInterestMap" parameterType="string">
+        SELECT
+            A.ref_interest_no,
+            A.user_no,
+            A.interest_no
+        FROM
+            tbl_user_interest as A
+
+        <if test="userName != null and userName != ''">
+            WHERE
+                A.user_no = (SELECT B.user_no FROM tbl_user as B WHERE B.user_id = #{ userId })
+        </if>
+    </select>
+
+    <select id="findInterestByInterestName" resultMap="userInterestMap" parameterType="string">
+        SELECT
+            A.ref_interest_no,
+            A.user_no,
+            A.interest_no
+        FROM
+            tbl_user_interest as A
+
+        <if test="interestName != null and interestName != ''">
+            WHERE
+                A.interest_no = (SELECT B.interest_no FROM tbl_interest as B WHERE B.interest_name = #{ interestName })
+        </if>
+    </select>
+
+<!--    <select id="findByUserIdAndInterestName" resultMap="userInterestMap" parameterType="string">-->
+<!--        SELECT-->
+<!--            A.ref_interest_no,-->
+<!--            A.user_no,-->
+<!--            A.interest_no-->
+<!--        FROM-->
+<!--            tbl_user_interest as A-->
+<!--        WHERE-->
+<!--                A.user_no = (SELECT B.user_no FROM tbl_user as B WHERE B.user_id = #{ userId })-->
+<!--            AND-->
+<!--                A.interest_no = (SELECT C.interest_no FROM tbl_interest as C WHERE C.interest_name = #{ interestName })-->
+<!--    </select>-->
+
+    <select id="findUserNoByInterestName" resultType="long" parameterType="string">
+        SELECT
+            A.user_no
+        FROM
+            tbl_user_interest as A
+        WHERE
+            A.interest_no = (SELECT B.interest_no FROM tbl_interest as B WHERE B.interest_name = #{ interestName })
+    </select>
+</mapper>
