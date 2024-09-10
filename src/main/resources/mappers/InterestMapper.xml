@@ -9,10 +9,50 @@
         <result property="interestName" column="interest_name"/>
     </resultMap>
 
-    <resultMap id="userInterestMap" type="UserInterestDTO">
-        <id property="refInterestNo" column="ref_interest_no"/>
-        <result property="userNo" column="user_no"/>
-        <result property="interestNo" column="interest_no"/>
-    </resultMap>
+    <select id="findAllInterests" resultMap="interestMap">
+        SELECT
+            interest_no,
+            interest_name
+        FROM
+            tbl_interest
+    </select>
+
+    <select id="findInterestByNo" resultMap="interestMap" parameterType="long">
+        SELECT
+            interest_no,
+            interest_name
+        FROM
+            tbl_interest
+        WHERE
+            interest_no = #{ interestNo }
+    </select>
+
+    <select id="findInterestByName" resultMap="interestMap" parameterType="string">
+        SELECT
+            interest_no,
+            interest_name
+        FROM
+            tbl_interest
+        WHERE
+            interest_name = #{ interestName }
+    </select>
+
+    <select id="findInterestNoByName" parameterType="string">
+        SELECT
+            interest_no
+        FROM
+            tbl_interest
+        WHERE
+            interest_name = #{ interestName }
+    </select>
+
+    <select id="findInterestNameByNo" parameterType="long">
+        SELECT
+            interest_name
+        FROM
+            tbl_interest
+        WHERE
+            interest_no = #{ interestNo }
+    </select>
 
 </mapper>
