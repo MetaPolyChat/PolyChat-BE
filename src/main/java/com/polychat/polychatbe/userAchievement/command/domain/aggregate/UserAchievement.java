@@ -15,13 +15,17 @@ public class UserAchievement {
     private long userAchievementId;
 
     private long achievementId;
-    private long userId;
+    private long userNo;
 
 
     protected UserAchievement() {}
 
-    public UserAchievement(long achievementId, long userId) {
+    public UserAchievement(long achievementId, long userNo) {
         this.achievementId = achievementId;
-        this.userId = userId;
+        this.userNo = userNo;
+    }
+
+    public void setAchievementId(long achievementId) {
+        this.achievementId = achievementId;
     }
 }
