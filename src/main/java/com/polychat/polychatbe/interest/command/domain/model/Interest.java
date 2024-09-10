@@ -3,7 +3,7 @@ package com.polychat.polychatbe.interest.command.domain.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="TBL_INEREST")
+@Table(name="TBL_INTEREST")
 public class Interest {
 
     @Id
