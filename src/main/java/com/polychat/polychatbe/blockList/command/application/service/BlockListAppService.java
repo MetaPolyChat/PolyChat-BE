@@ -19,8 +19,12 @@ public class BlockListAppService {
         return blockListDomainService.findAllBlockList();
     }
 
-    public void blockUser(Long userId, Long blockedUserId) {
-        blockListDomainService.addToBlockList(userId, blockedUserId);
+    public BlockList getBlockById(Long userId, Long blockedUserId) {
+        return blockListDomainService.findByUserIdAndBlockedUserId(userId, blockedUserId);
+    }
+
+    public String blockUser(Long userId, Long blockedUserId) throws IllegalArgumentException {
+        return blockListDomainService.addToBlockList(userId, blockedUserId);
     }
 
     public void unblockUser(Long userId, Long blockedUserId) {
