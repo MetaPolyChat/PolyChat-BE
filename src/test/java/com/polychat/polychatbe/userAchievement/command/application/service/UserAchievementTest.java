@@ -1,5 +1,6 @@
 package com.polychat.polychatbe.userAchievement.command.application.service;
 
+import com.polychat.polychatbe.userAchievement.command.application.dto.UserAchievementModifyDTO;
 import com.polychat.polychatbe.userAchievement.command.application.dto.UserAchievementRegistDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +34,10 @@ public class UserAchievementTest {
     @ParameterizedTest
     @CsvSource({"1,3,1"})
     public void modifyAllUserAchievement(long userId, long beforeAchievementId, long afterAchievementId){
-        userAchievementService.modifyOneUserAchievement(userId, beforeAchievementId, afterAchievementId);
+        UserAchievementModifyDTO newUserAchievement = new UserAchievementModifyDTO(
+                userId, beforeAchievementId, afterAchievementId
+        );
+        userAchievementService.modifyOneUserAchievement(newUserAchievement);
 
     }
 

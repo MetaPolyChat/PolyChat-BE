@@ -1,5 +1,6 @@
 package com.polychat.polychatbe.userAchievement.command.application.service;
 
+import com.polychat.polychatbe.userAchievement.command.application.dto.UserAchievementModifyDTO;
 import com.polychat.polychatbe.userAchievement.command.application.dto.UserAchievementRegistDTO;
 import com.polychat.polychatbe.userAchievement.command.domain.aggregate.UserAchievement;
 import com.polychat.polychatbe.userAchievement.command.domain.repository.UserAchievementRepository;
@@ -25,11 +26,11 @@ public class UserAchievementService {
     }
 
     @Transactional
-    public void modifyOneUserAchievement(long userId, long beforeAchievementId, long afterAchievementId) {
+    public void modifyOneUserAchievement(UserAchievementModifyDTO newUserAchievement) {
         UserAchievement userAchievement = userAchievementRepository.findByUserIdAndAchievementId(
-                userId, beforeAchievementId);
+                newUserAchievement.getUserId(), newUserAchievement.getBeforeAchievementId());
 
-        userAchievement.setAchievementId(afterAchievementId);
+        userAchievement.setAchievementId(newUserAchievement.getAfterAchievementId());
     }
 
     @Transactional
