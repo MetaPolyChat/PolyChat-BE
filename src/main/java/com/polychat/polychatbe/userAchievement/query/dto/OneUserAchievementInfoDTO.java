@@ -1,14 +1,18 @@
 package com.polychat.polychatbe.userAchievement.query.dto;
 
+import com.polychat.polychatbe.achievement.query.dto.AchievementResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAchievementResponseDTO {
-    private long userAchievementId;
+public class OneUserAchievementInfoDTO {
     private long userNo;
-    private long achievementId;
+    private List<AchievementResponseDTO> achievementList;
+
 }
+

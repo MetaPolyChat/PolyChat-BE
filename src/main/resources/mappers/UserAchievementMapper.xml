@@ -9,56 +9,62 @@
         <result property="achievementId" column="achievement_id"/>
     </resultMap>
 
+    <resultMap id="oneUserAchievementMap" type="OneUserInterestDTO">
+        <result property="userNo" column="user_no"/>
+        <collection property="achievement" ofType="com.polychat.polychatbe.achievement.query.dto.AchievementResponseDTO">
+            <id property="achievementId" column="ACHIEVEMENT_ID"/>
+            <result property = "achievementName" column="ACHIEVEMENT_NAME"/>
+            <result property = "achievementDescription" column="ACHIEVEMENT_DESCRIPTION"/>
+            <result property = "achievementCondition" column="ACHIEVEMENT_CONDITION"/>
+            <result property = "achievementIcon" column="ACHIEVEMENT_ICON"/>
+        </collection>
+    </resultMap>
+
     <select id="findUserAchievementById" resultMap="userAchievement" parameterType="long">
         SELECT
-                A.userAchievementMap
-             ,
-        A.user_no,
-        A.interest_no
-        FROM
-        tbl_user_interest as A
-
-        <if test="userName != null and userName != ''">
-            WHERE
-            A.user_no = (SELECT B.user_no FROM tbl_user as B WHERE B.user_id = #{ userId })
-        </if>
+                ID
+             ,  ACHIEVEMENT_ID
+             ,  USER_ID
+          FROM
+                TBL_USER
+         WHERE
+                ID=#{id}
     </select>
 
     <select id="findOneUserAchievements" resultMap="userAchievementMap" parameterType="_long">
         SELECT
-                A.id
-              , A.achievement_id,
-              , A.user_id
-        A.user_no,
-        A.interest_no
-        FROM
-        tbl_user_interest as A
-
-        <if test="interestName != null and interestName != ''">
-            WHERE
-            A.interest_no = (SELECT B.interest_no FROM tbl_interest as B WHERE B.interest_name = #{ interestName })
-        </if>
+                A.ID
+<!--             ,  A.user_id-->
+             ,  A.USER_NO
+             ,  B.ACHIEVEMENT_ID
+             ,  B.ACHIEVEMENT_DESCRIPTION
+          FROM
+                (
+                 SELECT
+                         ID
+                      ,  USER_NO
+                      ,  ACHIEVEMENT_ID
+                   FROM
+                         TBL_USER_ACHIEVEMENT
+                  WHERE
+                         USER_NO=#{userNo}
+                 ) A
+         JOIN
+                TBL_ACHIEVEMENT B
+            ON
+                A.ACHIEVEMENT_ID = B.ACHIEVEMENT_ID
+         WHERE
+                B.IS_ACTIVE='Y'
     </select>
 
-    <!--    <select id="findByUserIdAndInterestName" resultMap="userInterestMap" parameterType="string">-->
-    <!--        SELECT-->
-    <!--            A.ref_interest_no,-->
-    <!--            A.user_no,-->
-    <!--            A.interest_no-->
-    <!--        FROM-->
-    <!--            tbl_user_interest as A-->
-    <!--        WHERE-->
-    <!--                A.user_no = (SELECT B.user_no FROM tbl_user as B WHERE B.user_id = #{ userId })-->
-    <!--            AND-->
-    <!--                A.interest_no = (SELECT C.interest_no FROM tbl_interest as C WHERE C.interest_name = #{ interestName })-->
-    <!--    </select>-->
-
-    <select id="findUserNoByInterestName" resultType="long" parameterType="string">
+    <select id="findAllUserAchievements" resultType="long" parameterType="string">
         SELECT
-        A.user_no
-        FROM
-        tbl_user_interest as A
-        WHERE
-        A.interest_no = (SELECT B.interest_no FROM tbl_interest as B WHERE B.interest_name = #{ interestName })
+                ID
+             ,  ACHIEVEMENT_ID
+             ,  USER_ID
+          FROM
+                TBL_USER
+         WHERE
+                ID=#{id}
     </select>
 </mapper>
