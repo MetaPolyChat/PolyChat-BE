@@ -29,16 +29,16 @@ public class BlockListController {
     })
     @PostMapping(value = "/api/block", produces = "application/json; charset=UTF-8")
     //Todo : 로그인 유저 id 받기 -> currentUser
-    public ResponseEntity<String> blockUser(@RequestBody BlockUserDTO blockUserDTO, Long currentUser) {
+    public ResponseEntity<String> blockUser(@RequestBody Long blockedUserId, Long currentUser) {
         try {
-            blockListAppService.blockUser(currentUser, blockUserDTO.getBlockedUserId());
+            blockListAppService.blockUser(currentUser, blockedUserId);
         }catch (IllegalArgumentException e) {
             System.out.println("여기서 예외 처리 해야 함");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
-        return ResponseEntity.ok("Blocked user: " + blockUserDTO.getBlockedUserId());
+        return ResponseEntity.ok("Blocked user: " + blockedUserId);
     }
 
 
@@ -50,17 +50,17 @@ public class BlockListController {
     })
     @PostMapping(value = "/api/unblock", produces = "application/json; charset=UTF-8")
     //Todo : 로그인 유저 id 받기 -> currentUser
-    public ResponseEntity<String> unblockUser(@RequestBody BlockUserDTO blockUserDTO, Long currentUser) {
-        BlockList blockList =  blockListAppService.getBlockById(currentUser, blockUserDTO.getBlockedUserId());
+    public ResponseEntity<String> unblockUser(@RequestBody Long blockedUserId, Long currentUser) {
+        BlockList blockList =  blockListAppService.getBlockById(currentUser, blockedUserId);
         if (blockList == null) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("블락 되지 않은 유저");
         }
         try {
-            blockListAppService.unblockUser(currentUser, blockUserDTO.getBlockedUserId());
+            blockListAppService.unblockUser(currentUser, blockedUserId);
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
-        return ResponseEntity.status(HttpStatus.OK).body("Unblocked user: " + blockUserDTO.getBlockedUserId());
+        return ResponseEntity.status(HttpStatus.OK).body("Unblocked user: " + blockedUserId);
     }
 
 }

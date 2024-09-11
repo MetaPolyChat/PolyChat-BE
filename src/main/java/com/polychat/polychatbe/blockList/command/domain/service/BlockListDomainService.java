@@ -5,6 +5,7 @@ import com.polychat.polychatbe.blockList.command.domain.repository.BlockListRepo
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -23,7 +24,8 @@ public class BlockListDomainService {
         // 없으면 저장
         if (this.findByUserIdAndBlockedUserId(userId, blockedUserId) == null) {
             System.out.println(blockedUserId + " : 블락되어 있지 않습니다");
-            blockListRepository.save(new BlockList(userId, blockedUserId));
+            blockListRepository.save(new BlockList(userId, blockedUserId, LocalDateTime.now()));
+            blockListRepository.flush();
             return "Success";
         }else {
             System.out.println("이 유저는 이미 블락 되어 있습니다.");
@@ -45,6 +47,8 @@ public class BlockListDomainService {
 
     //단일 검색 : 유저 id
     public BlockList findByUserIdAndBlockedUserId(Long userId, Long blockedUserId) {
+        System.out.println("userId : " + userId);
+        System.out.println("blockedUserId : " + blockedUserId);
         BlockList blockList = blockListRepository.findByUserIdAndBlockedUserId(userId, blockedUserId).orElse(null);
         System.out.println(blockList);
         System.out.println(findBlockListByUserId(userId));

@@ -1,42 +1,37 @@
-package com.polychat.polychatbe.blockList.command.domain.model;
+package com.polychat.polychatbe.blockList.query.dto;
 
-import jakarta.persistence.*;
+
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Entity(name = "tbl_block_list")
-public class BlockList {
+@Getter
+@Setter
+public class BlockFindDTO {
 
-    @Id
-    @Getter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Getter
-    @Column
     private Long userId;
 
-    @Getter
-    @Column
     private Long blockedUserId;
 
-    @Getter
-    @Column
     private LocalDateTime createdAt;
 
-    public BlockList() {
+    public BlockFindDTO() {
     }
 
-    public BlockList(Long blockedUserId, Long userId, LocalDateTime createdAt) {
-        this.blockedUserId = blockedUserId;
+    public BlockFindDTO(Long id, Long userId, Long blockedUserId, LocalDateTime createdAt) {
+        this.id = id;
         this.userId = userId;
+        this.blockedUserId = blockedUserId;
         this.createdAt = createdAt;
     }
 
+
     @Override
     public String toString() {
-        return "BlockList{" +
+        return "BlockFindDTO{" +
                 "id=" + id +
                 ", userId=" + userId +
                 ", blockedUserId=" + blockedUserId +
