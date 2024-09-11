@@ -31,7 +31,7 @@ Enter the relevant API keys to run the project.
 ```yml
 API: yourkey
 ```
-## Architecture ##
+## :building_construction: Architecture ##
 
 
 ## Login ##
