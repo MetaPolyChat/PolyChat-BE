@@ -9,7 +9,7 @@ Create Database server and WebRTC server
 
 The following tools were used in this project:
 
-[![My Skills](https://skillicons.dev/icons?i=spring,nodejs)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=spring,nodejs,mysql)](https://skillicons.dev)
 
 
 ## :white_check_mark: Requirements ##
@@ -31,6 +31,8 @@ Enter the relevant API keys to run the project.
 ```yml
 API: yourkey
 ```
+## Architecture ##
+
 
 ## Login ##
 
