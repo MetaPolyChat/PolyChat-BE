@@ -93,7 +93,6 @@ public class AchievementTest {
                 achievementId, achievementName, achievementDescription, achievementCondition, achievementImage
         );
 
-        //System.out.println(modifiedAchievementRequest);
 
         Assertions.assertDoesNotThrow(
                 ()-> achievementService.updateAchievement(modifiedAchievementRequest)
