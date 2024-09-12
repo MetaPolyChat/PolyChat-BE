@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.polychat.polychatbe.blockList.query.repository.BlockMapper">
+    <resultMap id="blackResulMap" type="com.polychat.polychatbe.blockList.command.application.dto.BlockUserDTO">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="blockedUserId" column="blocked_user_id"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+
+    <select id="findAllBlockList" resultMap="blackResulMap">
+        select
+            id,
+            blocked_user_id,
+            user_id,
+            created_at
+        from
+            tbl_block_list
+    </select>
+
+    <select id="findSingleBlockList" resultMap="blackResulMap" parameterType="long">
+        select
+            id,
+            blocked_user_id,
+            user_id,
+            created_at
+        from
+            tbl_block_list
+        where
+            user_id = #{userId}
+            and
+            blocked_user_id = #{blockedUserId}
+    </select>
+
+
+
+</mapper>
