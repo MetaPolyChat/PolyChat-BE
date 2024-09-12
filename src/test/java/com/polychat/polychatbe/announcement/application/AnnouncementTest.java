@@ -65,7 +65,7 @@ public class AnnouncementTest {
         System.out.println(announcementSearchService.findAllAnnouncement());
     }
 
-    @DisplayName("작성자가 아닌 사람이 공지사항 삭제 시도")
+    @DisplayName("권한이 없는 사람이 공지사항 삭제 시도")
     @Transactional
     @ParameterizedTest
     @CsvSource({"5,2", "6,5"})
@@ -78,7 +78,6 @@ public class AnnouncementTest {
         Assertions.assertEquals("삭제 권한이 없습니다.", notMatchException.getMessage());
 
     }
-
 
 
 }
