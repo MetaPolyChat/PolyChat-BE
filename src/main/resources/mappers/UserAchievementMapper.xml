@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.polychat.polychatbe.userAchievement.query.repository.UserAchievementSearchRepository">
+    <resultMap id="userAchievementMap" type="com.polychat.polychatbe.userAchievement.query.dto.UserAchievementResponseDTO">
+        <id property="userAchievementId" column="user_achievement_id"/>
+        <result property="userNo" column="user_no"/>
+        <result property="achievementId" column="achievement_id"/>
+    </resultMap>
+
+    <resultMap id="oneUserAchievementMap" type="com.polychat.polychatbe.userAchievement.query.dto.OneUserAchievementDTO">
+        <result property="userNo" column="user_no"/>
+        <collection property="achievementList" javaType="java.util.ArrayList" ofType="com.polychat.polychatbe.achievement.query.dto.AchievementResponseDTO">
+            <id property="achievementId" column="ACHIEVEMENT_ID"/>
+            <result property = "achievementName" column="ACHIEVEMENT_NAME"/>
+            <result property = "achievementDescription" column="ACHIEVEMENT_DESCRIPTION"/>
+            <result property = "achievementCondition" column="ACHIEVEMENT_CONDITION"/>
+            <result property = "achievementIcon" column="ACHIEVEMENT_ICON"/>
+        </collection>
+    </resultMap>
+
+    <select id="findUserAchievementById" resultMap="userAchievementMap" parameterType="_long">
+        SELECT
+                USER_ACHIEVEMENT_ID
+             ,  ACHIEVEMENT_ID
+             ,  USER_ID
+          FROM
+                TBL_USER
+         WHERE
+                USER_ACHIEVEMENT_ID=#{id}
+    </select>
+
+    <select id="findOneUserAchievements" resultMap="oneUserAchievementMap" parameterType="_long">
+        SELECT
+                A.USER_ACHIEVEMENT_ID
+<!--             ,  A.user_id-->
+             ,  A.USER_NO
+             ,  B.ACHIEVEMENT_ID
+             ,  B.ACHIEVEMENT_DESCRIPTION
+             ,  B.ACHIEVEMENT_CONDITION
+             ,  B.ACHIEVEMENT_NAME
+             ,  B.ACHIEVEMENT_ICON
+          FROM
+                (
+                 SELECT
+                         USER_ACHIEVEMENT_ID
+                      ,  USER_NO
+                      ,  ACHIEVEMENT_ID
+                   FROM
+                         TBL_USER_ACHIEVEMENT
+                  WHERE
+                         USER_NO=#{userNo}
+                 ) A
+         JOIN
+                TBL_ACHIEVEMENT B
+            ON
+                A.ACHIEVEMENT_ID = B.ACHIEVEMENT_ID
+         WHERE
+                B.IS_ACTIVE='Y'
+    </select>
+
+    <select id="findAllUserAchievements" resultMap="userAchievementMap" parameterType="_long">
+        SELECT
+                USER_ACHIEVEMENT_ID
+             ,  ACHIEVEMENT_ID
+             ,  USER_ID
+          FROM
+                TBL_USER
+    </select>
+</mapper>

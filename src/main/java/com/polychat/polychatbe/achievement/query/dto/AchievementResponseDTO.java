@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AchievementResponseDTO {
-    private int achievementId;
+    private long achievementId;
 
     private String achievementName;
     private String achievementDescription;
