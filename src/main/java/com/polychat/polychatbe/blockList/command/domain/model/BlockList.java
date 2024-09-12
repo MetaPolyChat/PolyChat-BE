@@ -3,6 +3,8 @@ package com.polychat.polychatbe.blockList.command.domain.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Entity(name = "tbl_block_list")
 public class BlockList {
 
@@ -19,12 +21,17 @@ public class BlockList {
     @Column
     private Long blockedUserId;
 
+    @Getter
+    @Column
+    private LocalDateTime createdAt;
+
     public BlockList() {
     }
 
-    public BlockList(Long blockedUserId, Long userId) {
-        this.blockedUserId = blockedUserId;
+    public BlockList(Long userId, Long blockedUserId, LocalDateTime createdAt) {
         this.userId = userId;
+        this.blockedUserId = blockedUserId;
+        this.createdAt = createdAt;
     }
 
     @Override
@@ -33,6 +40,7 @@ public class BlockList {
                 "id=" + id +
                 ", userId=" + userId +
                 ", blockedUserId=" + blockedUserId +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }
