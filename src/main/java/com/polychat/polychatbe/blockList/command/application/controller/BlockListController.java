@@ -2,13 +2,14 @@ package com.polychat.polychatbe.blockList.command.application.controller;
 
 import com.polychat.polychatbe.blockList.command.application.dto.BlockUserDTO;
 import com.polychat.polychatbe.blockList.command.application.service.BlockListAppService;
-import com.polychat.polychatbe.blockList.command.domain.model.BlockList;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class BlockListController {
@@ -30,10 +31,13 @@ public class BlockListController {
     @PostMapping(value = "/api/block", produces = "application/json; charset=UTF-8")
     //Todo : 로그인 유저 id 받기 -> currentUser
     public ResponseEntity<String> blockUser(@RequestBody Long blockedUserId, Long currentUser) {
+        if (blockedUserId.longValue() == currentUser.longValue()) {
+            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).body("뜨거운 티 맛좀 볼래?");
+        }
+
         try {
             blockListAppService.blockUser(currentUser, blockedUserId);
         }catch (IllegalArgumentException e) {
-            System.out.println("여기서 예외 처리 해야 함");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -51,8 +55,8 @@ public class BlockListController {
     @PostMapping(value = "/api/unblock", produces = "application/json; charset=UTF-8")
     //Todo : 로그인 유저 id 받기 -> currentUser
     public ResponseEntity<String> unblockUser(@RequestBody Long blockedUserId, Long currentUser) {
-        BlockList blockList =  blockListAppService.getBlockById(currentUser, blockedUserId);
-        if (blockList == null) {
+        BlockUserDTO blockUserDTO =  blockListAppService.getBlockById(currentUser, blockedUserId);
+        if (blockUserDTO == null) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("블락 되지 않은 유저");
         }
         try {
@@ -63,4 +67,14 @@ public class BlockListController {
         return ResponseEntity.status(HttpStatus.OK).body("Unblocked user: " + blockedUserId);
     }
 
+
+    @Operation(summary = "모든 블락 리스트 호출", description = "관리자 대쉬보드용 리스트 호출")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공적으로 불러왔습니다.")
+    })
+    @GetMapping(value = "/admin/bloccklist", produces = "application/json; charset=UTF-8")
+    public ResponseEntity<List<BlockUserDTO>> blockListAdmin() {
+        List<BlockUserDTO> blockList = blockListAppService.getAllBlockLists();
+        return ResponseEntity.status(HttpStatus.OK).body(blockList);
+    }
 }

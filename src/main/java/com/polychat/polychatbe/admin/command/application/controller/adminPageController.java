@@ -1,5 +1,6 @@
 package com.polychat.polychatbe.admin.command.application.controller;
 
+import com.polychat.polychatbe.blockList.command.application.dto.BlockUserDTO;
 import com.polychat.polychatbe.blockList.command.application.service.BlockListAppService;
 import com.polychat.polychatbe.blockList.command.domain.model.BlockList;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,8 +36,8 @@ public class adminPageController {
             @ApiResponse(responseCode = "500", description = "서버 에러")
     })
     @GetMapping(value = "/admin/blockuser", produces = "application/json; charset=UTF-8")
-    public ResponseEntity adminBlockUser() {
-        List<BlockList> blockLists = blockListAppService.getAllBlockLists();
+    public ResponseEntity<List<BlockUserDTO>> adminBlockUser() {
+        List<BlockUserDTO> blockLists = blockListAppService.getAllBlockLists();
         System.out.println(blockLists);
         return ResponseEntity.ok(blockLists);
     }

@@ -20,21 +20,15 @@ public class BlockListDomainService {
 
 
     //create
-    public String addToBlockList(Long userId, Long blockedUserId) throws IllegalArgumentException{
-        // 없으면 저장
-        if (this.findByUserIdAndBlockedUserId(userId, blockedUserId) == null) {
-            System.out.println(blockedUserId + " : 블락되어 있지 않습니다");
-            blockListRepository.save(new BlockList(userId, blockedUserId, LocalDateTime.now()));
-            blockListRepository.flush();
-            return "Success";
-        }else {
-            System.out.println("이 유저는 이미 블락 되어 있습니다.");
-            throw new IllegalArgumentException("이 유저는 이미 블락 되어 있습니다.");
-//            return null;
-        }
+//    @Transactional
+    public void addToBlockList(Long userId, Long blockedUserId) throws IllegalArgumentException{
+        blockListRepository.save(new BlockList(userId, blockedUserId, LocalDateTime.now()));
+        blockListRepository.flush();
+        System.out.println(blockListRepository.findAll());
     }
 
     //read
+    @Deprecated
     public List<BlockList> findAllBlockList() {
         return blockListRepository.findAll();
     }
@@ -46,6 +40,7 @@ public class BlockListDomainService {
     }
 
     //단일 검색 : 유저 id
+    @Deprecated
     public BlockList findByUserIdAndBlockedUserId(Long userId, Long blockedUserId) {
         System.out.println("userId : " + userId);
         System.out.println("blockedUserId : " + blockedUserId);
