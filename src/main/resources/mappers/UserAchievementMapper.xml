@@ -11,7 +11,7 @@
 
     <resultMap id="oneUserAchievementMap" type="com.polychat.polychatbe.userAchievement.query.dto.OneUserAchievementDTO">
         <result property="userNo" column="user_no"/>
-        <collection property="achievement" javaType="java.util.ArrayList" ofType="com.polychat.polychatbe.achievement.query.dto.AchievementResponseDTO">
+        <collection property="achievementList" javaType="java.util.ArrayList" ofType="com.polychat.polychatbe.achievement.query.dto.AchievementResponseDTO">
             <id property="achievementId" column="ACHIEVEMENT_ID"/>
             <result property = "achievementName" column="ACHIEVEMENT_NAME"/>
             <result property = "achievementDescription" column="ACHIEVEMENT_DESCRIPTION"/>
@@ -20,28 +20,31 @@
         </collection>
     </resultMap>
 
-    <select id="findUserAchievementById" resultMap="userAchievement" parameterType="_long">
+    <select id="findUserAchievementById" resultMap="userAchievementMap" parameterType="_long">
         SELECT
-                ID
+                USER_ACHIEVEMENT_ID
              ,  ACHIEVEMENT_ID
              ,  USER_ID
           FROM
                 TBL_USER
          WHERE
-                ID=#{id}
+                USER_ACHIEVEMENT_ID=#{id}
     </select>
 
-    <select id="findOneUserAchievements" resultMap="userAchievementMap" parameterType="_long">
+    <select id="findOneUserAchievements" resultMap="oneUserAchievementMap" parameterType="_long">
         SELECT
-                A.ID
+                A.USER_ACHIEVEMENT_ID
 <!--             ,  A.user_id-->
              ,  A.USER_NO
              ,  B.ACHIEVEMENT_ID
              ,  B.ACHIEVEMENT_DESCRIPTION
+             ,  B.ACHIEVEMENT_CONDITION
+             ,  B.ACHIEVEMENT_NAME
+             ,  B.ACHIEVEMENT_ICON
           FROM
                 (
                  SELECT
-                         ID
+                         USER_ACHIEVEMENT_ID
                       ,  USER_NO
                       ,  ACHIEVEMENT_ID
                    FROM
@@ -57,14 +60,12 @@
                 B.IS_ACTIVE='Y'
     </select>
 
-    <select id="findAllUserAchievements" resultType="long" parameterType="string">
+    <select id="findAllUserAchievements" resultMap="userAchievementMap" parameterType="_long">
         SELECT
-                ID
+                USER_ACHIEVEMENT_ID
              ,  ACHIEVEMENT_ID
              ,  USER_ID
           FROM
                 TBL_USER
-         WHERE
-                ID=#{id}
     </select>
 </mapper>
