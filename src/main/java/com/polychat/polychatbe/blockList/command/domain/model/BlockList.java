@@ -28,9 +28,9 @@ public class BlockList {
     public BlockList() {
     }
 
-    public BlockList(Long blockedUserId, Long userId, LocalDateTime createdAt) {
-        this.blockedUserId = blockedUserId;
+    public BlockList(Long userId, Long blockedUserId, LocalDateTime createdAt) {
         this.userId = userId;
+        this.blockedUserId = blockedUserId;
         this.createdAt = createdAt;
     }
 
