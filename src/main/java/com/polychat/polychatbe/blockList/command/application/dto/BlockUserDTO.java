@@ -15,7 +15,7 @@ public class BlockUserDTO {
     private Long id;
     private Long userId;
     private Long blockedUserId;
-    private LocalDateTime createdAt;
+    private String createdAt;
 
     @Override
     public String toString() {

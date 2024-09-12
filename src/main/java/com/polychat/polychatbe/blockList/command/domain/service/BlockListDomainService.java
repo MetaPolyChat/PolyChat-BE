@@ -23,6 +23,7 @@ public class BlockListDomainService {
 //    @Transactional
     public void addToBlockList(Long userId, Long blockedUserId) throws IllegalArgumentException{
         blockListRepository.save(new BlockList(userId, blockedUserId, LocalDateTime.now()));
+
         blockListRepository.flush();
         System.out.println(blockListRepository.findAll());
     }
