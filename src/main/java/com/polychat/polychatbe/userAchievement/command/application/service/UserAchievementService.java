@@ -27,8 +27,8 @@ public class UserAchievementService {
 
     @Transactional
     public void modifyOneUserAchievement(UserAchievementModifyDTO newUserAchievement) {
-        UserAchievement userAchievement = userAchievementRepository.findByUserIdAndAchievementId(
-                newUserAchievement.getUserId(), newUserAchievement.getBeforeAchievementId());
+        UserAchievement userAchievement = userAchievementRepository.findByUserNoAndAchievementId(
+                newUserAchievement.getUserNo(), newUserAchievement.getBeforeAchievementId());
 
         userAchievement.setAchievementId(newUserAchievement.getAfterAchievementId());
     }

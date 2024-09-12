@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserAchievementModifyDTO {
-    private long userId;
+    private long userNo;
     private long beforeAchievementId;
     private long afterAchievementId;
 }

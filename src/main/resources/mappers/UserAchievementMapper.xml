@@ -2,16 +2,16 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.polychat.polychatbe.userAchievement.query.dto">
-    <resultMap id="userAchievementMap" type="UserInterestDTO">
+<mapper namespace="com.polychat.polychatbe.userAchievement.query.repository.UserAchievementSearchRepository">
+    <resultMap id="userAchievementMap" type="com.polychat.polychatbe.userAchievement.query.dto.UserAchievementResponseDTO">
         <id property="userAchievementId" column="user_achievement_id"/>
         <result property="userNo" column="user_no"/>
         <result property="achievementId" column="achievement_id"/>
     </resultMap>
 
-    <resultMap id="oneUserAchievementMap" type="OneUserInterestDTO">
+    <resultMap id="oneUserAchievementMap" type="com.polychat.polychatbe.userAchievement.query.dto.OneUserAchievementDTO">
         <result property="userNo" column="user_no"/>
-        <collection property="achievement" ofType="com.polychat.polychatbe.achievement.query.dto.AchievementResponseDTO">
+        <collection property="achievement" javaType="java.util.ArrayList" ofType="com.polychat.polychatbe.achievement.query.dto.AchievementResponseDTO">
             <id property="achievementId" column="ACHIEVEMENT_ID"/>
             <result property = "achievementName" column="ACHIEVEMENT_NAME"/>
             <result property = "achievementDescription" column="ACHIEVEMENT_DESCRIPTION"/>
@@ -20,7 +20,7 @@
         </collection>
     </resultMap>
 
-    <select id="findUserAchievementById" resultMap="userAchievement" parameterType="long">
+    <select id="findUserAchievementById" resultMap="userAchievement" parameterType="_long">
         SELECT
                 ID
              ,  ACHIEVEMENT_ID
