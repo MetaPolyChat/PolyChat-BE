@@ -4,6 +4,7 @@ import com.polychat.polychatbe.blockList.command.application.dto.BlockUserDTO;
 import com.polychat.polychatbe.blockList.command.domain.model.BlockList;
 import com.polychat.polychatbe.blockList.command.domain.service.BlockListDomainService;
 import com.polychat.polychatbe.blockList.query.service.BlockListQueryService;
+import com.polychat.polychatbe.serverTools.PolyTime;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +24,13 @@ public class BlockListAppService {
     }
 
     public List<BlockUserDTO> getAllBlockLists() {
-        return blockListQueryService.findAllBlockList();
+        List<BlockUserDTO> blockUserDTO = blockListQueryService.findAllBlockList();
+        blockUserDTO.forEach(
+                dto -> {
+                    dto.setCreatedAt(new PolyTime(dto.getCreatedAt()).get());
+                }
+        );
+        return blockUserDTO;
     }
 
     public BlockUserDTO getBlockById(Long userId, Long blockedUserId) {
