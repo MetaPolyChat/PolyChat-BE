@@ -1,6 +1,6 @@
 package com.polychat.polychatbe.userAchievement.query.service;
 
-import com.polychat.polychatbe.userAchievement.query.dto.OneUserAchievementInfoDTO;
+import com.polychat.polychatbe.userAchievement.query.dto.OneUserAchievementDTO;
 import com.polychat.polychatbe.userAchievement.query.dto.UserAchievementResponseDTO;
 import com.polychat.polychatbe.userAchievement.query.repository.UserAchievementSearchRepository;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class UserAchievementSearchService {
         return userAchievementSearchRepository.findUserAchievementById(id);
     }
 
-    public OneUserAchievementInfoDTO findOneUserAchievements(long userNo){
+    public OneUserAchievementDTO findOneUserAchievements(long userNo){
         return userAchievementSearchRepository.findOneUserAchievements(userNo);
     }
 

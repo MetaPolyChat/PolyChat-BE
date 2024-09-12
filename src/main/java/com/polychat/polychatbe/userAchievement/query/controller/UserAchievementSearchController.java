@@ -1,11 +1,6 @@
 package com.polychat.polychatbe.userAchievement.query.controller;
 
-import com.polychat.polychatbe.announcement.command.application.dto.AnnounceAddRequest;
-import com.polychat.polychatbe.announcement.query.dto.AnnouncementResponseDTO;
-import com.polychat.polychatbe.common.SearchCriteriaInfo;
-import com.polychat.polychatbe.userAchievement.command.application.service.UserAchievementService;
-import com.polychat.polychatbe.userAchievement.query.dto.OneUserAchievementInfoDTO;
-import com.polychat.polychatbe.userAchievement.query.dto.UserAchievementResponseDTO;
+import com.polychat.polychatbe.userAchievement.query.dto.OneUserAchievementDTO;
 import com.polychat.polychatbe.userAchievement.query.service.UserAchievementSearchService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpHeaders;
@@ -15,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 public class UserAchievementSearchController {
 
@@ -27,9 +21,9 @@ public class UserAchievementSearchController {
 
     @Operation(summary = "특정 유저 업적 목록 조회", description = "지정한 유저의 업적 목록을 조회합니다.")
     @GetMapping("userAchievement")
-    public ResponseEntity<OneUserAchievementInfoDTO> getAnnouncementList(@RequestParam long userId) {
+    public ResponseEntity<OneUserAchievementDTO> getAnnouncementList(@RequestParam long userId) {
 
-        OneUserAchievementInfoDTO oneUserAchievement = userAchievementSearchService.findOneUserAchievements(userId);
+        OneUserAchievementDTO oneUserAchievement = userAchievementSearchService.findOneUserAchievements(userId);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));

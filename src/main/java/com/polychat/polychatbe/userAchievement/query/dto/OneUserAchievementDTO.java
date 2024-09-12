@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OneUserAchievementInfoDTO {
+public class OneUserAchievementDTO {
     private long userNo;
     private List<AchievementResponseDTO> achievementList;
 
