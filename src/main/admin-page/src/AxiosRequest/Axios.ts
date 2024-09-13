@@ -36,3 +36,11 @@ export const LoginAxios = (loginData: { id: string, password: string }) => {
         withCredentials: true
     });
 };
+
+export const getAnnouncement = async () => {
+    const response = await axios.get('http://localhost:8000/announcement', {
+        headers: { 'Content-Type': 'application/json' }
+    });
+
+    return response;
+};
