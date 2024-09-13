@@ -42,6 +42,7 @@ const Layout: React.FC = () => {
                     <ul>
                         <li><Link to="/home">대쉬보드</Link></li>
                         <li><Link to="/account">유저관리</Link></li>
+                        <li><Link to="/announcement">공지사항</Link></li>
                     </ul>
                 </Sidebar>
                 <MainContent>
