@@ -8,14 +8,19 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 //@RequestMapping("/api/v1")
-public class AnnounceController {
+public class AnnouncementController {
 
     private AnnouncementService announcementService;
+
+    public AnnouncementController(AnnouncementService announcementService) {
+        this.announcementService = announcementService;
+    }
 
     @Operation(summary = "공지사항 등록", description = "공지사항을 등록합니다.")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/announcement")
     public void addAnnouncement(AnnounceAddRequest announceAddRequest){
+        System.out.println("announceAddRequest = " + announceAddRequest);
         announcementService.addAnnouncement(announceAddRequest);
     }
 
