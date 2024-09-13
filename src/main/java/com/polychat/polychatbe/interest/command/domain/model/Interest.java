@@ -11,7 +11,7 @@ public class Interest {
     private Long interestNo;
 
 
-//    @Column(name="INTEREST_NAME")
+    @Column(name="INTEREST_NAME", nullable = false)
     private String interestName;
 
     public Interest() {}
