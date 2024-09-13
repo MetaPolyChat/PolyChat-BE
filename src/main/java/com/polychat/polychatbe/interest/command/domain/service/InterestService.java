@@ -24,8 +24,10 @@ public class InterestService {
 
 
     @Transactional  // 관심사 종류 등록
-    public void registInterest(String InterestName) {   // 유효한 문자열인지 검증 필요
-        interestRepository.save(new Interest(InterestName));
+    public void registInterest(String interestName) {   // 유효한 문자열인지 검증 필요
+        if (interestRepository.findByInterestName(interestName) == null) {
+            interestRepository.save(new Interest(interestName));
+        }
     }
 
     @Transactional  // 관심사 종류 삭제
@@ -43,7 +45,9 @@ public class InterestService {
     @Transactional
     public void updateInterest(String interestName) {
         Interest interest = interestRepository.findByInterestName(interestName);
-        interest.updateInterest(interest);
-        interestRepository.save(interest);
+        if (interest != null) {
+            interest.updateInterest(interest);
+            interestRepository.save(interest);
+        }
     }
 }
