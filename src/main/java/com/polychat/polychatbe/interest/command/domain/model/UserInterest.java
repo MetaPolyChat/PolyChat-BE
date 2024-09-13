@@ -11,10 +11,10 @@ public class UserInterest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long refInterestNo;
 
-    @Column(name = "USER_NO")
+    @Column(name = "USER_NO", nullable = false)
     private Long userNo;
 
-    @Column(name = "INTEREST_NO")
+    @Column(name = "INTEREST_NO", nullable = false)
     private Long interestNo;
 
     public UserInterest() {}
