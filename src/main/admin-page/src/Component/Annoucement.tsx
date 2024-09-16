@@ -40,26 +40,27 @@ const Announcement: React.FC = () => {
     return (
             <>
                 <h2> 공지사항 내용입니다 </h2>
-                <table>
+                <table className="min-w-full bg-white border border-gray-300">
                     <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>제목</th>
-                        <th>날짜</th>
-                    </tr>
+                        <tr className="bg-gray-200">
+                        <th className="py-2 px-4 border-b border-gray-300">번호</th>
+                        <th className="py-2 px-4 border-b border-gray-300">제목</th>
+                        <th className="py-2 px-4 border-b border-gray-300">날짜</th>
+                        </tr>
                     </thead>
                     <tbody>
                     {
                     announcement.map((item:AnnouncementInfo, index) => (
-                        <tr key={index}>
-                            <td>
+                        <tr className="hover:bg-gray-100" key={index}>
+                            <td className="py-2 px-4 border-b border-gray-300 text-center">
                                 {item.announcementId}
                             </td>
-                            <td>
+                            <td className="py-2 px-4 border-b border-gray-300">
                                 {item.announcementTitle}
                             </td>
-                            <td>
-                                {String(item.uploadTime).substring(0,12)}
+                            <td className="py-2 px-4 border-b border-gray-300 text-center">
+                                {/* {String(item.uploadTime).substring(0,12)} */}
+                                {item.uploadTime}
                             </td>
                         </tr>
                     ))}

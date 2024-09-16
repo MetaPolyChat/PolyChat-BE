@@ -1,17 +1,18 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import styled from "styled-components";
+import Sidebar from "./Sidebar";
 
 const LayoutContainer = styled.div`
   display: flex;
 `;
 
-const Sidebar = styled.nav`
-  width: 250px;
-  background-color: #f5f5f5;
-  padding: 1rem;
-  height: 100vh;
-`;
+// const Sidebar = styled.nav`
+//   width: 250px;
+//   background-color: #f5f5f5;
+//   padding: 1rem;
+//   height: 100vh;
+// `;
 
 const MainContent = styled.main`
   flex-grow: 1;
@@ -38,13 +39,7 @@ const Layout: React.FC = () => {
                 </nav>
             </Header>
             <LayoutContainer>
-                <Sidebar>
-                    <ul>
-                        <li><Link to="/home">대쉬보드</Link></li>
-                        <li><Link to="/account">유저관리</Link></li>
-                        <li><Link to="/announcement">공지사항</Link></li>
-                    </ul>
-                </Sidebar>
+                <Sidebar/>
                 <MainContent>
                     <Outlet />
                 </MainContent>

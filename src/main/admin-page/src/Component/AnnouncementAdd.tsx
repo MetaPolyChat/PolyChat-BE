@@ -18,14 +18,14 @@ const AnnouncementAdd: React.FC = () => {
     return (
             <>
                 <h2>공지사항 추가</h2>
-                <form method="post" action="http://localhost:8000/announcement">
-                    <label>제목2</label>
-                    <input name="title" type="text"/>
-                    <label>내용</label>
-                    <input name="content" type="text"/>
+                <form className="min-w-80 w-3/5 flex flex-col py-2" method="post" action="http://localhost:8000/announcement">
+                    <label>제목</label>
+                    <input className="rounded-md border my-2" name="title" type="text"/>
                     <label>보내는 사람 id</label>
-                    <input name=" uploaderId" type="text"/>
-                    <button>제출</button>
+                    <input className="rounded-md border my-2" name=" uploaderNo" type="text"/>
+                    <label>내용</label>
+                    <input className="rounded-md border h-48 " name="content" type="text"/>
+                    <button className="bg-sky-500 rounded-md border w-1/2 self-center my-2">제출</button>
                 </form>
                 <Link to="/announcement">공지사항 목록</Link>
             </>

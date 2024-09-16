@@ -1,0 +1,8 @@
+/* Sidebar.module.css */
+.sidebar {
+    @apply w-64 bg-gray-100 p-4 h-screen;
+  }
+  
+  .menuItem {
+    @apply block py-2 px-4 rounded-lg hover:bg-gray-200 hover:text-gray-900 transition-all mb-2;
+  }
