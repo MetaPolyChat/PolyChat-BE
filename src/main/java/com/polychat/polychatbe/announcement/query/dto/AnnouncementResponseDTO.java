@@ -1,5 +1,6 @@
 package com.polychat.polychatbe.announcement.query.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.polychat.polychatbe.announcement.command.domain.aggregate.Announcement;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,9 @@ public class AnnouncementResponseDTO {
     private long announcementId;
     private String announcementTitle;
     private String announcementContent;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime uploadTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime lastUpdatedTime;
     private long uploaderNo;
     private String uploaderName;

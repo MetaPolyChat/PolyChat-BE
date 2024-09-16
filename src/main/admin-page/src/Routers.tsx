@@ -5,6 +5,7 @@ import HomePage from "./Component/HomePage";
 import AccountPage from "./Component/AccoutPage";
 import Announcement from "./Component/Annoucement";
 import AnnouncementAdd from "./Component/AnnouncementAdd";
+import AnnouncementDetail from "./Component/AnnouncementDetail";
 
 export const Routers = () => {
     return (
@@ -16,6 +17,7 @@ export const Routers = () => {
                 <Route path="/announcement">
                     <Route index element={<Announcement/>}/>
                     <Route path="add" element={<AnnouncementAdd/>}/>
+                    <Route path=":announcementId" element={<AnnouncementDetail/>}/>
                 </Route>
             </Route>
         </Routes>
