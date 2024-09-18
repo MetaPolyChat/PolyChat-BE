@@ -1,4 +1,4 @@
-package com.polychat.polychatbe.user.command.application.dto;
+package com.polychat.polychatbe.user.command.domain.model;
 
 public enum Status {
     ACTIVATED,

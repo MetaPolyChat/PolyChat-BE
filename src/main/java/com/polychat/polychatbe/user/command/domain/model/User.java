@@ -1,13 +1,12 @@
 package com.polychat.polychatbe.user.command.domain.model;
 
-import com.polychat.polychatbe.user.command.application.dto.Authority;
-import com.polychat.polychatbe.user.command.application.dto.LoginType;
-import com.polychat.polychatbe.user.command.application.dto.Status;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name="TBL_USER")
@@ -27,6 +26,9 @@ public class User {
     @Column(name="PASSWORD", nullable = false)
     private String password;
 
+    @Column(length = 100, nullable = false, unique = true)
+    private String email;
+
     @Column(name="LOGIN_TYPE", nullable = false)
     @Enumerated(value = EnumType.STRING)
     @ColumnDefault("'NONE'")
@@ -43,41 +45,14 @@ public class User {
     private Status status;
 
 
-    public User(String userId, String userName, String password, LoginType loginType, Authority authority, Status status) {
+    public User(String userId, String userName, String password, LoginType loginType, Authority authority, Status status, String email) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
         this.loginType = loginType;
         this.authority = authority;
         this.status = status;
-    }
-
-    public Long getUserNo() {
-        return userNo;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public LoginType getLoginType() {
-        return loginType;
-    }
-
-    public Authority getAuthority() {
-        return authority;
-    }
-
-    public Status getStatus() {
-        return status;
+        this.email = email;
     }
 
     @Override
@@ -90,6 +65,7 @@ public class User {
                 ", loginType=" + loginType +
                 ", authority=" + authority +
                 ", status=" + status +
+                ", email='" + email + '\'' +
                 '}';
     }
 }
