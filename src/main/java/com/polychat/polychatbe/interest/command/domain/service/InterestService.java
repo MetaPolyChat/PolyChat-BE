@@ -41,13 +41,13 @@ public class InterestService {
         userInterestRepository.deleteAll(userInterests);    // 해당 관심사를 가지는 모든 유저의 관심사와의 관계 제거
     }
 
-    // 관심사 업데이트
-    @Transactional
-    public void updateInterest(String interestName) {
-        Interest interest = interestRepository.findByInterestName(interestName);
-        if (interest != null) {
-            interest.updateInterest(interest);
-            interestRepository.save(interest);
-        }
-    }
+    // 관심사 업데이트 수정 필요
+//    @Transactional
+//    public void updateInterest(String targetInterestName, String interestName) {
+//        Interest interest = interestRepository.findByInterestName(targetInterestName);
+//        if (interest != null) {
+//            interest.updateInterest(interest);
+//            interestRepository.save(interest);
+//        }
+//    }
 }

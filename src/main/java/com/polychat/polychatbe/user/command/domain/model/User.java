@@ -2,6 +2,7 @@ package com.polychat.polychatbe.user.command.domain.model;
 
 import com.polychat.polychatbe.user.command.application.dto.Authority;
 import com.polychat.polychatbe.user.command.application.dto.LoginType;
+import com.polychat.polychatbe.user.command.application.dto.Status;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -36,12 +37,19 @@ public class User {
     @ColumnDefault("'USER'")
     private Authority authority;
 
-    public User(String userId, String userName, String password, LoginType loginType, Authority authority) {
+    @Column(name="STATUS")
+    @Enumerated(value = EnumType.STRING)
+    @ColumnDefault("'ACTIVATED'")
+    private Status status;
+
+
+    public User(String userId, String userName, String password, LoginType loginType, Authority authority, Status status) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
         this.loginType = loginType;
         this.authority = authority;
+        this.status = status;
     }
 
     public Long getUserNo() {
@@ -68,6 +76,10 @@ public class User {
         return authority;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -77,6 +89,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", loginType=" + loginType +
                 ", authority=" + authority +
+                ", status=" + status +
                 '}';
     }
 }
