@@ -3,11 +3,13 @@ package com.polychat.polychatbe.announcement.command.application.controller;
 import com.polychat.polychatbe.announcement.command.application.dto.AnnounceAddRequest;
 import com.polychat.polychatbe.announcement.command.application.service.AnnouncementService;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 //@RequestMapping("/api/v1")
+@Slf4j
 public class AnnouncementController {
 
     private AnnouncementService announcementService;
@@ -20,7 +22,9 @@ public class AnnouncementController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/announcement")
     public void addAnnouncement(AnnounceAddRequest announceAddRequest){
-        System.out.println("announceAddRequest = " + announceAddRequest);
+        log.info("Creating new announcement. Title:{}, UploaderId:{}",
+                announceAddRequest.getTitle(), announceAddRequest.getUploaderId());
+        //System.out.println("announceAddRequest = " + announceAddRequest);
         announcementService.addAnnouncement(announceAddRequest);
     }
 
@@ -29,14 +33,19 @@ public class AnnouncementController {
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping("/announcement/{id}")
     public void updateAnnouncement(@PathVariable long id, AnnounceAddRequest announceAddRequest) {
+        log.info("Updating announcement. AnnouncementId:{} Title:{} UploaderId:{}",
+                announceAddRequest.getAnnouncementId(), announceAddRequest.getTitle(),
+                announceAddRequest.getUploaderId());
         announceAddRequest.setAnnouncementId(id);
         announcementService.updateAnnouncement(announceAddRequest);
+        log.info("Update Successful.");
     }
 
     @Operation(summary = "공지사항 삭제", description = "공지사항을 삭제합니다.")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/announcement/{id}")
     public void deleteAnnouncement(@PathVariable long id, @RequestBody long userNo){
+        log.info("Deleting announcement. AnnouncementId: {}", id);
         announcementService.deleteAnnouncement(id, userNo);
     }
 

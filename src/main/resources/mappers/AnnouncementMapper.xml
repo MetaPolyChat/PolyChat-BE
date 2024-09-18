@@ -9,7 +9,7 @@
         <id property="announcementId" column="announcement_id"/>
         <result property="announcementTitle" column="announcement_title"/>
         <result property="announcementContent" column="announcement_content"/>
-        <result property="uploaderNo" column="uploader_no"/>
+        <result property="uploaderNo" column="uploader_id"/>
         <result property="uploaderName" column="uploader_name"/>
         <result property="uploadTime" column="upload_time"/>
         <result property="lastUpdatedTime" column="last_updated_time"/>
