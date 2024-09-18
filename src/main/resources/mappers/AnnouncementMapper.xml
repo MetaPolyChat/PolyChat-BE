@@ -16,7 +16,8 @@
 
     </resultMap>
 
-    <select id="findAllAnnouncement" resultMap="announcementMap">
+    <select id="findAllAnnouncement" resultMap="announcementMap"
+            parameterType="com.polychat.polychatbe.common.SearchCriteriaInfo">
         SELECT  ANNOUNCEMENT_ID
               , ANNOUNCEMENT_TITLE
               , ANNOUNCEMENT_CONTENT
@@ -30,6 +31,13 @@
                 TBL_USER B
             ON
                 A.UPLOADER_ID=B.USER_NO
+        <if test="limit!=null">
+            limit #{limit}
+        </if>
+        <if test="offset!=null">
+            offset #{offset}
+        </if>
+
     </select>
 
     <select id="findAnnouncementById" resultMap="announcementMap">
