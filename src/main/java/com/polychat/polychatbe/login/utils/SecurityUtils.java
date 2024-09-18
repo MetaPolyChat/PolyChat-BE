@@ -1,7 +1,8 @@
 package com.polychat.polychatbe.login.utils;
 
-import com.backend.voicetuner.login._core.error.ApplicationException;
-import com.backend.voicetuner.login._core.error.ErrorCode;
+
+import com.polychat.polychatbe.login.error.ApplicationException;
+import com.polychat.polychatbe.login.error.ErrorCode;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class SecurityUtils {
