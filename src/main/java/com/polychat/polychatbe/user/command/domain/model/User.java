@@ -2,6 +2,7 @@ package com.polychat.polychatbe.user.command.domain.model;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -45,6 +46,7 @@ public class User {
     private Status status;
 
 
+    @Builder
     public User(String userId, String userName, String password, LoginType loginType, Authority authority, Status status, String email) {
         this.userId = userId;
         this.userName = userName;
