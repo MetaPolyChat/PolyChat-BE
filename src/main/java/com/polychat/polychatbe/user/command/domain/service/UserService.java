@@ -1,7 +1,10 @@
 package com.polychat.polychatbe.user.command.domain.service;
 
+import com.polychat.polychatbe.user.command.domain.model.User;
 import com.polychat.polychatbe.user.command.domain.repository.UserRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -12,4 +15,12 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public Optional<User> findUserByEmail(String email) {
+
+        return userRepository.findUserByEmail(email);
+    }
+
+    public User findUserByUserId(String UserId) {
+        return userRepository.findUserByUserId(UserId).orElse(null);
+    }
 }
