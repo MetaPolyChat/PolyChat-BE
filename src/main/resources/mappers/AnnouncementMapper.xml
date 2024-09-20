@@ -31,14 +31,49 @@
                 TBL_USER B
             ON
                 A.UPLOADER_ID=B.USER_NO
+        <if test="orderCriteria == 'announcementId' and orderMethod != null">
+            ORDER BY ANNOUNCEMENT_ID ${orderMethod}
+        </if>
+        <if test="orderCriteria == 'announcementTitle' and orderMethod != null">
+            ORDER BY ANNOUNCEMENT_TITLE ${orderMethod}
+        </if>
+        <if test="orderCriteria == 'uploadTime' and orderMethod != null">
+            ORDER BY UPLOAD_TIME ${orderMethod}
+        </if>
         <if test="limit!=null">
             limit #{limit}
         </if>
         <if test="offset!=null">
             offset #{offset}
         </if>
-
     </select>
+
+<!--    <select id="findAnnouncementByCriteria" resultMap="announcementMap"-->
+<!--            parameterType="com.polychat.polychatbe.common.SearchCriteriaInfo">-->
+<!--        SELECT  ANNOUNCEMENT_ID-->
+<!--              , ANNOUNCEMENT_TITLE-->
+<!--              , ANNOUNCEMENT_CONTENT-->
+<!--              , A.UPLOADER_ID AS UPLOADER_ID-->
+<!--              , B.USER_NAME AS UPLOADER_NAME-->
+<!--              , UPLOAD_TIME-->
+<!--              , LAST_UPDATED_TIME-->
+<!--          FROM-->
+<!--                TBL_ANNOUNCEMENT A-->
+<!--          JOIN-->
+<!--                TBL_USER B-->
+<!--            ON-->
+<!--        A.UPLOADER_ID=B.USER_NO-->
+<!--        <if test="limit!=null">-->
+<!--            limit #{limit}-->
+<!--        </if>-->
+<!--        <if test="offset!=null">-->
+<!--            offset #{offset}-->
+<!--        </if>-->
+<!--        <if test="orderCriteria!=null and orderMethod!=null">-->
+<!--            ORDER BY #{orderCriteria} #{orderMethod}-->
+<!--        </if>-->
+
+<!--    </select>-->
 
     <select id="findAnnouncementById" resultMap="announcementMap">
         SELECT  ANNOUNCEMENT_ID
