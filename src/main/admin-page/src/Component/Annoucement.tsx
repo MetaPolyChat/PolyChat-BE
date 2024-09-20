@@ -18,6 +18,7 @@ const Announcement: React.FC = () => {
     const [announcement, setAnnouncement] = useState<AnnouncementInfo[]>([]);
     const [sortingColumn, setSortingColumn] = useState<string>('announcementId');
     const [sortingMethod, setSortingMethod] = useState<'ASC' | 'DESC'>('ASC');
+    const [page, setPage] = useState<number>(1);
 
     const handleSort = (column: string) => {
         if (sortingColumn === column) {
@@ -30,10 +31,23 @@ const Announcement: React.FC = () => {
         }
     };
 
+    const onPageChange = async (event: any)=>{
+        const newPage:number = event.selected +1;
+        console.log(`선택된 페이지: ${newPage}` )
+        setPage(newPage);
+        try {
+            console.log("페이지 전환 시도");
+            const announcementList = await getAnnouncement({ sortingColumn, sortingMethod}, newPage);
+            setAnnouncement(announcementList.data);
+        } catch (error) {
+            console.error("에러 발생:", error);
+        }
+    }
+
     useEffect(() => {
         async function fetchAnnouncements() {
             try {
-                const announcementList = await getAnnouncement({ sortingColumn, sortingMethod });
+                const announcementList = await getAnnouncement({ sortingColumn, sortingMethod }, page);
                 setAnnouncement(announcementList.data);
             } catch (error) {
                 console.error("에러 발생:", error);
@@ -92,7 +106,7 @@ const Announcement: React.FC = () => {
                 breakLabel="..."
                 nextLabel="next >"
                 nextClassName="bg-white border rounded px-3 py-0.5"
-                onPageChange={undefined}
+                onPageChange={onPageChange}
                 pageRangeDisplayed={3}
                 containerClassName="flex justify-center space-x-2 align-middle my-1"
                 pageClassName="bg-white border rounded size-8 text-center py-0.5"
