@@ -1,6 +1,7 @@
 package com.polychat.polychatbe.login.error;
 
-import com.backend.voicetuner.login._core.utils.ApiUtils;
+
+import com.polychat.polychatbe.login.utils.ApiUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

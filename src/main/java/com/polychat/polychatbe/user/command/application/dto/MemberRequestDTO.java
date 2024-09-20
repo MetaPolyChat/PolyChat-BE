@@ -1,4 +1,4 @@
-package com.polychat.polychatbe.login.dto;
+package com.polychat.polychatbe.user.command.application.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

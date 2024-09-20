@@ -45,9 +45,12 @@ public class User {
     @ColumnDefault("'ACTIVATED'")
     private Status status;
 
+    @Column(name = "PLANET", nullable = false)
+    private String planet;
+
 
     @Builder
-    public User(String userId, String userName, String password, LoginType loginType, Authority authority, Status status, String email) {
+    public User(String userId, String userName, String password, LoginType loginType, Authority authority, Status status, String email, String planet) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
@@ -55,6 +58,7 @@ public class User {
         this.authority = authority;
         this.status = status;
         this.email = email;
+        this.planet = planet;
     }
 
     @Override
@@ -64,10 +68,11 @@ public class User {
                 ", userId='" + userId + '\'' +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
                 ", loginType=" + loginType +
                 ", authority=" + authority +
                 ", status=" + status +
-                ", email='" + email + '\'' +
+                ", planet='" + planet + '\'' +
                 '}';
     }
 }

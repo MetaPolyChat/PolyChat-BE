@@ -18,7 +18,7 @@ public class UserRandomGenerateService {
     }
 
     public String generateGoogleUserID() {
-        rand.setSeed(System.currentTimeMillis());   // 시드는 최초 한번
+        rand.setSeed(System.currentTimeMillis());   // 시드는 id 생성시 최초 한번
         String result;
         do {
             result = "google-" + rand.nextInt(999999);
