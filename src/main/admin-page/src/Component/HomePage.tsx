@@ -20,8 +20,20 @@ const HomePage: React.FC = () => {
                 <div className="basis-1/4 border">02</div>
                 <div className="basis-1/2 border">03</div>
             </div>
-            <div>
-                <WeeklyVisitorsChart />
+            테스트
+            <div className="grid grid-cols-2 gap-4 border">
+                <div className="border ...">01</div>
+                <div className="border ...">02</div>
+                <div className="border ...">03</div>
+                <div className="border col-span-2 ...">04</div>
+                <div className="border ...">방문자 현황 그래프
+                    <WeeklyVisitorsChart />
+
+                </div>
+                <div className="border ...">일자별 요약
+                    <WeeklyVisitorsTable />
+                </div>
+                <div className="border col-span-2 ...">신고 접수</div>
             </div>
         </>
     );
@@ -50,6 +62,29 @@ const WeeklyVisitorsChart: React.FC = () => {
                 <Line type="monotone" dataKey="visitors" stroke="#8884d8" activeDot={{ r: 8 }} />
             </LineChart>
         </ResponsiveContainer>
+    );
+}
+
+const WeeklyVisitorsTable: React.FC = () => {
+    return (
+        <>
+            <table>
+                <thead>
+                    <tr>
+                        <th>일자</th>
+                        <th>가입자 수</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data.map(dayInfo => (
+                        <tr key={dayInfo.day}>
+                            <th>{dayInfo.day}</th>
+                            <th>{dayInfo.visitors}</th>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </>
     );
 }
 
