@@ -37,9 +37,10 @@ export const LoginAxios = (loginData: { id: string, password: string }) => {
     });
 };
 
-export const getAnnouncement = async ( params:undefined|null|{sortingColumn:string, sortingMethod: 'ASC' | 'DESC'}) => {
+export const getAnnouncement = async ( params:undefined|null|{sortingColumn:string, sortingMethod: 'ASC' | 'DESC'}, page:number=1) => {
     const response = await axios.get('http://localhost:8000/announcement', {
         params: {
+            pageNum:page,
             orderCriteria: params?.sortingColumn,
             orderMethod: params?.sortingMethod,
         },
