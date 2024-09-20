@@ -8,6 +8,8 @@ build/
 ### external API_KEY ###
 .env
 
+.DS_STORE
+
 ### STS ###
 .apt_generated
 .classpath
