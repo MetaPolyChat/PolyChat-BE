@@ -16,4 +16,5 @@ public interface AnnouncementSearchRepository {
 
     Optional<AnnouncementResponseDTO> findAnnouncementById(Long announcementId);
 
+    int countAll();
 }
