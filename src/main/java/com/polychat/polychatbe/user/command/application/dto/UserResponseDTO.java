@@ -1,10 +1,10 @@
-package com.polychat.polychatbe.login.dto;
+package com.polychat.polychatbe.user.command.application.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 
-public class MemberResponseDTO {
+public class UserResponseDTO {
 
     /** 토큰 발급
      * @param grantType
@@ -23,15 +23,11 @@ public class MemberResponseDTO {
     ) {
     }
 
-    /** 카카오 프로필
-     * @param nickname
+    /** 구글 OAuth2 프로필
      * @param email
-     * @param gender
      */
-    public record KakaoProfile(
-            String nickname,
-            String email,
-            String gender
+    public record GoogleProfile(
+            String email
     ){
     }
 

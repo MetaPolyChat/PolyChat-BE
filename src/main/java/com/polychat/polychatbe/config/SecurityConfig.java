@@ -1,6 +1,8 @@
 package com.polychat.polychatbe.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.polychat.polychatbe.login.error.ErrorCode;
+import com.polychat.polychatbe.login.jwt.JWTTokenFilter;
 import com.polychat.polychatbe.login.jwt.JWTTokenProvider;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
