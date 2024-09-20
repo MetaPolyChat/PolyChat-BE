@@ -16,6 +16,13 @@
 
     </resultMap>
 
+    <select id="countAll" resultType="_int">
+        SELECT
+                COUNT(*)
+          FROM
+                TBL_ANNOUNCEMENT
+    </select>
+
     <select id="findAllAnnouncement" resultMap="announcementMap"
             parameterType="com.polychat.polychatbe.common.SearchCriteriaInfo">
         SELECT  ANNOUNCEMENT_ID
@@ -27,7 +34,7 @@
               , LAST_UPDATED_TIME
           FROM
                 TBL_ANNOUNCEMENT A
-          JOIN
+          LEFT JOIN
                 TBL_USER B
             ON
                 A.UPLOADER_ID=B.USER_NO
