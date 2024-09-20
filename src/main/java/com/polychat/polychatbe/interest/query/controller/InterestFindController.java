@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/interest/find")
+@RequestMapping("/interest-find")
 public class InterestFindController {
 
     private final InterestFindService interestFindService;
@@ -20,7 +20,7 @@ public class InterestFindController {
     }
 
     @Operation(summary = "모든 관심사 출력", description = "DB에 저장된 모든 관심사를 출력합니다.")
-    @ApiResponses(value = {
+    @ApiResponses(value = { // Swagger 용
             @ApiResponse(responseCode = "200", description = "모든 관심사를 불러오는데 성공했습니다."),
             @ApiResponse(responseCode = "400", description = "관심사를 찾는데 실패했습니다.")
     })
