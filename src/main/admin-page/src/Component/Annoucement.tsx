@@ -1,6 +1,5 @@
 // HomePage.tsx
-import React from "react";
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getAnnouncement } from "../AxiosRequest/Axios";
 import { Link } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
@@ -16,70 +15,78 @@ interface AnnouncementInfo {
 }
 
 const Announcement: React.FC = () => {
+    const [announcement, setAnnouncement] = useState<AnnouncementInfo[]>([]);
+    const [sortingColumn, setSortingColumn] = useState<string>('announcementId');
+    const [sortingMethod, setSortingMethod] = useState<'ASC' | 'DESC'>('ASC');
 
-    const [announcement, setAnnouncement] = useState([]);
+    const handleSort = (column: string) => {
+        if (sortingColumn === column) {
+            // 정렬 순서를 'ASC'와 'DESC' 사이에서 토글
+            setSortingMethod(sortingMethod === 'ASC' ? 'DESC' : 'ASC');
+        } else {
+            // 새로운 정렬 열로 설정하고 정렬 순서를 'ASC'로 초기화
+            setSortingColumn(column);
+            setSortingMethod('ASC');
+        }
+    };
 
-    useEffect(
-        () => {
-            async function getAnnouncement3() {
-
-                try {
-                    const announcementList = await getAnnouncement();
-                    setAnnouncement(announcementList.data)
-                    //console.log(announcementList);
-                } catch (error) {
-                    console.error("에러남:", error);
-                }
+    useEffect(() => {
+        async function fetchAnnouncements() {
+            try {
+                const announcementList = await getAnnouncement({ sortingColumn, sortingMethod });
+                setAnnouncement(announcementList.data);
+            } catch (error) {
+                console.error("에러 발생:", error);
             }
-
-            getAnnouncement3();
-            //console.log(announcement);
-            //console.log(announcement);
-            //console.log(announcement);
-        }, []);
+        }
+        fetchAnnouncements();
+    }, [sortingColumn, sortingMethod]);
 
     return (
         <>
-            <h1 className="text-center my-3"> 공지사항 </h1>
+            <h1 className="text-center my-3">공지사항</h1>
             <table className="min-w-full bg-white border border-gray-300 my-2">
                 <thead>
                     <tr className="bg-gray-200">
-                        <th className="py-2 px-4 border-b border-gray-300">번호</th>
-                        <th className="py-2 px-4 border-b border-gray-300">제목</th>
-                        <th className="py-2 px-4 border-b border-gray-300">등록 날짜</th>
+                        <th
+                            className="py-2 px-4 border-b border-gray-300 cursor-pointer"
+                            onClick={() => handleSort('announcementId')}
+                        >
+                            번호 {sortingColumn === 'announcementId' && (sortingMethod === 'ASC' ? '▲' : '▼')}
+                        </th>
+                        <th
+                            className="py-2 px-4 border-b border-gray-300 cursor-pointer"
+                            onClick={() => handleSort('announcementTitle')}
+                        >
+                            제목 {sortingColumn === 'announcementTitle' && (sortingMethod === 'ASC' ? '▲' : '▼')}
+                        </th>
+                        <th
+                            className="py-2 px-4 border-b border-gray-300 cursor-pointer"
+                            onClick={() => handleSort('uploadTime')}
+                        >
+                            등록 날짜 {sortingColumn === 'uploadTime' && (sortingMethod === 'ASC' ? '▲' : '▼')}
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                        announcement.map((item: AnnouncementInfo, index) => (
-                            <tr className="hover:bg-gray-100" key={index}>
-                                <td className="py-2 px-4 border-b border-gray-300 text-center">
-                                    {item.announcementId}
-                                </td>
-                                <td className="py-2 px-4 border-b border-gray-300">
-                                    {item.announcementTitle}
-                                </td>
-                                <td className="py-2 px-4 border-b border-gray-300 text-center">
-                                    {/* {String(item.uploadTime).substring(0,12)} */}
-                                    {item.uploadTime}
-                                </td>
-                            </tr>
-                        ))}
+                    {announcement.map((item: AnnouncementInfo) => (
+                        <tr className="hover:bg-gray-100" key={item.announcementId}>
+                            <td className="py-2 px-4 border-b border-gray-300 text-center">
+                                {item.announcementId}
+                            </td>
+                            <td className="py-2 px-4 border-b border-gray-300">
+                                {item.announcementTitle}
+                            </td>
+                            <td className="py-2 px-4 border-b border-gray-300 text-center">
+                                {item.uploadTime}
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
             <div>
-                {/* Render your announcements here */}
-                {/* {
-            announcement.map((item, index) => (
-                <div key={index}>{index}:{item["announcementTitle"]}
-                <p>{item["announcementContent"]}</p>
-                <span>{item["uploadTime"]}</span>
-                </div> // Adjust according to your data structure
-            ))} */}
-
                 <Link to="add">공지사항 추가하기</Link>
             </div>
-            
             {/* 페이지네이션 */}
             <ReactPaginate
                 breakLabel="..."
@@ -96,7 +103,6 @@ const Announcement: React.FC = () => {
             />
         </>
     );
-
 };
 
 export default Announcement;
