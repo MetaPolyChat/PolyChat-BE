@@ -27,8 +27,8 @@ public class UserInterestService {
 
     @Transactional  // 유저의 관심사 등록
     public UserInterest registUserInterest(User user, Interest interest) {
-        UserInterest uInter = new UserInterest(user.getUserNo(), interest.getInterestNo());
-        if(userInterestRepository.findByUserNoAndInterestNo(user.getUserNo(), interest.getInterestNo()) == null) {
+        UserInterest uInter = new UserInterest(user.getUserId(), interest.getInterestNo());
+        if(userInterestRepository.findByUserNoAndInterestNo(user.getUserId(), interest.getInterestNo()) == null) {
             uInter = userInterestRepository.save(uInter);
             return uInter;
         }
@@ -39,7 +39,7 @@ public class UserInterestService {
     public void removeUserInterest(User user, Interest interest) {
         UserInterest userInterest = userInterestRepository
                 .findByUserNoAndInterestNo(
-                user.getUserNo(),
+                user.getUserId(),
                 interest.getInterestNo()
                 );
         if (userInterest != null) {
