@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "spring.security.oauth2.client.provider.kakao")
-public class KakaoProviderProperties {
+@ConfigurationProperties(prefix = "spring.security.oauth2.client.provider.google")
+public class GoogleProviderProperties {
     private String tokenUri;
     private String userInfoUri;
 }
