@@ -7,8 +7,9 @@ import jakarta.persistence.*;
 public class Interest {
 
     @Id
+    @Column(name="INTEREST_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long interestNo;
+    private Long interestId;
 
 
     @Column(name="INTEREST_NAME", nullable = false)
@@ -20,28 +21,18 @@ public class Interest {
         this.interestName = interestName;
     }
 
-    public Interest(Long interestNo, String interestName) {
-        this.interestNo = interestNo;
-        this.interestName = interestName;
-    }
-
-    public Long getInterestNo() {
-        return interestNo;
+    public Long getInterestId() {
+        return interestId;
     }
 
     public String getInterestName() {
         return interestName;
     }
 
-    public void updateInterest(Interest interest) {
-        this.interestNo = interest.getInterestNo();
-        this.interestName = interest.getInterestName();
-    }
-
     @Override
     public String toString() {
         return "Interest{" +
-                "interestId=" + interestNo +
+                "interestId=" + interestId +
                 ", interestName='" + interestName + '\'' +
                 '}';
     }
