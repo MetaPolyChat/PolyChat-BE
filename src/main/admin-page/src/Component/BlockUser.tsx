@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getBlockUser } from "../AxiosRequest/Axios";
+import { getBlockUser } from "../AxiosRequest/BlockInfoApi";
 
 interface BlockInfo {
     blockId: number;

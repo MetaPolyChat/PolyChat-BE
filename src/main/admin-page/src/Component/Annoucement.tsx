@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAnnouncement } from "../AxiosRequest/Axios";
+import { getAnnouncement } from "../AxiosRequest/AnnouncementApi";
 import { Link } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
 
