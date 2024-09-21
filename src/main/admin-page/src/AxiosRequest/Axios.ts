@@ -44,3 +44,11 @@ export const getAnnouncement = async () => {
 
     return response;
 };
+
+export const getAnnouncementById = async (announcementId:number) => {
+    const response = await axios.get(`http://localhost:8000/announcement/${announcementId}`, {
+        headers: { 'Content-Type': 'application/json' }
+    });
+
+    return response;
+};
