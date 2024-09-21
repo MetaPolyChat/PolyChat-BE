@@ -4,6 +4,7 @@ import com.polychat.polychatbe.announcement.query.dto.AnnouncementResponseDTO;
 import com.polychat.polychatbe.announcement.query.service.AnnouncementSearchService;
 import com.polychat.polychatbe.common.SearchCriteriaInfo;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,18 +27,20 @@ public class AnnouncementSearchController {
 
     @Operation(summary = "공지사항 전체 조회", description = "전체 공지사항을 조회합니다.")
     @GetMapping("announcement")
-    public ResponseEntity<List<AnnouncementResponseDTO>> getAnnouncementList(@ModelAttribute SearchCriteriaInfo searchCriteriaInfo) {
+    public ResponseEntity<List<AnnouncementResponseDTO>> getAnnouncementList(
+            @Valid @ModelAttribute SearchCriteriaInfo searchCriteriaInfo,
+            @RequestParam(required = false) String test) {
 
-        if (searchCriteriaInfo !=null) {
-            System.out.println(searchCriteriaInfo);
-        } else{
-            System.out.println("null임");
-        }
+        System.out.println(searchCriteriaInfo);
+        System.out.println(test);
+
+        //List<AnnouncementResponseDTO> announcementList = announcementSearchService.findAllAnnouncement();
+        List<AnnouncementResponseDTO> announcementList = announcementSearchService.findAnnouncementList(searchCriteriaInfo);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
 
-        return new ResponseEntity<>(announcementSearchService.findAllAnnouncement(), headers, HttpStatus.OK);
+        return new ResponseEntity<>(announcementList, headers, HttpStatus.OK);
 
     }
 
