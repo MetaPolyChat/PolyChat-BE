@@ -23,7 +23,7 @@ public class UserSocialLoginController {
 
     private final UserSocialLoginService userSocialLoginService;
 
-    // @Value 어노테이션을 사용하여 application.yml에서 client-id 값을 불러옵니다.
+    // @Value 어노테이션을 사용하여 application.yml 에서 client-id 값을 불러옵니다.
     @Value("${spring.security.oauth2.client.registration.google.clientId}")
     private String googleClientId;
 
