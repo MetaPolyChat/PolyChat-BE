@@ -1,31 +1,34 @@
 package com.polychat.polychatbe.user.command.domain.model;
 
-import com.polychat.polychatbe.user.command.application.dto.Authority;
-import com.polychat.polychatbe.user.command.application.dto.LoginType;
-import com.polychat.polychatbe.user.command.application.dto.Status;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name="TBL_USER")
 public class User {
 
     @Id
-    @Column(name="USER_NO")
+    @Column(name="USER_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userNo;
+    private Long userId;
 
-    @Column(name="USER_ID", nullable = false, unique = true)
-    private String userId;
+    @Column(name="EMAIL", nullable = false, unique = true)
+    private String email;
 
     @Column(name="USER_NAME", nullable = false)
     private String userName;
 
     @Column(name="PASSWORD", nullable = false)
     private String password;
+
+//    @Column(length = 100, nullable = false, unique = true)
+//    private String email;
 
     @Column(name="LOGIN_TYPE", nullable = false)
     @Enumerated(value = EnumType.STRING)
@@ -42,54 +45,34 @@ public class User {
     @ColumnDefault("'ACTIVATED'")
     private Status status;
 
+    @Column(name = "PLANET", nullable = false)
+    private String planet;
 
-    public User(String userId, String userName, String password, LoginType loginType, Authority authority, Status status) {
-        this.userId = userId;
+
+    @Builder
+    public User(/*String userId, */String userName, String password, LoginType loginType, Authority authority, Status status, String email, String planet) {
+//        this.userId = userId;
         this.userName = userName;
         this.password = password;
         this.loginType = loginType;
         this.authority = authority;
         this.status = status;
-    }
-
-    public Long getUserNo() {
-        return userNo;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public LoginType getLoginType() {
-        return loginType;
-    }
-
-    public Authority getAuthority() {
-        return authority;
-    }
-
-    public Status getStatus() {
-        return status;
+        this.email = email;
+        this.planet = planet;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "userNo=" + userNo +
-                ", userId='" + userId + '\'' +
+                "userNo=" + userId +
+//                ", userId='" + userId + '\'' +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
                 ", loginType=" + loginType +
                 ", authority=" + authority +
                 ", status=" + status +
+                ", planet='" + planet + '\'' +
                 '}';
     }
 }

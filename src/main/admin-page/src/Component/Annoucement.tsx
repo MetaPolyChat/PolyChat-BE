@@ -1,4 +1,3 @@
-// HomePage.tsx
 import React, { useState, useEffect } from 'react';
 import { getAnnouncement } from "../AxiosRequest/Axios";
 import { Link } from "react-router-dom";
@@ -31,13 +30,13 @@ const Announcement: React.FC = () => {
         }
     };
 
-    const onPageChange = async (event: any)=>{
-        const newPage:number = event.selected +1;
-        console.log(`선택된 페이지: ${newPage}` )
+    const onPageChange = async (event: any) => {
+        const newPage: number = event.selected + 1;
+        console.log(`선택된 페이지: ${newPage}`)
         setPage(newPage);
         try {
             console.log("페이지 전환 시도");
-            const announcementList = await getAnnouncement({ sortingColumn, sortingMethod}, newPage);
+            const announcementList = await getAnnouncement({ sortingColumn, sortingMethod }, newPage);
             setAnnouncement(announcementList.data);
         } catch (error) {
             console.error("에러 발생:", error);

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080";
+const API_URL = "http://localhost:8000";
 
 const request = axios.create({
     baseURL: API_URL
@@ -8,6 +8,7 @@ const request = axios.create({
 
 request.interceptors.request.use(
     config => {
+        console.log("인터셉터를 거침");
         return config;
     },
     error => {
@@ -18,7 +19,9 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
     response => {
-        return response.data;
+        console.log(`받아온것: ` + response);
+        return response;
+        //return response.data;
     },
     error => {
         console.error(error);
@@ -37,10 +40,10 @@ export const LoginAxios = (loginData: { id: string, password: string }) => {
     });
 };
 
-export const getAnnouncement = async ( params:undefined|null|{sortingColumn:string, sortingMethod: 'ASC' | 'DESC'}, page:number=1) => {
-    const response = await axios.get('http://localhost:8000/announcement', {
+export const getAnnouncement = async (params: undefined | null | { sortingColumn: string, sortingMethod: 'ASC' | 'DESC' }, page: number = 1) => {
+    const response = await request.get('/announcement', {
         params: {
-            pageNum:page,
+            pageNum: page,
             orderCriteria: params?.sortingColumn,
             orderMethod: params?.sortingMethod,
         },
@@ -50,8 +53,8 @@ export const getAnnouncement = async ( params:undefined|null|{sortingColumn:stri
     return response;
 };
 
-export const getAnnouncementById = async (announcementId:number) => {
-    const response = await axios.get(`http://localhost:8000/announcement/${announcementId}`, {
+export const getAnnouncementById = async (announcementId: number) => {
+    const response = await request.get(`/announcement/${announcementId}`, {
         headers: { 'Content-Type': 'application/json' }
     });
 
