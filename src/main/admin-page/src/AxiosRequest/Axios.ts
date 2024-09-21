@@ -60,3 +60,11 @@ export const getAnnouncementById = async (announcementId: number) => {
 
     return response;
 };
+
+export const getBlockUser = async () => {
+    const response = await request.get('/admin/blockuser', {
+        headers: { 'Content-Type': 'application/json' }
+    });
+
+    return response;
+};
