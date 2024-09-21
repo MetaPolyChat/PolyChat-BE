@@ -30,7 +30,8 @@ spring:
             scope:
               - email
               - profile
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+              - openid
+            redirect-uri: "http://localhost:8000/api/auth/google/login"
             authorizationGrantType: authorization_code
         provider:
           google:
