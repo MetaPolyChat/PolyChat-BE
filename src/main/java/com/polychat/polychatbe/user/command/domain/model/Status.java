@@ -3,5 +3,6 @@ package com.polychat.polychatbe.user.command.domain.model;
 public enum Status {
     ACTIVATED,
     DEACTIVATED,
-    SUSPENDED
+    SUSPENDED,
+    BEFORE_SIGNUP
 }
