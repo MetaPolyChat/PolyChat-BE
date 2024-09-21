@@ -137,7 +137,7 @@ public class UserSocialLoginService {
         log.info("구글 회원 생성 : " + profile.name());
 
         User user = User.builder()
-                .userId(userRandomGenerateService.generateGoogleUserID())
+//                .userId(userRandomGenerateService.generateGoogleUserID())
                 .userName(profile.name())
                 .password(passwordEncoder.encode(UUID.randomUUID().toString()))
                 .loginType(LoginType.GOOGLE)

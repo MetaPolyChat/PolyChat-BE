@@ -14,12 +14,12 @@ import org.hibernate.annotations.ColumnDefault;
 public class User {
 
     @Id
-    @Column(name="USER_NO")
+    @Column(name="USER_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userNo;
+    private Long userId;
 
-    @Column(name="USER_ID", nullable = false, unique = true)
-    private String userId;
+    @Column(name="EMAIL", nullable = false, unique = true)
+    private String email;
 
     @Column(name="USER_NAME", nullable = false)
     private String userName;
@@ -27,8 +27,8 @@ public class User {
     @Column(name="PASSWORD", nullable = false)
     private String password;
 
-    @Column(length = 100, nullable = false, unique = true)
-    private String email;
+//    @Column(length = 100, nullable = false, unique = true)
+//    private String email;
 
     @Column(name="LOGIN_TYPE", nullable = false)
     @Enumerated(value = EnumType.STRING)
@@ -50,8 +50,8 @@ public class User {
 
 
     @Builder
-    public User(String userId, String userName, String password, LoginType loginType, Authority authority, Status status, String email, String planet) {
-        this.userId = userId;
+    public User(/*String userId, */String userName, String password, LoginType loginType, Authority authority, Status status, String email, String planet) {
+//        this.userId = userId;
         this.userName = userName;
         this.password = password;
         this.loginType = loginType;
@@ -64,8 +64,8 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "userNo=" + userNo +
-                ", userId='" + userId + '\'' +
+                "userNo=" + userId +
+//                ", userId='" + userId + '\'' +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
