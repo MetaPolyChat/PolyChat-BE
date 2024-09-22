@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getBlockUser } from "../AxiosRequest/BlockInfoApi";
 
 interface BlockInfo {
-    blockId: number;
+    id: number;
     userId: number;
     blockedUserId: number;
     createdAt: string;
@@ -41,11 +41,11 @@ const BlockUser: React.FC = () => {
                 </thead>
                 <tbody>
                     {blockUsers.map((item: BlockInfo) => (
-                        <tr className="hover:bg-gray-100" key={item.blockId}>
+                        <tr className="hover:bg-gray-100" key={item.id}>
                             <td className="py-2 px-4 border-b border-gray-300 text-center">
-                                {item.blockId}
+                                {item.id}
                             </td>
-                            <td className="py-2 px-4 border-b border-gray-300">
+                            <td className="py-2 px-4 border-b border-gray-300 text-center">
                                 {item.userId}
                             </td>
                             <td className="py-2 px-4 border-b border-gray-300 text-center">
