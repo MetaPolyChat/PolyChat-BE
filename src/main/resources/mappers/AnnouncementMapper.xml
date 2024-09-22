@@ -37,7 +37,7 @@
           LEFT JOIN
                 TBL_USER B
             ON
-                A.UPLOADER_ID=B.USER_NO
+                A.UPLOADER_ID=B.USER_ID
         <if test="orderCriteria == 'announcementId' and orderMethod != null">
             ORDER BY ANNOUNCEMENT_ID ${orderMethod}
         </if>
@@ -95,7 +95,7 @@
         LEFT JOIN
                 TBL_USER B
             ON
-                A.UPLOADER_ID=B.USER_NO
+                A.UPLOADER_ID=B.USER_ID
          WHERE
                 A.ANNOUNCEMENT_ID = #{announcementId}
     </select>
