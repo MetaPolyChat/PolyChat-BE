@@ -7,47 +7,41 @@ import jakarta.persistence.*;
 public class UserInterest {
 
     @Id
-    @Column(name = "REF_INTEREST_NO")
+    @Column(name = "REF_INTEREST_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long refInterestNo;
 
-    @Column(name = "USER_NO", nullable = false)
-    private Long userNo;
+    @Column(name = "USER_ID", nullable = false)
+    private Long userId;
 
-    @Column(name = "INTEREST_NO", nullable = false)
-    private Long interestNo;
+    @Column(name = "INTEREST_ID", nullable = false)
+    private Long interestId;
 
     public UserInterest() {}
 
-    public UserInterest(Long userNo, Long interestNo) {
-        this.userNo = userNo;
-        this.interestNo = interestNo;
-    }
-
-    public UserInterest(Long refInterestNo, Long userNo, Long interestNo) {
-        this.refInterestNo = refInterestNo;
-        this.userNo = userNo;
-        this.interestNo = interestNo;
+    public UserInterest(Long userId, Long interestId) {
+        this.userId = userId;
+        this.interestId = interestId;
     }
 
     public Long getRefInterestNo() {
         return refInterestNo;
     }
 
-    public Long getUserNo() {
-        return userNo;
+    public Long getUserId() {
+        return userId;
     }
 
-    public Long getInterestNo() {
-        return interestNo;
+    public Long getInterestId() {
+        return interestId;
     }
 
     @Override
     public String toString() {
         return "UserInterest{" +
                 "refInterestNo=" + refInterestNo +
-                ", userNo=" + userNo +
-                ", interestNo=" + interestNo +
+                ", userId=" + userId +
+                ", interestId=" + interestId +
                 '}';
     }
 }
