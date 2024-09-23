@@ -1,7 +1,6 @@
-// HomePage.tsx
 import React, { useState, useEffect } from 'react';
-import { getAnnouncement } from "../AxiosRequest/Axios";
-import { Link } from "react-router-dom";
+import { deleteAnnouncement, getAnnouncement } from "../AxiosRequest/AnnouncementApi";
+import { Link, useNavigate } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
 
 interface AnnouncementInfo {
@@ -19,6 +18,14 @@ const Announcement: React.FC = () => {
     const [sortingColumn, setSortingColumn] = useState<string>('announcementId');
     const [sortingMethod, setSortingMethod] = useState<'ASC' | 'DESC'>('ASC');
     const [page, setPage] = useState<number>(1);
+    const [totalCount, setTotalCount] = useState<number>(0);
+    
+    const navigate = useNavigate();
+
+    function detailAnnouncement(id:number) {
+        navigate(`${id}`);
+    }
+
 
     const handleSort = (column: string) => {
         if (sortingColumn === column) {
@@ -31,24 +38,40 @@ const Announcement: React.FC = () => {
         }
     };
 
-    const onPageChange = async (event: any)=>{
-        const newPage:number = event.selected +1;
-        console.log(`선택된 페이지: ${newPage}` )
+    const onPageChange = async (event: any) => {
+        const newPage: number = event.selected + 1;
+        console.log(`선택된 페이지: ${newPage}`)
         setPage(newPage);
         try {
             console.log("페이지 전환 시도");
-            const announcementList = await getAnnouncement({ sortingColumn, sortingMethod}, newPage);
-            setAnnouncement(announcementList.data);
+            const announcementList = await getAnnouncement({ sortingColumn, sortingMethod }, newPage);
+            setAnnouncement(announcementList.data.elements);
+            setTotalCount(announcementList.data.totalCount);
         } catch (error) {
             console.error("에러 발생:", error);
         }
+    }
+
+    const onDeleteBtnClicked = async (id:number, uploaderNo:number)=> {
+        console.log(`삭제시도, id:${id}`)
+        try{
+            deleteAnnouncement(id, uploaderNo);
+            const newAnnouncement:AnnouncementInfo[] = announcement.filter(item=>item.announcementId!==id); 
+            setAnnouncement(newAnnouncement);
+        } catch(error) {
+            alert(`삭제에 실패했습니다. 에러: ${error}`)
+        }
+
+        
     }
 
     useEffect(() => {
         async function fetchAnnouncements() {
             try {
                 const announcementList = await getAnnouncement({ sortingColumn, sortingMethod }, page);
-                setAnnouncement(announcementList.data);
+                setAnnouncement(announcementList.data.elements);
+                setTotalCount(announcementList.data.totalCount);
+                console.log(announcementList.data);
             } catch (error) {
                 console.error("에러 발생:", error);
             }
@@ -80,19 +103,27 @@ const Announcement: React.FC = () => {
                         >
                             등록 날짜 {sortingColumn === 'uploadTime' && (sortingMethod === 'ASC' ? '▲' : '▼')}
                         </th>
+                        <th
+                            className="py-2 px-4 border-b border-gray-300 cursor-pointer"
+                        >
+                            관리
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     {announcement.map((item: AnnouncementInfo) => (
-                        <tr className="hover:bg-gray-100" key={item.announcementId}>
-                            <td className="py-2 px-4 border-b border-gray-300 text-center">
+                        <tr className="hover:bg-gray-100 cursor-pointer" key={item.announcementId}>
+                            <td className="py-2 px-4 border-b border-gray-300 text-center" onClick={()=>detailAnnouncement(item.announcementId)}>
                                 {item.announcementId}
                             </td>
-                            <td className="py-2 px-4 border-b border-gray-300">
+                            <td className="py-2 px-4 border-b border-gray-300" onClick={()=>detailAnnouncement(item.announcementId)}>
                                 {item.announcementTitle}
                             </td>
-                            <td className="py-2 px-4 border-b border-gray-300 text-center">
+                            <td className="py-2 px-4 border-b border-gray-300 text-center" onClick={()=>detailAnnouncement(item.announcementId)}>
                                 {item.uploadTime}
+                            </td>
+                            <td className="py-2 px-4 border-b border-gray-300 text-center">
+                                <button className="border px-2 round-10" onClick={()=>onDeleteBtnClicked(item.announcementId, item.uploaderNo)}>삭제</button>
                             </td>
                         </tr>
                     ))}
@@ -110,7 +141,7 @@ const Announcement: React.FC = () => {
                 pageRangeDisplayed={3}
                 containerClassName="flex justify-center space-x-2 align-middle my-1"
                 pageClassName="bg-white border rounded size-8 text-center py-0.5"
-                pageCount={11}
+                pageCount={(Math.ceil)(totalCount/3)}
                 previousLabel="< prev"
                 previousClassName="bg-white border rounded px-3 py-0.5"
                 renderOnZeroPageCount={null}

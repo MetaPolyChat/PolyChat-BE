@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getAnnouncementById } from "../AxiosRequest/Axios";
+import { getAnnouncementById } from "../AxiosRequest/AnnouncementApi";
 
 interface AnnouncementInfo {
     announcementId: number;
