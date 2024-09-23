@@ -61,6 +61,22 @@ public class User {
         this.planet = planet;
     }
 
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setPlanet(String planet) {
+        this.planet = planet;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -75,4 +91,5 @@ public class User {
                 ", planet='" + planet + '\'' +
                 '}';
     }
+
 }

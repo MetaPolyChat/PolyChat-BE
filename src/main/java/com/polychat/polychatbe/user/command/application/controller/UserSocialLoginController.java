@@ -24,10 +24,10 @@ public class UserSocialLoginController {
     private final UserSocialLoginService userSocialLoginService;
 
     // @Value 어노테이션을 사용하여 application.yml 에서 client-id 값을 불러옵니다.
-    @Value("${spring.security.oauth2.client.registration.google.clientId}")
+    @Value("${spring.security.oauth2.client.registration.google.client-id}")
     private String googleClientId;
 
-    @Value("${spring.security.oauth2.client.registration.google.redirect_uri}")
+    @Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
     private String googleRedirectUri;
 
     /**
