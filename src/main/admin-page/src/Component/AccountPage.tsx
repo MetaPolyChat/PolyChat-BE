@@ -1,6 +1,7 @@
 // AccountPage.tsx
 import React, { useEffect, useState } from "react";
 import { getUser } from "../AxiosRequest/UserInfoApi";
+import ReactPaginate from "react-paginate";
 
 interface UserInfo {
     userId: number;
@@ -12,24 +13,48 @@ interface UserInfo {
     status: string;
 }
 
+
 const AccountPage: React.FC = () => {
 
+    const loadAccountInfo = async (searchCriteria:any=null)=>{
+        try{
+            const userInfo = await getUser(searchCriteria);
+            setUserList(userInfo.data.elements);
+            setTotalCount(userInfo.data.totalCount);
+        } catch (error) {
+            console.error("유저 정보 로드 중 에러 발생");
+        }
+    }
+
     const [userList, setUserList] = useState<UserInfo[]>([]);
+    const [totalCount, setTotalCount] = useState<number>(0);
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [limit, setLimit] = useState<number>(10);
+
+    const onPageChange = async (event: any) => {
+        const newPage: number = event.selected + 1;
+        console.log(`선택된 페이지: ${newPage}`)
+        setCurrentPage(newPage);
+        try {
+            console.log("페이지 전환 시도");
+            loadAccountInfo({
+                pageNum :newPage,
+                orderCriteria: null,
+                orderMethod: null,
+                limit: limit
+            });
+        } catch (error) {
+            console.error("에러 발생:", error);
+        }
+    }
 
     useEffect(()=>{
-        async function getUserList(){
-            try{
-                const userList = await getUser();
-                //console.log(userList.data);
-                setUserList(userList.data);
-            } catch{
-                console.log("에러남");
-            }
-        }
-        
-        getUserList();
-        console.log("유저리스트?");
-        //console.log(userList)
+        loadAccountInfo({
+            pageNum :1,
+            orderCriteria: null,
+            orderMethod: null,
+            limit: limit
+        });
     } ,[]);
 
     return (
@@ -52,7 +77,8 @@ const AccountPage: React.FC = () => {
                 <tbody>
                     {userList.map((userInfo:UserInfo)=>{ return (
                         <tr>
-                            <td className="py-2 px-4 border-b border-gray-300 text-center">{userInfo.userId}</td>
+                            <td className="py-2 px-4 border-b border-gray-300 text-center"
+                                key={userInfo.userId}>{userInfo.userId}</td>
                             <td className="py-2 px-4 border-b border-gray-300">{userInfo.email}</td>
                             <td className="py-2 px-4 border-b border-gray-300">{userInfo.userName}</td>
                             <td className="py-2 px-4 border-b border-gray-300">{userInfo.planet}</td>
@@ -63,9 +89,23 @@ const AccountPage: React.FC = () => {
                     })}
                 </tbody>
             </table>
+
+            {/* 페이지네이션 */}
+            <ReactPaginate
+                breakLabel="..."
+                nextLabel="next >"
+                nextClassName="bg-white border rounded px-3 py-0.5"
+                onPageChange={onPageChange}
+                pageRangeDisplayed={3}
+                containerClassName="flex justify-center space-x-2 align-middle my-1"
+                pageClassName="bg-white border rounded size-8 text-center py-0.5"
+                pageCount={(Math.ceil)(totalCount/limit)}
+                previousLabel="< prev"
+                previousClassName="bg-white border rounded px-3 py-0.5"
+                renderOnZeroPageCount={null}
+            />
         </>
     );
-
 
 };
 

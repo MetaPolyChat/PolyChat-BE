@@ -1,5 +1,6 @@
 package com.polychat.polychatbe.user.query.service;
 
+import com.polychat.polychatbe.common.SearchCriteriaInfo;
 import com.polychat.polychatbe.user.query.dto.UserResponseDTO;
 import com.polychat.polychatbe.user.query.repository.UserSearchRepository;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,16 @@ public class UserSearchService {
         return userSearchRepository.findAllUser();
     }
 
+    public List<UserResponseDTO> findUsersWithCriteria(SearchCriteriaInfo searchCriteriaInfo) {
+        System.out.println("시도중");
+        return userSearchRepository.findUsersWithCriteria(searchCriteriaInfo);
+    }
+
     public int countAll() {
-        return userSearchRepository.countAll();
+        System.out.println("카운트 시도?");
+        int counted = userSearchRepository.countAll();
+        System.out.println("카운트 : " + counted);
+        return counted;
     }
 
 
