@@ -29,7 +29,6 @@ public class AnnouncementSearchService {
     }
 
     public List<AnnouncementResponseDTO> findAllAnnouncement() {
-
         return announcementSearchRepository.findAllAnnouncement();
     }
 

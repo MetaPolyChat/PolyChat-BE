@@ -1,6 +1,8 @@
 package com.polychat.polychatbe.announcement.command.application.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.polychat.polychatbe.announcement.command.application.dto.AnnounceAddRequest;
+import com.polychat.polychatbe.announcement.command.application.dto.AnnouncementDeleteRequest;
 import com.polychat.polychatbe.announcement.command.application.service.AnnouncementService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
@@ -46,9 +48,10 @@ public class AnnouncementController {
     @Operation(summary = "공지사항 삭제", description = "공지사항을 삭제합니다.")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/announcement/{id}")
-    public void deleteAnnouncement(@PathVariable long id, @RequestBody long userNo){
+    public void deleteAnnouncement(@PathVariable long id, @RequestBody AnnouncementDeleteRequest deleteInfo){
+        //System.out.println(userNo);
         log.info("Deleting announcement. AnnouncementId: {}", id);
-        announcementService.deleteAnnouncement(id, userNo);
+        announcementService.deleteAnnouncement(id, deleteInfo);
     }
 
 }

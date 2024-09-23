@@ -2,6 +2,7 @@ package com.polychat.polychatbe.common;
 
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
+import org.springframework.data.util.ParsingUtils;
 
 import java.util.List;
 
@@ -19,13 +20,22 @@ public class SearchCriteriaInfo {
     private final Integer limit;
     private final Integer offset;
 
+    private final String orderCriteriaSnakeCase;
+    private final String searchCriteriaSnakeCase;
+
+    public String convertCriteriaCamel(String criteria){
+        return ParsingUtils.reconcatenateCamelCase(criteria, "_");
+    }
+
     public SearchCriteriaInfo(String searchCriteria, String searchValue, List<String> filter,
                               String orderCriteria, OrderMethod orderMethod,
                               Integer pageNum, Integer limit) {
         this.searchCriteria = searchCriteria;
+        this.searchCriteriaSnakeCase = searchCriteria!=null? convertCriteriaCamel(searchCriteria): null;
         this.searchValue = searchValue;
         this.filter = filter;
         this.orderCriteria = orderCriteria;
+        this.orderCriteriaSnakeCase = orderCriteria!=null? convertCriteriaCamel(orderCriteria): null;
         this.orderMethod = orderMethod;
 
         this.pageNum = pageNum != null ? pageNum : 1;
