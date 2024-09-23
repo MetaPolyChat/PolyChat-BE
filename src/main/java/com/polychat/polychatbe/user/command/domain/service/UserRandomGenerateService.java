@@ -17,14 +17,14 @@ public class UserRandomGenerateService {
         rand = new Random();
     }
 
-//    public String generateGoogleUserID() {
-//        rand.setSeed(System.currentTimeMillis());   // 시드는 id 생성시 최초 한번
-//        String result;
-//        do {
-//            result = "google-" + rand.nextInt(999999);
-//        } while (userService.findUserByUserId(result) != null); //없으면 통과
-//        return result;
-//    }
+    public String generateGoogleTempUserName() {
+        rand.setSeed(System.currentTimeMillis());   // 시드는 id 생성시 최초 한번
+        String newName;
+        do {
+            newName = "google-" + rand.nextInt(999999);
+        } while (userService.findUserByUserName(newName) != null); //없으면 통과
+        return newName;
+    }
 
 
     /**

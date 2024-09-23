@@ -29,8 +29,8 @@ spring:
             client-secret: ${GOOGLE_CLIENT_SECRET}
             scope:
               - email
-              - profile
-              - openid
+#              - profile
+#              - openid
             redirect-uri: "http://localhost:8000/api/auth/google/login"
             authorizationGrantType: authorization_code
         provider:

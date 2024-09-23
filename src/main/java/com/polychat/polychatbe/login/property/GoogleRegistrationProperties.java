@@ -11,4 +11,5 @@ public class GoogleRegistrationProperties {
     private String clientId;
     private String redirectUri;
     private String authorizationGrantType;
+    private String clientSecret;
 }
