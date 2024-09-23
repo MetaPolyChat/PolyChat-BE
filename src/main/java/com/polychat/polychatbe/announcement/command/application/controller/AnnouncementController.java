@@ -7,9 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 //@RequestMapping("/api/v1")
 @Slf4j
+@CrossOrigin(origins = "*", methods = RequestMethod.POST)
 public class AnnouncementController {
 
     private AnnouncementService announcementService;
@@ -21,7 +23,7 @@ public class AnnouncementController {
     @Operation(summary = "공지사항 등록", description = "공지사항을 등록합니다.")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/announcement")
-    public void addAnnouncement(AnnounceAddRequest announceAddRequest){
+    public void addAnnouncement(@ModelAttribute AnnounceAddRequest announceAddRequest){
         log.info("Creating new announcement. Title:{}, UploaderId:{}",
                 announceAddRequest.getTitle(), announceAddRequest.getUploaderId());
         //System.out.println("announceAddRequest = " + announceAddRequest);

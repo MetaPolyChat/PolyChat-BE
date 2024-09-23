@@ -7,6 +7,7 @@ import Announcement from "./Component/Annoucement";
 import AnnouncementAdd from "./Component/AnnouncementAdd";
 import AnnouncementDetail from "./Component/AnnouncementDetail";
 import WithdrawUser from "./Component/WithdrawUser";
+import BlockUser from "./Component/BlockUser";
 
 export const Routers = () => {
     return (
@@ -20,6 +21,8 @@ export const Routers = () => {
                     <Route path="add" element={<AnnouncementAdd/>}/>
                     <Route path=":announcementId" element={<AnnouncementDetail/>}/>
                 </Route>
+                <Route path="/blockUser" element={<BlockUser/>}/>
+                {/* <Route path="/inquiries" element=  */}
                 <Route path="/withdrawUser" element={<WithdrawUser/>}/>
             </Route>
         </Routes>
