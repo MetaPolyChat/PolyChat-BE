@@ -29,6 +29,30 @@
                 TBL_USER
     </select>
 
+    <select id="findUsersWithCriteria" resultMap="userMap"
+        parameterType="com.polychat.polychatbe.common.SearchCriteriaInfo">
+        SELECT
+                USER_ID
+              , EMAIL
+              , USER_NAME
+              , PLANET
+              , LOGIN_TYPE
+              , AUTHORITY
+              , STATUS
+          FROM
+        TBL_USER
+        <if test="orderCriteriaSnakeCase != null and orderMethod != null">
+            ORDER BY ${orderCriteriaSnakeCase} ${orderMethod}
+        </if>
+        <if test="limit!=null">
+            limit #{limit}
+        </if>
+        <if test="offset!=null">
+            offset #{offset}
+        </if>
+    </select>
+
+
     <select id="countAll" resultType="_int">
         SELECT
                 COUNT(*)

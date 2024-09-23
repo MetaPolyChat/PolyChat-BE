@@ -15,4 +15,5 @@ public interface UserSearchRepository {
 
     int countAll();
 
+    List<UserResponseDTO> findUsersWithCriteria(SearchCriteriaInfo searchCriteriaInfo);
 }
