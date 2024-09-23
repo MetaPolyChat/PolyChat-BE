@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styles from './Sidebar.module.css';
 
 const Sidebar: React.FC = () => {
@@ -6,22 +6,22 @@ const Sidebar: React.FC = () => {
     <nav className={styles.sidebar}>
       <ul>
         <li>
-          <Link to="/home" className={styles.menuItem}>대쉬보드</Link>
+          <NavLink to="/home" className={({isActive}) => isActive? styles.selected: styles.menuItem}>대쉬보드</NavLink>
         </li>
         <li>
-          <Link to="/account" className={styles.menuItem}>회원 관리</Link>
+          <NavLink to="/account" className={({isActive}) => isActive? styles.selected: styles.menuItem}>회원 관리</NavLink>
         </li>
         <li>
-          <Link to="/blockUser" className={styles.menuItem}>정지회원</Link>
+          <NavLink to="/blockUser" className={({isActive}) => isActive? styles.selected: styles.menuItem}>정지회원</NavLink>
         </li>
         <li>
-          <Link to="/announcement" className={styles.menuItem}>공지사항</Link>
+          <NavLink to="/announcement" className={({isActive}) => isActive? styles.selected: styles.menuItem}>공지사항</NavLink>
         </li>
         {/* <li>
           <Link to="/inquiry" className={styles.menuItem}>문의사항</Link>
         </li> */}
         <li>
-          <Link to="/withdrawUser" className={styles.menuItem}>탈퇴 회원 관리</Link>
+          <NavLink to="/withdrawUser" className={({isActive}) => isActive? styles.selected: styles.menuItem}>탈퇴 회원 관리</NavLink>
         </li>
       </ul>
     </nav>

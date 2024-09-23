@@ -17,6 +17,10 @@ public class AnnouncementSearchService {
         this.announcementSearchRepository = announcementSearchRepository;
     }
 
+    public int countAll(){
+        return announcementSearchRepository.countAll();
+    }
+
     public AnnouncementResponseDTO findAnnouncementById(long announcementId){
         AnnouncementResponseDTO announcement = announcementSearchRepository.findAnnouncementById(announcementId)
                 .orElseThrow(()-> new NoSuchElementException("존재하지 않는 공지"));
