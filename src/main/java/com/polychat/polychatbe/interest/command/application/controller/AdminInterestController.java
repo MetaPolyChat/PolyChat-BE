@@ -18,5 +18,7 @@ public class AdminInterestController {
     }
 
     @PostMapping("/regist")
-    public ResponseEntity regist(@RequestParam String interest) {}
+    public void regist(@RequestParam String interest) {
+        interestAdminService.registInterest(interest);
+    }
 }
