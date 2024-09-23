@@ -1,7 +1,6 @@
 package com.polychat.polychatbe.user.command.domain.service;
 
 import com.polychat.polychatbe.user.command.application.dto.UserRequestDTO;
-import com.polychat.polychatbe.user.command.application.dto.UserResponseDTO;
 import com.polychat.polychatbe.user.command.domain.model.Authority;
 import com.polychat.polychatbe.user.command.domain.model.LoginType;
 import com.polychat.polychatbe.user.command.domain.model.Status;
@@ -10,7 +9,6 @@ import com.polychat.polychatbe.user.command.domain.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.event.TransactionalEventListener;
 
 import java.util.Optional;
 
@@ -56,7 +54,7 @@ public class UserService {
     public void deactivateUser(UserRequestDTO.userDataDTO user) {
         userRepository.findUserByEmailAndStatus(user.email(), "ACTIVATED")
                 .ifPresent(foundUser -> {
-                    foundUser.setStatus(Status.DEACTIVATED);
+                    foundUser.updateStatus(Status.DEACTIVATED);
                     userRepository.save(foundUser);
                 });
     }
@@ -65,7 +63,7 @@ public class UserService {
     public void activateUser(UserRequestDTO.userDataDTO user) {
         userRepository.findUserByEmailAndStatus(user.email(), "DEACTIVATED")
                 .ifPresent(foundUser -> {
-                    foundUser.setStatus(Status.ACTIVATED);
+                    foundUser.updateStatus(Status.ACTIVATED);
                     userRepository.save(foundUser);
                 });
     }
@@ -74,7 +72,7 @@ public class UserService {
     public void renameUser(UserRequestDTO.userDataDTO user, String newName) {
         userRepository.findByEmail(user.email())
                 .ifPresent(foundUser -> {
-                    foundUser.setUserName(newName);
+                    foundUser.updateUserName(newName);
                     userRepository.save(foundUser);
                 });
 
@@ -83,7 +81,7 @@ public class UserService {
     @Transactional
     public void renameUserPlanet(UserRequestDTO.userDataDTO user, String newName) {
         userRepository.findByEmail(user.email()).ifPresent(foundUser -> {
-            foundUser.setPlanet(newName);
+            foundUser.updatePlanet(newName);
             userRepository.save(foundUser);
         });
     }
@@ -93,4 +91,8 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+
+    public User findUserByUserName(String name) {
+        return userRepository.findByUserName(name).orElse(null);
+    }
 }

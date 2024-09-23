@@ -1,14 +1,12 @@
 package com.polychat.polychatbe.user.command.domain.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Entity
 @Table(name="TBL_USER")
 public class User {
@@ -50,8 +48,7 @@ public class User {
 
 
     @Builder
-    public User(/*String userId, */String userName, String password, LoginType loginType, Authority authority, Status status, String email, String planet) {
-//        this.userId = userId;
+    public User(String userName, String password, LoginType loginType, Authority authority, Status status, String email, String planet) {
         this.userName = userName;
         this.password = password;
         this.loginType = loginType;
@@ -61,19 +58,19 @@ public class User {
         this.planet = planet;
     }
 
-    public void setStatus(Status status) {
+    public void updateStatus(Status status) {
         this.status = status;
     }
 
-    public void setPlanet(String planet) {
+    public void updatePlanet(String planet) {
         this.planet = planet;
     }
 
-    public void setUserName(String userName) {
+    public void updateUserName(String userName) {
         this.userName = userName;
     }
 
-    public void setPassword(String password) {
+    public void updatePassword(String password) {
         this.password = password;
     }
 
@@ -81,7 +78,6 @@ public class User {
     public String toString() {
         return "User{" +
                 "userNo=" + userId +
-//                ", userId='" + userId + '\'' +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +

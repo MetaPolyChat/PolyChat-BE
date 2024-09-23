@@ -5,6 +5,7 @@ import com.polychat.polychatbe.login.utils.ApiUtils;
 import com.polychat.polychatbe.user.command.application.dto.UserRequestDTO;
 import com.polychat.polychatbe.user.command.application.service.UserSocialLoginService;
 import com.polychat.polychatbe.user.command.application.dto.UserResponseDTO;
+import com.polychat.polychatbe.user.command.domain.model.User;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -53,6 +54,8 @@ public class UserSocialLoginController {
 
         // 구글 인증 코드 수신 후 로그인 처리
         UserResponseDTO.authTokenDTO responseDTO = userSocialLoginService.googleLogin(code);
+
+        //없으면 회원가입으로 리다이렉트
         if (responseDTO == null) {
             System.out.println("회원가입 페이지로 리다이렉트 합니다.");
             response.sendRedirect("/signup"); // 회원가입 페이지로 리다이렉트
@@ -73,12 +76,11 @@ public class UserSocialLoginController {
     @PostMapping("/google/signup")
     public ResponseEntity<?> googleSignUp(@RequestBody UserRequestDTO.signUpDTO request) {
         // 클라이언트로부터 추가 정보 수신 후 회원가입 처리
-//        UserResponseDTO.authTokenDTO responseDTO = userSocialLoginService.googleSignUp(request);
-//
-//        // JWT 토큰을 JSON 형식으로 클라이언트에 반환
-//        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+        UserResponseDTO.authTokenDTO authTokenDTO = userSocialLoginService.googleSignUp(request);
 
-        return null;
+        // JWT 토큰을 JSON 형식으로 클라이언트에 반환
+        return ResponseEntity.ok().body(ApiUtils.success(authTokenDTO));
+
     }
 
 }

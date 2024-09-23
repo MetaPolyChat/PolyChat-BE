@@ -17,10 +17,8 @@ import com.polychat.polychatbe.user.command.domain.service.UserRandomGenerateSer
 import com.polychat.polychatbe.user.command.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -57,21 +55,27 @@ public class UserSocialLoginService {
         구글 로그인
      */
     @Transactional
+    @Nullable
     public UserResponseDTO.authTokenDTO googleLogin(String code) {
         System.out.println("Google Login 시작");
 
         // 카카오로부터 액세스 토큰 발급
         String accessToken = generateAccessToken(code);
 
-        // 액세스 토큰을 사용하여 카카오 사용자 프로필 가져오기
-        UserResponseDTO.KakaoInfoDTO profile = getKakaoProfile(accessToken);
-        System.out.println("프로필 " + profile);
+        // 액세스 토큰을 사용하여 이메일 가져오기
+        UserResponseDTO.GoogleEmailDTO emailDTO = getGoogleProfile(accessToken);
+        System.out.println("프로필 " + emailDTO);
 
-        // 사용자가 이미 존재하는지 확인하고 없으면 null 반환
-        User user = userService.findUserByEmail(profile.kakaoAccount().email())
+        // 사용자가 이미 존재하는지 확인
+        User user = userService.findUserByEmail(emailDTO.email())
                 .orElse(null);
-        //없으면 null 반환, 있어도 status 체크
-        if (user == null || Status.BEFORE_SIGNUP.equals(user.getStatus())) {
+        //없으면 null 리턴
+        if (user == null) {
+            this.signUpTemporary(emailDTO);
+            return null;
+        }
+        //있으면 임시 회원인지 체크
+        if (Status.BEFORE_SIGNUP.equals(user.getStatus())) {
             return null;
         }
 
@@ -86,43 +90,51 @@ public class UserSocialLoginService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("grant_type", googleRegistrationProperties.getAuthorizationGrantType());
-        params.add("client_id", googleRegistrationProperties.getClientId());
-        params.add("redirect_uri", googleRegistrationProperties.getRedirectUri());
-        params.add("code", code);
-
-        HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(params, headers);
-        ResponseEntity<UserResponseDTO.KakaoTokenDTO> response = restTemplate.postForEntity(
+        HttpEntity<MultiValueMap<String, String>> httpEntity = getMultiValueMapHttpEntity(code, headers);
+        ResponseEntity<UserResponseDTO.GoogleTokenDTO> response = restTemplate.postForEntity(
                 googleProviderProperties.getTokenUri(),
                 httpEntity,
-                UserResponseDTO.KakaoTokenDTO.class
+                UserResponseDTO.GoogleTokenDTO.class
         );
 
-        if(!response.getStatusCode().is2xxSuccessful()) {
+        if (!response.getStatusCode().is2xxSuccessful()) {
             throw new ApplicationException(ErrorCode.FAILED_GET_ACCESS_TOKEN);
         }
 
         return response.getBody().accessToken();
     }
 
+    private HttpEntity<MultiValueMap<String, String>> getMultiValueMapHttpEntity(String code, HttpHeaders headers) {
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", "authorization_code");
+        params.add("client_id", googleRegistrationProperties.getClientId());
+        params.add("client_secret", googleRegistrationProperties.getClientSecret());
+        params.add("redirect_uri", googleRegistrationProperties.getRedirectUri());
+        params.add("code", code);
+
+        return new HttpEntity<>(params, headers);
+    }
+
+
     /**
-     카카오회원 프로필 정보 가져오기
+     구글 회원 이메일 정보 가져오기
      */
-    private UserResponseDTO.KakaoInfoDTO getKakaoProfile(String accessToken) {
+    private UserResponseDTO.GoogleEmailDTO getGoogleProfile(String accessToken) {
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(accessToken);
 
-        ResponseEntity<UserResponseDTO.KakaoInfoDTO> response = restTemplate.postForEntity(
-                googleProviderProperties.getUserInfoUri(),
-                new HttpEntity<>(headers),
-                UserResponseDTO.KakaoInfoDTO.class
+        HttpEntity<Void> entity = new HttpEntity<>(headers);
+        ResponseEntity<UserResponseDTO.GoogleEmailDTO> response = restTemplate.exchange(
+                "https://openidconnect.googleapis.com/v1/userinfo",
+                HttpMethod.GET,
+                entity,
+                UserResponseDTO.GoogleEmailDTO.class
         );
 
-        if(!response.getStatusCode().is2xxSuccessful()) {
-            throw new ApplicationException(ErrorCode.FAILED_GET_KAKAO_PROFILE);
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            throw new ApplicationException(ErrorCode.FAILED_GET_GOOGLE_PROFILE);
         }
 
         System.out.println(response.getBody());
@@ -130,26 +142,59 @@ public class UserSocialLoginService {
         return response.getBody();
     }
 
-    /**
-     구글 회원가입
-     */
-    public User googleSignUp(UserRequestDTO.signUpDTO profile) {
-        log.info("구글 회원 생성 : " + profile.name());
+
+    @Transactional
+    public void signUpTemporary(UserResponseDTO.GoogleEmailDTO emailDTO) {
+        log.info("임시 회원 생성 : {}", emailDTO.email());
 
         User user = User.builder()
-//                .userId(userRandomGenerateService.generateGoogleUserID())
-                .userName(profile.name())
+                .email(emailDTO.email())
+                .userName(userRandomGenerateService.generateGoogleTempUserName())
                 .password(passwordEncoder.encode(UUID.randomUUID().toString()))
                 .loginType(LoginType.GOOGLE)
                 .authority(Authority.USER)
-                .email(profile.email())
-                .planet(userRandomGenerateService.generatePlanetCode())
+                .status(Status.BEFORE_SIGNUP)
+                .planet("Temp")
                 .build();
 
         userRepository.save(user);
-
-        return user;
     }
+
+    /**
+     구글 회원가입
+     */
+    @Transactional
+    @Nullable
+    public UserResponseDTO.authTokenDTO googleSignUp(UserRequestDTO.signUpDTO signUpDTO) {
+        log.info("구글 회원 생성 : {}", signUpDTO.name());
+        User user = userService.findUserByEmail(signUpDTO.email()).orElse(null);
+        if (user == null) {
+            throw new ApplicationException(ErrorCode.INTERNAL_SERVER_ERROR);
+        }
+
+        if (Status.BEFORE_SIGNUP.equals(user.getStatus())) {
+            this.signUpNewUserWithID(user, signUpDTO);
+            return this.getSocialAuthTokenDTO(user);
+        }
+
+        throw new ApplicationException(ErrorCode.SAME_EMAIL);
+    }
+
+    private void signUpNewUserWithID(User user, UserRequestDTO.signUpDTO signUpDTO) {
+        user = new User(
+                user.getUserId(),
+                signUpDTO.email(),
+                signUpDTO.name(),
+                passwordEncoder.encode(UUID.randomUUID().toString()),
+                LoginType.GOOGLE,
+                Authority.USER,
+                Status.ACTIVATED,
+                userRandomGenerateService.generatePlanetCode()
+        );
+
+        userRepository.save(user);
+    }
+
 
     /**
      소셜 로그인 회원 토큰 생성
