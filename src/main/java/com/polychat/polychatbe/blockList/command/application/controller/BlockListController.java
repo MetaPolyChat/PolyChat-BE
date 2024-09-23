@@ -72,7 +72,7 @@ public class BlockListController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공적으로 불러왔습니다.")
     })
-    @GetMapping(value = "/admin/bloccklist", produces = "application/json; charset=UTF-8")
+    @GetMapping(value = "/admin/blocklist", produces = "application/json; charset=UTF-8")
     public ResponseEntity<List<BlockUserDTO>> blockListAdmin() {
         List<BlockUserDTO> blockList = blockListAppService.getAllBlockLists();
         return ResponseEntity.status(HttpStatus.OK).body(blockList);

@@ -37,15 +37,9 @@
           LEFT JOIN
                 TBL_USER B
             ON
-                A.UPLOADER_ID=B.USER_NO
-        <if test="orderCriteria == 'announcementId' and orderMethod != null">
-            ORDER BY ANNOUNCEMENT_ID ${orderMethod}
-        </if>
-        <if test="orderCriteria == 'announcementTitle' and orderMethod != null">
-            ORDER BY ANNOUNCEMENT_TITLE ${orderMethod}
-        </if>
-        <if test="orderCriteria == 'uploadTime' and orderMethod != null">
-            ORDER BY UPLOAD_TIME ${orderMethod}
+                A.UPLOADER_ID=B.USER_ID
+        <if test="orderCriteriaSnakeCase != null and orderMethod != null">
+            ORDER BY ${orderCriteriaSnakeCase} ${orderMethod}
         </if>
         <if test="limit!=null">
             limit #{limit}
@@ -95,7 +89,7 @@
         LEFT JOIN
                 TBL_USER B
             ON
-                A.UPLOADER_ID=B.USER_NO
+                A.UPLOADER_ID=B.USER_ID
          WHERE
                 A.ANNOUNCEMENT_ID = #{announcementId}
     </select>
