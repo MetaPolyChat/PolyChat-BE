@@ -2,6 +2,7 @@ package com.polychat.polychatbe.announcement.query.controller;
 
 import com.polychat.polychatbe.announcement.query.dto.AnnouncementResponseDTO;
 import com.polychat.polychatbe.announcement.query.service.AnnouncementSearchService;
+import com.polychat.polychatbe.common.PageItemResponse;
 import com.polychat.polychatbe.common.SearchCriteriaInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -35,7 +36,8 @@ public class AnnouncementSearchController {
         System.out.println(test);
 
         //List<AnnouncementResponseDTO> announcementList = announcementSearchService.findAllAnnouncement();
-        List<AnnouncementResponseDTO> announcementList = announcementSearchService.findAnnouncementList(searchCriteriaInfo);
+        List<AnnouncementResponseDTO> announcementList = announcementSearchService.findAnnouncementList(
+                searchCriteriaInfo);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
@@ -52,5 +54,21 @@ public class AnnouncementSearchController {
         headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
 
         return new ResponseEntity<>(announcementSearchService.findAnnouncementById(id), headers, HttpStatus.OK);
+    }
+
+    @Operation(summary = "공지사항 조회 페이지", description = "페이지별로 공지사항 조회.")
+    @GetMapping("announcement/page")
+    public ResponseEntity<PageItemResponse<AnnouncementResponseDTO>> getAnnouncementWithPage(
+            @Valid @ModelAttribute SearchCriteriaInfo searchCriteriaInfo
+    ) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
+
+        return new ResponseEntity<>(
+                new PageItemResponse<>(
+                        announcementSearchService.countAll(),
+                        announcementSearchService.findAnnouncementList(searchCriteriaInfo)),
+                headers, HttpStatus.OK);
     }
 }
