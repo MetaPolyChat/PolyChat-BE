@@ -12,8 +12,14 @@ const Sidebar: React.FC = () => {
           <Link to="/account" className={styles.menuItem}>회원 관리</Link>
         </li>
         <li>
+          <Link to="/blockUser" className={styles.menuItem}>정지회원</Link>
+        </li>
+        <li>
           <Link to="/announcement" className={styles.menuItem}>공지사항</Link>
         </li>
+        {/* <li>
+          <Link to="/inquiry" className={styles.menuItem}>문의사항</Link>
+        </li> */}
         <li>
           <Link to="/withdrawUser" className={styles.menuItem}>탈퇴 회원 관리</Link>
         </li>
