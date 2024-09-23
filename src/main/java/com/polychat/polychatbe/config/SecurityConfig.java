@@ -45,7 +45,10 @@ public class SecurityConfig {
             "/swagger-ui.html",     // Swagger UI HTML
             "/api/tarot/**",
             "/api/sendOriginVerse",
-            "/api/sendOriginSong"
+            "/api/sendOriginSong",
+            "/announcement/**",
+            "/admin/user/**",
+            "/admin/blockuser/**"
     };
 
     @Bean

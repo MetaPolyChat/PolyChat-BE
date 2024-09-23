@@ -1,4 +1,3 @@
-// AccountPage.tsx
 import React from "react";
 
 const WithdrawUser: React.FC = () => {
