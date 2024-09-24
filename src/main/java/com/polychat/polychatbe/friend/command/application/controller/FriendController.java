@@ -5,11 +5,13 @@ import com.polychat.polychatbe.friend.command.application.service.FriendApplicat
 import com.polychat.polychatbe.friend.command.domain.service.FriendService;
 import com.polychat.polychatbe.friend.query.service.FriendSearchService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 //@RequestMapping("/api/v1")
+@Tag(name = "친구 API", description = "친구를 추가하거나 삭제하기 위한 API")
 public class FriendController {
 
     //private FriendService friendService;
