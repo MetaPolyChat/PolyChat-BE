@@ -29,7 +29,12 @@ $ npm start
 
 Enter the relevant API keys to run the project.
 ```yml
-API: yourkey
+MYSQL_URL=your_key
+MYSQL_USER=your_key
+MYSQL_PASSWORD=your_key
+GOOGLE_CLIENT_ID=your_key
+GOOGLE_CLIENT_SECRET=your_key
+JWT_SECRET_KEY=your_key
 ```
 ## :building_construction: Architecture ##
 
