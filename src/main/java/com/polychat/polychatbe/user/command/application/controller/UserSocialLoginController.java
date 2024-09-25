@@ -36,6 +36,7 @@ public class UserSocialLoginController {
      */
     @GetMapping("/google/redirect")
     public void redirectToGoogle(HttpServletResponse response) throws IOException {
+        System.out.println("redirectToGoogle");
         String redirectUri = "https://accounts.google.com/o/oauth2/v2/auth?"
                 + "client_id=" + googleClientId
                 + "&redirect_uri=" + googleRedirectUri
@@ -75,6 +76,7 @@ public class UserSocialLoginController {
      */
     @PostMapping("/google/signup")
     public ResponseEntity<?> googleSignUp(@RequestBody UserRequestDTO.signUpDTO request) {
+        System.out.println("회원 가입 시작");
         // 클라이언트로부터 추가 정보 수신 후 회원가입 처리
         UserResponseDTO.authTokenDTO authTokenDTO = userSocialLoginService.googleSignUp(request);
 
