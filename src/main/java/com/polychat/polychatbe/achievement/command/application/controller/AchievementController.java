@@ -3,11 +3,14 @@ package com.polychat.polychatbe.achievement.command.application.controller;
 import com.polychat.polychatbe.achievement.command.application.dto.AchievementRequest;
 import com.polychat.polychatbe.achievement.command.application.service.AchievementService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 //@RequestMapping("/api/v1")
+@Tag(name = "업적 API", description = "업적을 등록, 수정, 삭제하는 API")
+
 public class AchievementController {
 
     private AchievementService achievementService;

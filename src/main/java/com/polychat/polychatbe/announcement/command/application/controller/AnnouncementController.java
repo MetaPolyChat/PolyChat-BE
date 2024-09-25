@@ -5,6 +5,7 @@ import com.polychat.polychatbe.announcement.command.application.dto.AnnounceAddR
 import com.polychat.polychatbe.announcement.command.application.dto.AnnouncementDeleteRequest;
 import com.polychat.polychatbe.announcement.command.application.service.AnnouncementService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 //@RequestMapping("/api/v1")
 @Slf4j
 @CrossOrigin(origins = "*", methods = RequestMethod.POST)
+@Tag(name = "공지사항 API", description = "공지사항을 등록, 변경, 삭제하는 API")
+
 public class AnnouncementController {
 
     private AnnouncementService announcementService;
