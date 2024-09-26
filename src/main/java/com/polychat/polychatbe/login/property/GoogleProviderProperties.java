@@ -10,4 +10,5 @@ import org.springframework.context.annotation.Configuration;
 public class GoogleProviderProperties {
     private String tokenUri;
     private String userInfoUri;
+    private String authorizationUri;
 }

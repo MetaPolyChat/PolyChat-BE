@@ -4,21 +4,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserResponseDTO {
 
-    /** 토큰 발급
-     * @param grantType
-     * @param accessToken
-     * @param accessTokenValidTime
-     * @param refreshToken
-     * @param refreshTokenValidTime
-     */
+//    /** 토큰 발급
+//     * @param grantType
+//     * @param accessToken
+//     * @param accessTokenValidTime
+//     * @param refreshToken
+//     * @param refreshTokenValidTime
+//     */
+//
+//    public record authTokenDTO(
+//            String grantType,
+//            String accessToken,
+//            Long accessTokenValidTime,
+//            String refreshToken,
+//            Long refreshTokenValidTime
+//    ) {
+//    }
 
-    public record authTokenDTO(
-            String grantType,
-            String accessToken,
-            Long accessTokenValidTime,
-            String refreshToken,
-            Long refreshTokenValidTime
-    ) {
+    public record authDTO(
+            Long userId,
+            String userEmail
+    ){
     }
 
     /** 구글 OAuth2 프로필

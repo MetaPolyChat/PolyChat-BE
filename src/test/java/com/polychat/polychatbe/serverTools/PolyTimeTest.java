@@ -4,17 +4,13 @@ import com.polychat.polychatbe.blockList.command.application.dto.BlockUserDTO;
 import com.polychat.polychatbe.blockList.command.domain.model.BlockList;
 import com.polychat.polychatbe.blockList.command.domain.service.BlockListDomainService;
 import com.polychat.polychatbe.blockList.query.service.BlockListQueryService;
+import com.polychat.polychatbe.common.PolyTime;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class PolyTimeTest {
