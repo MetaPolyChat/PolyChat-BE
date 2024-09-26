@@ -7,7 +7,6 @@ import com.polychat.polychatbe.user.command.application.dto.UserRequestDTO;
 import com.polychat.polychatbe.user.command.application.dto.UserResponseDTO;
 import com.polychat.polychatbe.login.error.ApplicationException;
 import com.polychat.polychatbe.login.error.ErrorCode;
-import com.polychat.polychatbe.login.jwt.JWTTokenProvider;
 import com.polychat.polychatbe.user.command.domain.model.Authority;
 import com.polychat.polychatbe.user.command.domain.model.LoginType;
 import com.polychat.polychatbe.user.command.domain.model.Status;
@@ -19,10 +18,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.lang.Nullable;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +25,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
 import java.util.UUID;
 
 @Slf4j
@@ -44,7 +38,7 @@ public class UserSocialLoginService {
     private final UserRandomGenerateService userRandomGenerateService;
 
     private final PasswordEncoder passwordEncoder;
-    private final JWTTokenProvider jwtTokenProvider;
+//    private final JWTTokenProvider jwtTokenProvider;
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final GoogleProviderProperties googleProviderProperties;
@@ -56,15 +50,15 @@ public class UserSocialLoginService {
      */
     @Transactional
     @Nullable
-    public UserResponseDTO.authTokenDTO googleLogin(String code) {
+    public UserResponseDTO.authDTO googleLogin(String code) {
         System.out.println("Google Login 시작");
 
-        // 카카오로부터 액세스 토큰 발급
+        // 구글로부터 액세스 토큰 발급
         String accessToken = generateAccessToken(code);
 
         // 액세스 토큰을 사용하여 이메일 가져오기
         UserResponseDTO.GoogleEmailDTO emailDTO = getGoogleProfile(accessToken);
-        System.out.println("프로필 " + emailDTO);
+        System.out.println("구글 인증 : " + emailDTO);
 
         // 사용자가 이미 존재하는지 확인
         User user = userService.findUserByEmail(emailDTO.email())
@@ -79,14 +73,18 @@ public class UserSocialLoginService {
             return null;
         }
 
-        // JWT 토큰 생성 및 반환
-        return getSocialAuthTokenDTO(user);
+        // DTO 생성 및 반환
+        return this.getSocialAuthDTO(user);
+
+//        // JWT 토큰 생성 및 반환
+//        return this.getSocialAuthTokenDTO(user);
     }
 
     /**
      구글 액세스 토큰 받기
      */
     private String generateAccessToken(String code) {
+        System.out.println("구글 액세스 토큰 받기");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
@@ -97,7 +95,7 @@ public class UserSocialLoginService {
                 UserResponseDTO.GoogleTokenDTO.class
         );
 
-        if (!response.getStatusCode().is2xxSuccessful()) {
+        if (response.getBody() == null || !response.getStatusCode().is2xxSuccessful()) {
             throw new ApplicationException(ErrorCode.FAILED_GET_ACCESS_TOKEN);
         }
 
@@ -165,7 +163,7 @@ public class UserSocialLoginService {
      */
     @Transactional
     @Nullable
-    public UserResponseDTO.authTokenDTO googleSignUp(UserRequestDTO.signUpDTO signUpDTO) {
+    public UserResponseDTO.authDTO googleSignUp(UserRequestDTO.signUpDTO signUpDTO) {
         log.info("구글 회원 생성 : {}", signUpDTO.name());
         User user = userService.findUserByEmail(signUpDTO.email()).orElse(null);
         if (user == null) {
@@ -174,7 +172,8 @@ public class UserSocialLoginService {
 
         if (Status.BEFORE_SIGNUP.equals(user.getStatus())) {
             this.signUpNewUserWithID(user, signUpDTO);
-            return this.getSocialAuthTokenDTO(user);
+            return this.getSocialAuthDTO(user);
+//            return this.getSocialAuthTokenDTO(user);
         }
 
         throw new ApplicationException(ErrorCode.SAME_EMAIL);
@@ -197,17 +196,28 @@ public class UserSocialLoginService {
 
 
     /**
-     소셜 로그인 회원 토큰 생성
+     소셜 로그인 DTO 생성
      */
-    private UserResponseDTO.authTokenDTO getSocialAuthTokenDTO(User user) {
-
-        UserDetails userDetails =
-                new org.springframework.security.core.userdetails.User(user.getEmail(), "",
-                Collections.singletonList(new SimpleGrantedAuthority(user.getAuthority().toString())));
-
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-
-        return jwtTokenProvider.generateToken(authentication);
+    private UserResponseDTO.authDTO getSocialAuthDTO(User user) {
+        return new UserResponseDTO.authDTO(
+                user.getUserId(),
+                user.getEmail()
+        );
     }
+
+
+//    /**
+//     소셜 로그인 회원 토큰 생성
+//     */
+//    private UserResponseDTO.authTokenDTO getSocialAuthTokenDTO(User user) {
+//        System.out.println("email 기반으로 jwt 토큰 생성");
+//        UserDetails userDetails =
+//                new org.springframework.security.core.userdetails.User(user.getEmail(), "",
+//                Collections.singletonList(new SimpleGrantedAuthority(user.getAuthority().toString())));
+//
+//        Authentication authentication =
+//                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+//
+//        return jwtTokenProvider.generateToken(authentication);
+//    }
 }

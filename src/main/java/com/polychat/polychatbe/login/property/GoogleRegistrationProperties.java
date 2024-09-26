@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "spring.security.oauth2.client.registration.google")
 public class GoogleRegistrationProperties {
     private String clientId;
+    private String clientSecret;
+    private String scope;
     private String redirectUri;
     private String authorizationGrantType;
-    private String clientSecret;
 }
