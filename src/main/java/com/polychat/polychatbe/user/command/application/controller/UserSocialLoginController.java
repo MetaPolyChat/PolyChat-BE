@@ -46,7 +46,7 @@ public class UserSocialLoginController {
     @GetMapping("/google/redirect")
     public void redirectToGoogle(HttpServletResponse response) throws IOException {
         System.out.println("redirectToGoogle");
-        String redirectUri = googleAuthorizationUri
+        String redirectUri = googleAuthorizationUri + "?"
                 + "client_id=" + googleClientId
                 + "&redirect_uri=" + googleRedirectUri
                 + "&response_type=code"
@@ -67,7 +67,7 @@ public class UserSocialLoginController {
 
         //없으면 회원가입으로
         if (authDTO == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body("go to sign in page");
         }
 
         System.out.println("로그인 : " + authDTO);
