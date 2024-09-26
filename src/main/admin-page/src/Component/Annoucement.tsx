@@ -15,8 +15,8 @@ interface AnnouncementInfo {
 
 const Announcement: React.FC = () => {
     const [announcement, setAnnouncement] = useState<AnnouncementInfo[]>([]);
-    const [sortingColumn, setSortingColumn] = useState<string>('announcementId');
-    const [sortingMethod, setSortingMethod] = useState<'ASC' | 'DESC'>('ASC');
+    const [sortingColumn, setSortingColumn] = useState<string | null>(null);
+    const [sortingMethod, setSortingMethod] = useState<'ASC' | 'DESC' | null>(null);
     const [page, setPage] = useState<number>(1);
     const [totalCount, setTotalCount] = useState<number>(0);
     
