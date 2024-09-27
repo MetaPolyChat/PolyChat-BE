@@ -25,9 +25,6 @@ public class User {
     @Column(name="PASSWORD", nullable = false)
     private String password;
 
-//    @Column(length = 100, nullable = false, unique = true)
-//    private String email;
-
     @Column(name="LOGIN_TYPE", nullable = false)
     @Enumerated(value = EnumType.STRING)
     @ColumnDefault("'NONE'")
@@ -43,7 +40,7 @@ public class User {
     @ColumnDefault("'ACTIVATED'")
     private Status status;
 
-    @Column(name = "PLANET", nullable = false)
+    @Column(name = "PLANET", nullable = false, unique = true)
     private String planet;
 
 
@@ -60,10 +57,6 @@ public class User {
 
     public void updateStatus(Status status) {
         this.status = status;
-    }
-
-    public void updatePlanet(String planet) {
-        this.planet = planet;
     }
 
     public void updateUserName(String userName) {

@@ -2,28 +2,18 @@ package com.polychat.polychatbe.user.command.application.service;
 
 import com.polychat.polychatbe.login.error.ApplicationException;
 import com.polychat.polychatbe.login.error.ErrorCode;
-import com.polychat.polychatbe.login.utils.ClientUtils;
 import com.polychat.polychatbe.user.command.application.dto.UserRequestDTO;
 import com.polychat.polychatbe.user.command.application.dto.UserResponseDTO;
 import com.polychat.polychatbe.user.command.domain.model.Authority;
-import com.polychat.polychatbe.user.command.domain.model.LoginType;
-import com.polychat.polychatbe.user.command.domain.model.Status;
 import com.polychat.polychatbe.user.command.domain.model.User;
-import com.polychat.polychatbe.user.command.domain.repository.UserRepository;
 import com.polychat.polychatbe.user.command.domain.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.Optional;
 
 @Slf4j
@@ -54,6 +44,22 @@ public class UserLoginService {
         // 회원 저장
         return userService.saveUser(requestDTO);
 
+    }
+
+    @Transactional
+    public UserResponseDTO.UserInfoDTO findUserById(Long id) {
+        User user = userService.findUserById(id);
+        if (Authority.ADMIN.equals(user.getAuthority())){
+            throw new ApplicationException(ErrorCode.INTERNAL_SERVER_ERROR);
+        } else {
+            return new UserResponseDTO.UserInfoDTO(
+                    user.getUserId(),
+                    user.getEmail(),
+                    user.getUserName(),
+                    user.getLoginType(),
+                    user.getPlanet()
+            );
+        }
     }
 
     /*

@@ -64,8 +64,7 @@ public class SecurityConfig {
                 )
                 // OAuth2 로그인 설정
                 .oauth2Login(oauth2 -> oauth2
-                        // 필요 시 로그인 페이지 커스터마이징
-                        .loginPage("/oauth2/authorization/google")
+                        .loginPage("/")
                 );
 
         return http.build();

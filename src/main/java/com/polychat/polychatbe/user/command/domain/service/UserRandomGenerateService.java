@@ -29,14 +29,18 @@ public class UserRandomGenerateService {
 
     /**
      * example : "BZS 285546 c"
+     * 456,976,000,000
      */
     public String generatePlanetCode(){
-        String result = "";
-        result = result + getSingleCapital() + getSingleCapital() + getSingleCapital();
-        result += " ";
-        result = result + rand.nextInt(999999);
-        result += " ";
-        result = result + getSingleSmall();
+        String result;
+        do {
+            result = "";
+            result = result + getSingleCapital() + getSingleCapital() + getSingleCapital();
+            result += " ";
+            result = result + rand.nextInt(999999);
+            result += " ";
+            result = result + getSingleSmall();
+        }while (userService.findUserByPlanet(result) != null);    //없으면 통과
 
         return result;
     }

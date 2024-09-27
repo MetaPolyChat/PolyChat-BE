@@ -52,7 +52,7 @@ public class UserService {
 
     @Transactional
     public void deactivateUser(UserRequestDTO.userDataDTO user) {
-        userRepository.findUserByEmailAndStatus(user.email(), "ACTIVATED")
+        userRepository.findUserByEmailAndStatus(user.email(), String.valueOf(Status.ACTIVATED))
                 .ifPresent(foundUser -> {
                     foundUser.updateStatus(Status.DEACTIVATED);
                     userRepository.save(foundUser);
@@ -61,7 +61,7 @@ public class UserService {
 
     @Transactional
     public void activateUser(UserRequestDTO.userDataDTO user) {
-        userRepository.findUserByEmailAndStatus(user.email(), "DEACTIVATED")
+        userRepository.findUserByEmailAndStatus(user.email(), String.valueOf(Status.DEACTIVATED))
                 .ifPresent(foundUser -> {
                     foundUser.updateStatus(Status.ACTIVATED);
                     userRepository.save(foundUser);
@@ -78,21 +78,21 @@ public class UserService {
 
     }
 
-    @Transactional
-    public void renameUserPlanet(UserRequestDTO.userDataDTO user, String newName) {
-        userRepository.findByEmail(user.email()).ifPresent(foundUser -> {
-            foundUser.updatePlanet(newName);
-            userRepository.save(foundUser);
-        });
-    }
 
     public Optional<User> findUserByEmail(String email) {
 
         return userRepository.findByEmail(email);
     }
 
-
     public User findUserByUserName(String name) {
         return userRepository.findByUserName(name).orElse(null);
+    }
+
+    public User findUserByPlanet(String planet) {
+        return userRepository.findByPlanet(planet).orElse(null);
+    }
+
+    public User findUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
     }
 }

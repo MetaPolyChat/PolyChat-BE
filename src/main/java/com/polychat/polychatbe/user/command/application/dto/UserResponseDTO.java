@@ -1,6 +1,7 @@
 package com.polychat.polychatbe.user.command.application.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.polychat.polychatbe.user.command.domain.model.LoginType;
 
 public class UserResponseDTO {
 
@@ -53,17 +54,13 @@ public class UserResponseDTO {
     }
 
 
-//
-//    public record GoogleProfileDTO(
-//            String sub,         // 구글 사용자 고유 ID
-//            String name,        // 사용자의 이름
-//            String given_name,  // 이름 (성 제외)
-//            String family_name, // 성
-//            String email,       // 이메일 주소
-//            boolean email_verified, // 이메일 인증 여부
-//            String picture,     // 프로필 사진 URL
-//            String locale       // 사용자 언어 및 국가 정보
-//    ) {
-//    }
+    public record UserInfoDTO(
+            Long userId,
+            String email,
+            String userName,
+            LoginType loginType,
+            String planet
+    ){
+    }
 
 }
