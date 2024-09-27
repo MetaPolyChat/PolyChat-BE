@@ -5,6 +5,7 @@ import com.polychat.polychatbe.announcement.query.service.AnnouncementSearchServ
 import com.polychat.polychatbe.common.PageItemResponse;
 import com.polychat.polychatbe.common.SearchCriteriaInfo;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@Tag(name = "공지사항 조회 API", description = "공지사항을 조회하기 위한 API")
 public class AnnouncementSearchController {
 
     private AnnouncementSearchService announcementSearchService;
