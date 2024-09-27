@@ -1,23 +1,33 @@
 package com.polychat.polychatbe.friendBoard.entity;
 
+import com.polychat.polychatbe.common.BaseTimeEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
+@Getter
 @Entity
-@Table(name = "friendBoard")
-public class friendBoard {
-    // 컬럼명 :  유저 아이디, 유저코드, 생성날짜, 내용, 타이틀,
+@Table(name = "tbl_friend_board")
+public class friendBoard extends BaseTimeEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
-    private String context;
-    private String nickname;
-    private Integer usernumber;
-    private LocalDateTime startAt;
-    private LocalDateTime endAt;
+    @Column(name ="writer")
+    private Long writer;
+
+    @Column(name ="board_title")
+    private String board_title;
+
+    @Column(name ="board_context")
+    private String board_context;
+
+    @Column(name ="interest_id")
+    private Long interest_Id;
 
     public friendBoard() {}
 
@@ -29,64 +39,35 @@ public class friendBoard {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public Long getWriter() {
+        return writer;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setWriter(Long writer) {
+        this.writer = writer;
     }
 
-    public String getContext() {
-        return context;
+    public String getBoard_title() {
+        return board_title;
     }
 
-    public void setContext(String context) {
-        this.context = context;
+    public void setBoard_title(String board_title) {
+        this.board_title = board_title;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getBoard_context() {
+        return board_context;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setBoard_context(String board_context) {
+        this.board_context = board_context;
     }
 
-    public Integer getUsernumber() {
-        return usernumber;
+    public Long getInterest_Id() {
+        return interest_Id;
     }
 
-    public void setUsernumber(Integer usernumber) {
-        this.usernumber = usernumber;
-    }
-
-    public LocalDateTime getStartAt() {
-        return startAt;
-    }
-
-    public void setStartAt(LocalDateTime startAt) {
-        this.startAt = startAt;
-    }
-
-    public LocalDateTime getEndAt() {
-        return endAt;
-    }
-
-    public void setEndAt(LocalDateTime endAt) {
-        this.endAt = endAt;
-    }
-
-    @Override
-    public String toString() {
-        return "friendBoard{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", context='" + context + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", usernumber=" + usernumber +
-                ", startAt=" + startAt +
-                ", endAt=" + endAt +
-                '}';
+    public void setInterest_Id(Long interest_Id) {
+        this.interest_Id = interest_Id;
     }
 }
