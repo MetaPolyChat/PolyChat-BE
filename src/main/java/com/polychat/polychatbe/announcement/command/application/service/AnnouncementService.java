@@ -1,6 +1,7 @@
 package com.polychat.polychatbe.announcement.command.application.service;
 
 import com.polychat.polychatbe.announcement.command.application.dto.AnnounceAddRequest;
+import com.polychat.polychatbe.announcement.command.application.dto.AnnouncementDeleteRequest;
 import com.polychat.polychatbe.announcement.command.domain.aggregate.Announcement;
 import com.polychat.polychatbe.announcement.command.domain.repository.AnnouncementRepository;
 import com.polychat.polychatbe.announcement.command.domain.service.AnnouncementDomainService;
@@ -48,8 +49,8 @@ public class AnnouncementService {
     }
 
     @Transactional
-    public void deleteAnnouncement(long announcementId, long uploaderNo) {
-        announcementDomainService.deleteAnnouncement(announcementId, uploaderNo);
+    public void deleteAnnouncement(long announcementId, AnnouncementDeleteRequest deleteInfo) {
+        announcementDomainService.deleteAnnouncement(announcementId, deleteInfo.getUserNo());
     }
 
 

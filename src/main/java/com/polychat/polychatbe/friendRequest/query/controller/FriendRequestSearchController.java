@@ -4,6 +4,7 @@ import com.polychat.polychatbe.friend.query.dto.FriendUserInfoDTO;
 import com.polychat.polychatbe.friend.query.dto.OneUserFriendResponseDTO;
 import com.polychat.polychatbe.friendRequest.query.dto.UserFriendRequestDTO;
 import com.polychat.polychatbe.friendRequest.query.service.FriendRequestSearchService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 //@RequestMapping("/api/v1")
+@Tag(name = "친구 요청 검색 API", description = "친구 요청 목록을 검색하는 API")
 public class FriendRequestSearchController {
 
     private FriendRequestSearchService friendRequestSearchService;

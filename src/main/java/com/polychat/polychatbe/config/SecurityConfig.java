@@ -44,7 +44,10 @@ public class SecurityConfig {
             "/api/auth/**",
             "/v3/api-docs/**",       // Swagger 문서
             "/swagger-ui/**",        // Swagger UI
-            "/swagger-ui.html"     // Swagger UI HTML
+            "/swagger-ui.html",     // Swagger UI HTML
+            "/announcement/**",
+            "/admin/user/**",
+            "/admin/blockuser/**"
     };
 
     @Bean

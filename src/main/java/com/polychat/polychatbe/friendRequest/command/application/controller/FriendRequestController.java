@@ -6,11 +6,13 @@ import com.polychat.polychatbe.friendRequest.command.application.service.FriendR
 import com.polychat.polychatbe.friendRequest.command.domain.model.FriendRequest;
 import com.polychat.polychatbe.friendRequest.command.domain.model.RequestStatus;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 //@RequestMapping("/api/v1")
+@Tag(name = "친구 신청 API", description = "친구 신청에 대한 API")
 public class FriendRequestController {
 
     FriendRequestApplicationService friendRequestApplicationService;
