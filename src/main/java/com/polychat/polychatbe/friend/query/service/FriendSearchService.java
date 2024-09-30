@@ -1,5 +1,6 @@
 package com.polychat.polychatbe.friend.query.service;
 
+import com.polychat.polychatbe.common.SearchCriteriaInfo;
 import com.polychat.polychatbe.friend.query.dto.FriendResponseDTO;
 import com.polychat.polychatbe.friend.command.application.dto.FriendUserDTO;
 import com.polychat.polychatbe.friend.command.domain.model.Friend;
@@ -30,12 +31,17 @@ public class FriendSearchService {
 
     }
 
-    public List<FriendUserInfoDTO> findUserFriend(int userId) {
+    public List<FriendUserInfoDTO> findUserFriend(long userId) {
 
         return friendMyBatisRepository.findOneUserFriend(new FriendUserId(userId));
     }
 
-    public FriendResponseDTO findFriendByUserId(int user1, int user2){
+    public List<FriendUserInfoDTO> findUserFriendWithCriteria(long userId, SearchCriteriaInfo searchCriteria) {
+
+        return friendMyBatisRepository.findOneUserFriend(new FriendUserId(userId));
+    }
+
+    public FriendResponseDTO findFriendByUserId(long user1, long user2){
         Friend friendInfo = friendSearchRepository.findByUser1AndUser2(
                 new FriendUserId(user1),
                 new FriendUserId(user2)

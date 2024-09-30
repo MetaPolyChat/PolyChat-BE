@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 public class FriendRequestInfoDTO {
 
     private long requestId;
-    private int sender;
-    private int receiver;
+    private long sender;
+    private long receiver;
     private RequestStatus status;
 
 

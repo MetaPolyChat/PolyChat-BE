@@ -31,7 +31,7 @@ public class FriendRequestController {
     @Operation(summary = "친구 신청 상태 변경", description = "친구 신청 상태를 변경합니다.")
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping("friendRequest/{id}")
-    public void updateRequestStats(@PathVariable int id, @RequestBody RequestStatus newStatus){
+    public void updateRequestStats(@PathVariable long id, @RequestBody RequestStatus newStatus){
         FriendRequestStatusDTO requestInfo = new FriendRequestStatusDTO(id, newStatus);
         friendRequestApplicationService.updateFriendRequestStatus(requestInfo);
     }
@@ -39,7 +39,7 @@ public class FriendRequestController {
     @Operation(summary = "친구 신청 취소", description = "친구 신청을 취소합니다.")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("friendRequest/{id}")
-    public void cancelFriendRequest(@PathVariable int id){
+    public void cancelFriendRequest(@PathVariable long id){
         FriendRequestStatusDTO requestInfo = new FriendRequestStatusDTO(id, RequestStatus.CANCELED);
         friendRequestApplicationService.updateFriendRequestStatus(requestInfo);
     }
