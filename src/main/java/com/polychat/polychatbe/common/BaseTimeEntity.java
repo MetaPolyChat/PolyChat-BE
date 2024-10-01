@@ -1,4 +1,4 @@
-package com.polychat.polychatbe.login;
+package com.polychat.polychatbe.common;
 
 import jakarta.persistence.*;
 import lombok.Getter;

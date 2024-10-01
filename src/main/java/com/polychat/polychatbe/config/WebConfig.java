@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     String[] allowCorsUrl = {
-            "http://localhost:3000",
+            "https://localhost:3000",
             "http://localhost:61981"
     };
 
@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("*") //임시로 전역으로 설정
-                //.allowedOrigins("http://localhost:3000") // React 앱의 URL
+                .allowedOrigins("https://localhost:3000") // React 앱의 URL
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*");
                 //.allowCredentials(true);
