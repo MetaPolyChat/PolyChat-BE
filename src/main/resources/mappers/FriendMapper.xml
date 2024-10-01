@@ -28,6 +28,20 @@
                 TBL_FRIEND
     </select>
 
+    <select id="findByTwoUser" resultMap="friendMap"
+            parameterType="com.polychat.polychatbe.friend.query.service.TwoFriendUserVO">
+        SELECT
+                FRIEND_ID
+              , USER1
+              , USER2
+          FROM
+                TBL_FRIEND
+         WHERE
+                USER1=#{userId1}
+           AND
+                USER2=#{userId2}
+    </select>
+
     <select id="findByFriendId" resultMap="friendMap">
         SELECT
                 FRIEND_ID
