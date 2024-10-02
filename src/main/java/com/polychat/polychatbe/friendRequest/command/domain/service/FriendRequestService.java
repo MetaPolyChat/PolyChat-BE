@@ -39,10 +39,7 @@ public class FriendRequestService {
     }
 
     @Transactional
-    public void approveFriendRequest(long requestId) {
-        FriendRequest request = friendRequestRepository.findById(requestId)
-                .orElseThrow(() -> new NoSuchElementException("Friend request not found"));
-
+    public void approveFriendRequest(FriendRequest request) {
         request.setStatus(RequestStatus.ACCEPTED);
         friendRequestRepository.save(request);
 

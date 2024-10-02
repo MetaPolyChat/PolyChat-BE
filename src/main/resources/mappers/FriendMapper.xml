@@ -37,9 +37,9 @@
           FROM
                 TBL_FRIEND
          WHERE
-                USER1=#{userId1}
+                USER1=#{user1.friendUserId}
            AND
-                USER2=#{userId2}
+                USER2=#{user2.friendUserId}
     </select>
 
     <select id="findByFriendId" resultMap="friendMap">
