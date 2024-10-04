@@ -5,6 +5,7 @@ import com.polychat.polychatbe.friend.query.dto.FriendResponseDTO;
 import com.polychat.polychatbe.friend.query.dto.FriendUserInfoDTO;
 import com.polychat.polychatbe.friend.query.dto.OneUserFriendResponseDTO;
 import com.polychat.polychatbe.friend.query.service.FriendSearchService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -23,6 +24,7 @@ public class FriendSearchController {
 
     private FriendSearchService friendSearchService;
 
+    @Operation(summary = "전체 친구 관계 조회", description = "모든 유저의 친구 관계를 조회합니다.")
     @GetMapping("friend")
     public ResponseEntity<List<FriendResponseDTO>> getAllFriend(){
 
@@ -36,8 +38,7 @@ public class FriendSearchController {
                 );
     }
 
-
-
+    @Operation(summary = "유저 친구 목록 조회", description = "지정한 유저의 친구 목록을 조회합니다.")
     @GetMapping("friend/{userId}")
     public ResponseEntity<OneUserFriendResponseDTO> getUserFriends(
             @PathVariable int userId, @ModelAttribute SearchCriteriaInfo searchCriteriaInfo){
