@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "친구 API", description = "친구를 추가하거나 삭제하기 위한 API")
 public class FriendController {
 
-    //private FriendService friendService;
     private FriendSearchService friendSearchService;
     private FriendApplicationService friendApplicationService;
 
@@ -23,14 +22,6 @@ public class FriendController {
         this.friendApplicationService = friendApplicationService;
     }
 
-
-    //    @GetMapping("friend")
-//    public FriendResponseDTO getFriend(@RequestParam Long id){
-//        return friendSearchService.findFriendByUserId()
-//    }
-
-//    @GetMapping("friend/")
-//
 
     @Operation(summary = "친구 등록", description = "두 유저를 친구로 등록합니다.")
     @ResponseStatus(HttpStatus.CREATED)

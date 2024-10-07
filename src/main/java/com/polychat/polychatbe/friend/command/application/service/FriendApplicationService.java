@@ -15,10 +15,6 @@ public class FriendApplicationService {
     private FriendRequestService friendRequestService;
 
 
-    public FriendUserDTO reverseDTOUserOrder(FriendUserDTO friendRegistInfo) {
-        return new FriendUserDTO(friendRegistInfo.getUser2(), friendRegistInfo.getUser1());
-    }
-
     public FriendApplicationService(FriendService friendService, FriendSearchService friendSearchService) {
         this.friendService = friendService;
         this.friendSearchService = friendSearchService;
@@ -31,14 +27,11 @@ public class FriendApplicationService {
         }
 
         friendService.addFriend(friendRegistInfo);
-        friendService.addFriend(reverseDTOUserOrder((friendRegistInfo)));
     }
 
     @Transactional
     public void deleteFriend(FriendUserDTO friendRegistInfo){
         friendService.deleteFriendByUserId(friendRegistInfo);
-        friendService.deleteFriendByUserId(reverseDTOUserOrder(friendRegistInfo));
-        //friendRequestService.updateFriendRequestStatus();
     }
 
 }

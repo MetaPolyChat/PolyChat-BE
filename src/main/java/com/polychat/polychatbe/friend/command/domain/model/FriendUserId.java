@@ -5,15 +5,15 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class FriendUserId {
 
-    private int friendUserId;
+    private long friendUserId;
 
     protected FriendUserId() {}
 
-    public FriendUserId(int friendUserId) {
+    public FriendUserId(long friendUserId) {
         this.friendUserId = friendUserId;
     }
 
-    public int getFriendUserId() {
+    public long getFriendUserId() {
         return friendUserId;
     }
 

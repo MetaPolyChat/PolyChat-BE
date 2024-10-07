@@ -14,8 +14,8 @@ public class FriendRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long friendRequestId;
 
-    private int sender;
-    private int receiver;
+    private long sender;
+    private long receiver;
     //private LocalDateTime requestTime;
 
     @Enumerated(EnumType.ORDINAL)
@@ -23,7 +23,7 @@ public class FriendRequest {
 
     protected FriendRequest() {}
 
-    public FriendRequest(int sender, int receiver, RequestStatus status) {
+    public FriendRequest(long sender, long receiver, RequestStatus status) {
         this.sender = sender;
         this.receiver = receiver;
         this.status = status;

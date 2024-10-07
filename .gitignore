@@ -7,7 +7,7 @@ build/
 
 ### external API_KEY ###
 .env
-
+firebaseAPI.json
 .DS_STORE
 
 ### STS ###

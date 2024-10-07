@@ -14,7 +14,7 @@ public class FriendRequestStatusDTO {
 
     @NotBlank(message = "친구 신청 정보를 확인해주세요.")
     @Positive
-    private Integer friendRequestId;
+    private Long friendRequestId;
 
     @NotBlank(message = "친구 신청 상태를 확인해주세요.")
     private RequestStatus status;
