@@ -7,7 +7,7 @@ build/
 
 ### external API_KEY ###
 .env
-
+firebaseAPI.json
 .DS_STORE
 
 ### STS ###
@@ -44,3 +44,4 @@ out/
 ### docker files ###
 /mysql_data/
 /my.cnf/
+
