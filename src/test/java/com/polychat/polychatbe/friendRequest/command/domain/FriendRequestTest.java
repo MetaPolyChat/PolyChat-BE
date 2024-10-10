@@ -11,10 +11,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.Stream;
 
+//@ActiveProfiles("local-security")
 @SpringBootTest
 public class FriendRequestTest {
 
@@ -28,7 +30,7 @@ public class FriendRequestTest {
     @ParameterizedTest
     @CsvSource({"1,2", "2,3", "4,3"})
     @Transactional
-    public void addFriendRequestTest(int senderId, int receiverId){
+    public void addFriendRequestTest(long senderId, long receiverId){
 
         Assertions.assertDoesNotThrow(
                 ()->{
@@ -42,7 +44,7 @@ public class FriendRequestTest {
     @DisplayName("자신 친구 요청 등록 테스트")
     @ParameterizedTest
     @CsvSource({"1,1", "3,3"})
-    public void addSameUserRequestTest(int senderId, int receiverId){
+    public void addSameUserRequestTest(long senderId, long receiverId){
 
         Assertions.assertThrows(
                 IllegalArgumentException.class,
@@ -73,7 +75,7 @@ public class FriendRequestTest {
     @ParameterizedTest
     @MethodSource("notAcceptStatus")
     @Transactional
-    void notAcceptRequestTest(int requestId, RequestStatus status){
+    void notAcceptRequestTest(long requestId, RequestStatus status){
         Assertions.assertDoesNotThrow(
                 ()->{
                     friendRequestService.updateFriendRequestStatus(
@@ -88,7 +90,7 @@ public class FriendRequestTest {
     @ParameterizedTest
     @MethodSource("acceptStatus")
     @Transactional
-    void acceptRequestTest(int requestId, RequestStatus status){
+    void acceptRequestTest(long requestId, RequestStatus status){
                 Assertions.assertDoesNotThrow(
                 ()->{
                     friendRequestService.updateFriendRequestStatus(
@@ -100,12 +102,11 @@ public class FriendRequestTest {
     }
 
 
-
     @DisplayName("친구 요청 삭제 테스트")
     @ParameterizedTest
     @ValueSource(ints = {1,3})
     @Transactional
-    void removeRequestTest(int requestId){
+    void removeRequestTest(long requestId){
         Assertions.assertDoesNotThrow(
                 () ->{
                     friendRequestService.deleteFriendRequest(requestId);

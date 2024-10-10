@@ -14,11 +14,11 @@ public class FriendRequestDTO {
 
     @NotBlank(message = "보내는 사람 정보를 확인해주세요.")
     @Positive
-    private int senderId;
+    private long senderId;
 
     @NotBlank(message = "받는 사람 정보를 확인해주세요.")
     @Positive
-    private int receiverId;
+    private long receiverId;
 
     @NotBlank(message = "친구 신청 상태를 확인해주세요.")
     private RequestStatus status;
