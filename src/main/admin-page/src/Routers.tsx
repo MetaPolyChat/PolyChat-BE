@@ -4,10 +4,11 @@ import Layout from "./Component/Layout";
 import HomePage from "./Component/HomePage";
 import AccountPage from "./Component/AccountPage";
 import Announcement from "./Component/Annoucement";
-import AnnouncementAdd from "./Component/AnnouncementAdd";
-import AnnouncementDetail from "./Component/AnnouncementDetail";
+import AnnouncementAdd from "./Component/Announcement/AnnouncementAdd";
+import AnnouncementDetail from "./Component/Announcement/AnnouncementDetail";
 import WithdrawUser from "./Component/WithdrawUser";
 import BlockUser from "./Component/BlockUser";
+import UserDetail from "./Component/UserDetail";
 
 export const Routers = () => {
     return (
@@ -21,6 +22,7 @@ export const Routers = () => {
                     <Route path="add" element={<AnnouncementAdd/>}/>
                     <Route path=":announcementId" element={<AnnouncementDetail/>}/>
                 </Route>
+                <Route path="/userInfo" element={<UserDetail nickname={""} email={""} loginMethod={""} planetNumber={""} isAdmin={false} isWithdrawn={false} isSuspended={false} isDeactivated={false}/>}/>
                 <Route path="/blockUser" element={<BlockUser/>}/>
                 {/* <Route path="/inquiries" element=  */}
                 <Route path="/withdrawUser" element={<WithdrawUser/>}/>

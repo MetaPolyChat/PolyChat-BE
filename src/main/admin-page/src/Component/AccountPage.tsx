@@ -66,12 +66,13 @@ const AccountPage: React.FC = () => {
                         <th className="py-2 px-4 border-b border-gray-300">번호</th>
                         <th className="py-2 px-4 border-b border-gray-300">이메일</th>
                         <th className="py-2 px-4 border-b border-gray-300">닉네임</th>
-                        <th className="py-2 px-4 border-b border-gray-300">행성 이름</th>
+                        {/* <th className="py-2 px-4 border-b border-gray-300">행성 이름</th> */}
                         <th className="py-2 px-4 border-b border-gray-300">로그인 유형</th>
-                        {/* <th className="py-2 px-4 border-b border-gray-300">가입일시</th> */}
+                        <th className="py-2 px-4 border-b border-gray-300">가입일시</th>
                         <th className="py-2 px-4 border-b border-gray-300">권한</th>
                         {/* <th className="py-2 px-4 border-b border-gray-300">최근 로그인 시간</th> */}
                         <th className="py-2 px-4 border-b border-gray-300">탈퇴여부</th>
+                        <th className="py-2 px-4 border-b border-gray-300">상세보기</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,10 +82,12 @@ const AccountPage: React.FC = () => {
                                 key={userInfo.userId}>{userInfo.userId}</td>
                             <td className="py-2 px-4 border-b border-gray-300">{userInfo.email}</td>
                             <td className="py-2 px-4 border-b border-gray-300">{userInfo.userName}</td>
-                            <td className="py-2 px-4 border-b border-gray-300">{userInfo.planet}</td>
+                            {/* <td className="py-2 px-4 border-b border-gray-300">{userInfo.planet}</td> */}
                             <td className="py-2 px-4 border-b border-gray-300">{userInfo.loginType}</td>
+                            <td className="py-2 px-4 border-b border-gray-300">2024.09.23:17:00</td>
                             <td className="py-2 px-4 border-b border-gray-300">{userInfo.authority}</td>
-                            <td className="py-2 px-4 border-b border-gray-300 text-center">{userInfo.status=="DEACTIVATED"? "O" : "X"}</td>
+                            <td className="py-2 px-4 border-b border-gray-300 text-center">{userInfo.status=="DEACTIVATED"? "Y" : "N"}</td>
+                            <td className="py-2 px-4 border-b border-gray-300 text-center">1</td>
                         </tr>)
                     })}
                 </tbody>
