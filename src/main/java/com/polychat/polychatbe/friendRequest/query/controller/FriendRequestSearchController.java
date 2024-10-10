@@ -4,6 +4,7 @@ import com.polychat.polychatbe.friend.query.dto.FriendUserInfoDTO;
 import com.polychat.polychatbe.friend.query.dto.OneUserFriendResponseDTO;
 import com.polychat.polychatbe.friendRequest.query.dto.UserFriendRequestDTO;
 import com.polychat.polychatbe.friendRequest.query.service.FriendRequestSearchService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -25,7 +26,7 @@ public class FriendRequestSearchController {
     }
 
 
-
+    @Operation(summary = "유저 친구 신청 목록 조회", description = "지정한 유저의 친구 신청 목록을 조회합니다.")
     @GetMapping("friendRequest/{userId}")
     private ResponseEntity<List<UserFriendRequestDTO>> getUserFriendRequestList(@RequestParam int userId) {
         // 한 유저가 신청한 친구 요청의 상태를 보는것
