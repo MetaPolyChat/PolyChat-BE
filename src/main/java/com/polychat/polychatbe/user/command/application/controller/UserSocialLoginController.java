@@ -7,6 +7,7 @@ import com.polychat.polychatbe.user.command.application.service.UserSocialLoginS
 import com.polychat.polychatbe.user.command.application.dto.UserResponseDTO;
 import com.polychat.polychatbe.user.command.domain.model.User;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -59,27 +60,30 @@ public class UserSocialLoginController {
      * @param code 구글 서버가 보낸 인증 코드
      */
     @GetMapping("/google/login")
-    public ResponseEntity<?>  googleLogin(@RequestParam(name = "code") String code) {
+    public void  googleLogin(HttpServletResponse response, HttpServletRequest request, @RequestParam(name = "code") String code) throws IOException {
         System.out.println("Google login started with code: " + code);
+        System.out.println("Current Url : " + request.getRequestURL());
+//        String redirectUrl = request.getRequestURL()
+//                .substring(0,request.getRequestURL().toString().lastIndexOf("/"))
+//                + "/signup";
+//        System.out.println("redirectUrl: " + redirectUrl);
 
         // 구글 인증 코드 수신 후 로그인 처리
         UserResponseDTO.authDTO authDTO = userSocialLoginService.googleLogin(code);
 
         //없으면 회원가입으로
         if (authDTO == null) {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("go to sign in page");
+            response.sendRedirect("http://localhost:3000/sign");
+//            return ResponseEntity.status(HttpStatus.ACCEPTED).body("go to sign in page");
         }
 
         System.out.println("로그인 : " + authDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(authDTO);
+//        return ResponseEntity.status(HttpStatus.OK).body(authDTO);
+        response.sendRedirect("http://localhost:3000/public/Unity_WebGL.html"); //확정 아님
 
-//        // JWT 토큰을 클라이언트에게 반환 (JSON 응답)
-//        System.out.println("토큰을 클라이언트에게 반환합니다.");
-//        response.setStatus(HttpServletResponse.SC_OK);
-//        response.setContentType("application/json");
-//        response.getWriter().write(ApiUtils.success(authDTO).toString());
 
     }
+
 
     /**
      * 추가 정보 입력 후 회원가입 처리
@@ -104,5 +108,7 @@ public class UserSocialLoginController {
         System.out.println(oauth2User.getAttributes());
         return ResponseEntity.ok().body(ApiUtils.success("good"));
     }
+
+
 
 }
