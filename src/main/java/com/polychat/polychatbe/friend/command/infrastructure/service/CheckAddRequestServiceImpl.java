@@ -19,12 +19,12 @@ public class CheckAddRequestServiceImpl implements CheckAddRequestService {
 
     @Override
     public boolean isExistRequest(long friendRequestId) {
-        return friendRequestRepository.existsById((int) friendRequestId);
+        return friendRequestRepository.existsById(friendRequestId);
     }
 
     @Override
     public boolean isValidRequest(long friendRequestId) {
-        FriendRequest friendRequest = friendRequestRepository.findById((int)friendRequestId).orElseThrow(
+        FriendRequest friendRequest = friendRequestRepository.findById(friendRequestId).orElseThrow(
                 NoSuchElementException::new);
 
         return friendRequest.getStatus()== RequestStatus.ACCEPTED;
