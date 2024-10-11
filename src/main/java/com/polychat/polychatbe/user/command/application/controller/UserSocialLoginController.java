@@ -73,7 +73,7 @@ public class UserSocialLoginController {
 
         //없으면 회원가입으로
         if (authDTO == null) {
-            response.sendRedirect("http://localhost:3000/sign");
+            response.sendRedirect("http://localhost:3000/createAccount");
 //            return ResponseEntity.status(HttpStatus.ACCEPTED).body("go to sign in page");
         }
 
@@ -89,7 +89,7 @@ public class UserSocialLoginController {
      * 추가 정보 입력 후 회원가입 처리
      */
     @PostMapping("/google/signup")
-    public ResponseEntity<?> googleSignUp(@RequestBody UserRequestDTO.signUpDTO request) {
+    public ResponseEntity<?> googleSignUp(@RequestBody UserRequestDTO.signUpDTO request, @AuthenticationPrincipal OAuth2User oauth2User) {
         System.out.println("회원 가입 시작");
         // 클라이언트로부터 추가 정보 수신 후 회원가입 처리
         UserResponseDTO.authDTO authDTO = userSocialLoginService.googleSignUp(request);

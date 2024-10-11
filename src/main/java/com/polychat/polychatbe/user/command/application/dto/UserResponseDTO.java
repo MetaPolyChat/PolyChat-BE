@@ -22,6 +22,9 @@ public class UserResponseDTO {
 //    ) {
 //    }
 
+    /**
+     * 로그인 했을때 리턴 데이터
+     * */
     public record authDTO(
             Long userId,
             String userEmail
@@ -54,6 +57,9 @@ public class UserResponseDTO {
     }
 
 
+    /**
+     * 유저 데이터 반환
+     * */
     public record UserInfoDTO(
             Long userId,
             String email,
