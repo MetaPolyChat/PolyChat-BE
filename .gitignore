@@ -7,7 +7,7 @@ build/
 
 ### external API_KEY ###
 .env
-firebaseAPI.json
+
 .DS_STORE
 
 ### STS ###
@@ -42,6 +42,6 @@ out/
 .vscode/
 
 ### docker files ###
-/mysql_data/
-/my.cnf/
-
+/docker/polychatdb
+/docker/nginx/certs
+/docker/nginx/private
