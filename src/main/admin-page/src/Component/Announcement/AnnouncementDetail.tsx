@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getAnnouncementById } from "../AxiosRequest/AnnouncementApi";
+import { getAnnouncementById } from "../../AxiosRequest/AnnouncementApi";
 
 interface AnnouncementInfo {
     announcementId: number;
@@ -58,6 +58,8 @@ const AnnouncementDetail: React.FC = () => {
                 <input className="rounded-md border my-2" name="title" type="text" onChange={onTitleChange} value={title} />
                 <label>보내는 사람 id</label>
                 <input className="rounded-md border my-2" name=" uploaderNo" type="text" value={announcement?.uploaderNo} />
+                <p>등록 시간 : {announcement?.uploadTime}</p>
+                <p>최종 변경 시간: {announcement?.lastUpdatedTime}</p>
                 <label>내용</label>
                 <input className="rounded-md border h-48 " name="content" type="text" onChange={onContentChange} value={content} />
                 <button className="bg-sky-500 rounded-md border w-1/2 self-center my-2">수정</button>
