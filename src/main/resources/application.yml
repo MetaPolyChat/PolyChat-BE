@@ -1,6 +1,5 @@
 server:
   port: 8000
-  forward-headers-strategy: native
 
 spring:
   config:
@@ -59,5 +58,9 @@ mybatis:
   type-aliases-package: com.polychat.polychatbe.interest.command.application.dto
   configuration:
     map-underscore-to-camel-case: true
+
+app:
+  firebase-configuration-file: ${FIREBASE_API_KEY}
+  firebase-bucket: ${FIREBASE_BUCKET_URL}
 
 #debug: true

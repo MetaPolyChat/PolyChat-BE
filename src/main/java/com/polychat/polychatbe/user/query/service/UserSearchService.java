@@ -1,11 +1,13 @@
 package com.polychat.polychatbe.user.query.service;
 
 import com.polychat.polychatbe.common.SearchCriteriaInfo;
+import com.polychat.polychatbe.user.query.dto.UserDetailResponseDTO;
 import com.polychat.polychatbe.user.query.dto.UserResponseDTO;
 import com.polychat.polychatbe.user.query.repository.UserSearchRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class UserSearchService {
@@ -21,15 +23,17 @@ public class UserSearchService {
     }
 
     public List<UserResponseDTO> findUsersWithCriteria(SearchCriteriaInfo searchCriteriaInfo) {
-        System.out.println("시도중");
         return userSearchRepository.findUsersWithCriteria(searchCriteriaInfo);
     }
 
-    public int countAll() {
-        System.out.println("카운트 시도?");
-        int counted = userSearchRepository.countAll();
-        System.out.println("카운트 : " + counted);
-        return counted;
+    public int countAll(){
+        return userSearchRepository.countAll();
+    }
+
+    public UserDetailResponseDTO findUserById(long id){
+        return userSearchRepository.findUserById(id).orElseThrow(
+                ()->new NoSuchElementException("해당 유저를 찾을 수 없습니다")
+        );
     }
 
 
