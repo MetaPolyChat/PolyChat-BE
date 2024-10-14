@@ -15,6 +15,9 @@ public class PolyTime {
         this.time = PolyTimeConverter.convertFromString(time);
     }
 
+    public PolyTime(){
+        this.time = LocalDateTime.now();
+    }
 
     public String getRaw() {
         return PolyTimeConverter.convTimeFromDB(this.time);
