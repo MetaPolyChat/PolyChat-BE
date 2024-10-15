@@ -17,6 +17,9 @@ const Sidebar: React.FC = () => {
         <li>
           <NavLink to="/announcement" className={({isActive}) => isActive? styles.selected: styles.menuItem}>공지사항</NavLink>
         </li>
+        <li>
+          <NavLink to="/item" className={({isActive}) => isActive? styles.selected: styles.menuItem}>상점 아이템</NavLink>
+        </li>
         {/* <li>
           <Link to="/inquiry" className={styles.menuItem}>문의사항</Link>
         </li> */}

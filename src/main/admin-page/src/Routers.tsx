@@ -9,6 +9,8 @@ import AnnouncementDetail from "./Component/Announcement/AnnouncementDetail";
 import WithdrawUser from "./Component/WithdrawUser";
 import BlockUser from "./Component/BlockUser";
 import UserDetail from "./Component/UserDetail";
+import Item from "./Component/Item/Item";
+import AddItem from "./Component/Item/ItemAdd";
 
 export const Routers = () => {
     return (
@@ -21,6 +23,10 @@ export const Routers = () => {
                     <Route index element={<Announcement/>}/>
                     <Route path="add" element={<AnnouncementAdd/>}/>
                     <Route path=":announcementId" element={<AnnouncementDetail/>}/>
+                </Route>
+                <Route path="/item">
+                    <Route index element={<Item/>}/>
+                    <Route path="add" element={<AddItem/>}/>
                 </Route>
                 <Route path="/userInfo" element={<UserDetail nickname={""} email={""} loginMethod={""} planetNumber={""} isAdmin={false} isWithdrawn={false} isSuspended={false} isDeactivated={false}/>}/>
                 <Route path="/blockUser" element={<BlockUser/>}/>
