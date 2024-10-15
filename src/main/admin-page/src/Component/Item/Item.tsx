@@ -102,6 +102,12 @@ const Item: React.FC = () => {
                         </th>
                         <th
                             className="py-2 px-4 border-b border-gray-300 cursor-pointer"
+                            onClick={() => handleSort('itemTitle')}
+                        >
+                            아이템 가격 {/* {sortingColumn === 'itemTitle' && (sortingMethod === 'ASC' ? '▲' : '▼')} */}
+                        </th>
+                        <th
+                            className="py-2 px-4 border-b border-gray-300 cursor-pointer"
                             onClick={() => handleSort('uploadTime')}
                         >
                             등록 날짜 {sortingColumn === 'uploadTime' && (sortingMethod === 'ASC' ? '▲' : '▼')}
@@ -121,11 +127,14 @@ const Item: React.FC = () => {
                             <td className="py-2 px-4 border-b border-gray-300 text-center">
                                 {/* 아이템 번호 */}33
                             </td>
-                            <td className="py-2 px-4 border-b border-gray-300" >
+                            <td className="py-2 px-4 border-b border-gray-300 text-center" >
                                 {/* 아이템 이름 */}대왕의자
                             </td>
                             <td className="py-2 px-4 border-b border-gray-300 text-center">
                                 {/* 아이템 유형 */}의자
+                            </td>
+                            <td className="py-2 px-4 border-b border-gray-300 text-center">
+                                {/* 아이템 가격 */}10000
                             </td>
                             <td className="py-2 px-4 border-b border-gray-300 text-center">
                                 {/* 업로드 시간 */}2024.9.24 10:22:33
