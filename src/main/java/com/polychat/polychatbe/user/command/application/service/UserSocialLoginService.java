@@ -182,7 +182,7 @@ public class UserSocialLoginService {
     private void signUpNewUserWithID(User user, UserRequestDTO.signUpDTO signUpDTO) {
         user = new User(
                 user.getUserId(),
-                signUpDTO.email(),
+                user.getEmail(),
                 signUpDTO.name(),
                 passwordEncoder.encode(UUID.randomUUID().toString()),
                 LoginType.GOOGLE,
