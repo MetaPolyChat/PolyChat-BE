@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +18,6 @@ public class UserResponseDTO {
     private LoginType loginType;
     private Authority authority;
     private Status status;
-//    private String planet;
-    private LocalDateTime createdAt;
+    private String planet;
+
 }
