@@ -9,9 +9,9 @@
   h3 {
     @apply text-lg;
   }
-  p {
+  /* p {
     @apply text-red-600;
-  }
+  } */
   ul {
     @apply  marker:text-sky-500;
   }
