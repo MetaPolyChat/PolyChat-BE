@@ -1,23 +1,25 @@
 package com.polychat.polychatbe.friendRequest.command.domain.service;
 
-import com.polychat.polychatbe.friend.command.domain.service.FriendService;
 import com.polychat.polychatbe.friendRequest.command.application.dto.FriendRequestDTO;
 import com.polychat.polychatbe.friendRequest.command.application.dto.FriendRequestStatusDTO;
 import com.polychat.polychatbe.friendRequest.command.domain.model.FriendRequest;
 import com.polychat.polychatbe.friendRequest.command.domain.model.RequestStatus;
 import com.polychat.polychatbe.friendRequest.command.domain.repository.FriendRequestRepository;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.NoSuchElementException;
 
 @Service
 public class FriendRequestService {
 
     private FriendRequestRepository friendRequestRepository;
-    private FriendService friendService;
+    private ApplicationEventPublisher eventPublisher;
 
-    public FriendRequestService(FriendRequestRepository friendRequestRepository, FriendService friendService) {
+    public FriendRequestService(FriendRequestRepository friendRequestRepository, ApplicationEventPublisher eventPublisher) {
         this.friendRequestRepository = friendRequestRepository;
-        this.friendService = friendService;
+        this.eventPublisher = eventPublisher;
     }
 
     @Transactional
@@ -37,6 +39,15 @@ public class FriendRequestService {
     }
 
     @Transactional
+    public void approveFriendRequest(FriendRequest request) {
+        request.setStatus(RequestStatus.ACCEPTED);
+        friendRequestRepository.save(request);
+
+        // 이벤트 발행
+        eventPublisher.publishEvent(new FriendRequestApprovedEvent(request.getSender(), request.getReceiver()));
+    }
+
+    @Transactional
     public void updateFriendRequestStatus(FriendRequestStatusDTO friendRequestStatusDTO){
 
         FriendRequest friendRequest = friendRequestRepository.findById(friendRequestStatusDTO.getFriendRequestId())
@@ -46,7 +57,7 @@ public class FriendRequestService {
     }
 
     @Transactional
-    public void deleteFriendRequest(int friendRequestId){
+    public void deleteFriendRequest(long friendRequestId){
         friendRequestRepository.deleteById(friendRequestId);
     }
 
