@@ -1,6 +1,5 @@
 package com.polychat.polychatbe.user.command.application.dto;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
@@ -44,5 +43,14 @@ public class UserRequestDTO {
             String name
     ) {
     }
+
+    /** 구글 로그인
+     *
+     * */
+    public record googleSignUpDTO(
+            Long userId,
+            String nickname
+    ){}
+
 
 }

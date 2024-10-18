@@ -6,21 +6,23 @@ import com.polychat.polychatbe.user.command.domain.model.LoginType;
 import com.polychat.polychatbe.user.command.domain.model.Status;
 import com.polychat.polychatbe.user.command.domain.model.User;
 import com.polychat.polychatbe.user.command.domain.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
 
 
@@ -43,7 +45,7 @@ public class UserService {
         return User.builder()
                 .userName(requestDTO.name())
                 .email(requestDTO.email())
-                .password(passwordEncoder.encode(requestDTO.password()))
+                .password(requestDTO.password())
                 .loginType(LoginType.NONE)
                 .authority(Authority.USER)
                 .status(Status.ACTIVATED)
