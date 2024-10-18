@@ -71,16 +71,15 @@ public class UserSocialLoginController {
         // 구글 인증 코드 수신 후 로그인 처리
         UserResponseDTO.authDTO authDTO = userSocialLoginService.googleLogin(code);
 
-        //없으면 회원가입으로
-        if (authDTO == null) {
-            response.sendRedirect("http://localhost:3000/createAccount");
-//            return ResponseEntity.status(HttpStatus.ACCEPTED).body("go to sign in page");
+        if (authDTO.isSignIn()) {
+            System.out.println("로그인 : " + authDTO);
+//        return ResponseEntity.status(HttpStatus.OK).body(authDTO);
+            response.sendRedirect("http://localhost:3000/public/Unity_WebGL.html"); //확정 아님
         }
 
-        System.out.println("로그인 : " + authDTO);
-//        return ResponseEntity.status(HttpStatus.OK).body(authDTO);
-        response.sendRedirect("http://localhost:3000/public/Unity_WebGL.html"); //확정 아님
-
+        //없으면 회원가입으로
+        response.sendRedirect("http://localhost:3000/createAccount?userId=" + authDTO.userId());
+//            return ResponseEntity.status(HttpStatus.ACCEPTED).body("go to sign in page");
 
     }
 
@@ -89,13 +88,11 @@ public class UserSocialLoginController {
      * 추가 정보 입력 후 회원가입 처리
      */
     @PostMapping("/google/signup")
-    public ResponseEntity<?> googleSignUp(@RequestBody UserRequestDTO.signUpDTO request, @AuthenticationPrincipal OAuth2User oauth2User) {
-        System.out.println("회원 가입 시작");
+    public ResponseEntity<?> googleSignUp(@RequestBody UserRequestDTO.googleSignUpDTO signUpDTO) {
         // 클라이언트로부터 추가 정보 수신 후 회원가입 처리
-        UserResponseDTO.authDTO authDTO = userSocialLoginService.googleSignUp(request);
-
+        System.out.println("회원 가입 시작");
+        UserResponseDTO.authDTO authDTO = userSocialLoginService.googleSignUp(signUpDTO);
         return ResponseEntity.ok().body(ApiUtils.success(authDTO));
-
     }
 
     /**
@@ -110,5 +107,13 @@ public class UserSocialLoginController {
     }
 
 
+    /**
+     * url 테스트
+     * */
+    @GetMapping("/test")
+    public ResponseEntity<?> test() {
+        System.out.println("success");
+        return ResponseEntity.ok().body(ApiUtils.success("good"));
+    }
 
 }
