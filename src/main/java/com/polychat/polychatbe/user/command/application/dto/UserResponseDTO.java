@@ -23,11 +23,11 @@ public class UserResponseDTO {
 //    }
 
     /**
-     * 로그인 했을때 리턴 데이터
+     * 로그인을 위한 처리
      * */
     public record authDTO(
             Long userId,
-            String userEmail
+            boolean isSignIn
     ){
     }
 
