@@ -20,17 +20,17 @@ public class Item {
     private String itemDescription;
     private String itemImageUrl;
     private String itemType;
-    private String price;
+    private int price;
 
-    public Item(String itemName, String itemDescription, String itemType, String price) {
+
+    public Item(String itemName, String itemDescription, String itemType, int price) {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemType = itemType;
         this.price = price;
     }
 
-    public Item(String itemName, String itemDescription, String itemImageUrl,
-                String itemType, String price) {
+    public Item(String itemName, String itemDescription, String itemImageUrl, String itemType, int price) {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemImageUrl = itemImageUrl;
@@ -39,7 +39,7 @@ public class Item {
     }
 
     public void update(String itemName, String itemDescription,
-                       String itemType, String price) {
+                       String itemType, int price) {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemType = itemType;

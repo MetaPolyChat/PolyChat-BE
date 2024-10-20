@@ -1,5 +1,6 @@
 package com.polychat.polychatbe.item.query.service;
 
+import com.polychat.polychatbe.common.SearchCriteriaInfo;
 import com.polychat.polychatbe.item.query.dto.ItemDetailResponseDTO;
 import com.polychat.polychatbe.item.query.dto.ItemResponseDTO;
 import com.polychat.polychatbe.item.query.repository.ItemSearchRepository;
@@ -26,6 +27,10 @@ public class ItemSearchService {
 
     public List<ItemResponseDTO> findAllItem() {
         return itemSearchRepository.findAllItem();
+    }
+
+    public List<ItemResponseDTO> findItems(SearchCriteriaInfo searchCriteria){
+        return itemSearchRepository.findItems(searchCriteria);
     }
 
     public int countAll() {

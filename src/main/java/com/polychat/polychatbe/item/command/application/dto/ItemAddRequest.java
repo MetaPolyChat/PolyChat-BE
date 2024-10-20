@@ -1,6 +1,8 @@
 package com.polychat.polychatbe.item.command.application.dto;
 
 import com.polychat.polychatbe.item.command.domain.aggregate.Item;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,12 +12,16 @@ import org.springframework.web.multipart.MultipartFile;
 @Setter
 public class ItemAddRequest {
 
+    @NotBlank
     private String itemName;
+    @NotBlank
     private String itemDescription;
 
     private MultipartFile itemImage;
     private String itemType;
-    private String price;
+
+    @PositiveOrZero
+    private int price;
 
 
     public static Item toItem(ItemAddRequest itemAddRequest){
