@@ -8,7 +8,7 @@ export const request = axios.create({
 
 request.interceptors.request.use(
     config => {
-        console.log("인터셉터를 거침");
+        //console.log("인터셉터를 거침");
         return config;
     },
     error => {
@@ -19,7 +19,7 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
     response => {
-        console.log(`받아온것: ` + response);
+        //console.log(`받아온것: ` + response);
         return response;
         //return response.data;
     },
