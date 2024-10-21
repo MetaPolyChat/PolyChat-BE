@@ -1,7 +1,7 @@
 import Announcement from "../Component/HomePage";
 import { request } from "./Axios";
 
-export const getAnnouncement = async (params: undefined | null | { sortingColumn: string; sortingMethod: 'ASC' | 'DESC'; }, page: number = 1) => {
+export const getAnnouncement = async (params: undefined | null | { sortingColumn: string|null; sortingMethod: 'ASC' | 'DESC'|null; }, page: number = 1) => {
     const response = await request.get('/announcement/page', {
         params: {
             pageNum: page,
