@@ -25,6 +25,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Slf4j
@@ -188,7 +189,8 @@ public class UserSocialLoginService {
                 LoginType.GOOGLE,
                 Authority.USER,
                 Status.ACTIVATED,
-                userRandomGenerateService.generatePlanetCode()
+                userRandomGenerateService.generatePlanetCode(),
+                LocalDateTime.now()
         );
 
         userRepository.save(user);
