@@ -1,4 +1,4 @@
-package com.polychat.polychatbe.item.domain.aggregate;
+package com.polychat.polychatbe.item.command.domain.aggregate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,7 +8,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "TBL_ITEM")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Item {
@@ -22,7 +22,15 @@ public class Item {
     private String itemType;
     private String price;
 
-    public Item(String itemName, String itemDescription, String itemImageUrl, String itemType, String price) {
+    public Item(String itemName, String itemDescription, String itemType, String price) {
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.itemType = itemType;
+        this.price = price;
+    }
+
+    public Item(String itemName, String itemDescription, String itemImageUrl,
+                String itemType, String price) {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemImageUrl = itemImageUrl;
@@ -30,14 +38,15 @@ public class Item {
         this.price = price;
     }
 
-    public void updateItem(String itemName, String itemDescription, String itemImageUrl,
-                           String itemType, String price) {
+    public void update(String itemName, String itemDescription,
+                       String itemType, String price) {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
-        this.itemImageUrl = itemImageUrl;
         this.itemType = itemType;
         this.price = price;
     }
 
-
+    public void setItemImageUrl(String itemImageUrl) {
+        this.itemImageUrl = itemImageUrl;
+    }
 }
