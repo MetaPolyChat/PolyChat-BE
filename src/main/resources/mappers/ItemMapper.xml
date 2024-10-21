@@ -8,8 +8,7 @@
     <resultMap id="itemMap" type="com.polychat.polychatbe.item.query.dto.ItemResponseDTO">
         <id property="itemId" column="item_id"/>
         <result property="itemName" column="item_name"/>
-        <result property="itemDescription" column="item_description"/>
-<!--        <result property="createdAt" column="created_at"/>-->
+        <result property="createdAt" column="created_at"/>
         <result property="itemType" column="item_type"/>
         <result property="price" column="price"/>
 
@@ -20,7 +19,7 @@
         <result property="itemName" column="item_name"/>
         <result property="itemDescription" column="item_description"/>
         <result property="itemImageUrl" column="item_image_url"/>
-<!--        <result property="createdAt" column="created_at"/>-->
+        <result property="createdAt" column="created_at"/>
         <result property="itemType" column="item_type"/>
         <result property="price" column="price"/>
     </resultMap>
@@ -31,17 +30,19 @@
               , ITEM_NAME
               , ITEM_TYPE
               , PRICE
+              , CREATED_AT
           FROM
                 TBL_ITEM
     </select>
 
-    <select id="findItems" resultMap="itemDetailMap"
+    <select id="findItems" resultMap="itemMap"
             parameterType="com.polychat.polychatbe.common.SearchCriteriaInfo">
         SELECT
                 ITEM_ID
               , ITEM_NAME
               , ITEM_TYPE
               , PRICE
+              , CREATED_AT
           FROM
                 TBL_ITEM
 
@@ -57,7 +58,7 @@
         </if>
     </select>
 
-    <select id="findById" resultMap="itemMap" parameterType="_long">
+    <select id="findById" resultMap="itemDetailMap" parameterType="_long">
         SELECT
                 ITEM_ID
               , ITEM_NAME
@@ -65,6 +66,7 @@
               , ITEM_TYPE
               , ITEM_IMAGE_URL
               , PRICE
+              , CREATED_AT
           FROM
                 TBL_ITEM
          WHERE
