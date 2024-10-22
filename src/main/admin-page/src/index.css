@@ -9,15 +9,19 @@
   h3 {
     @apply text-lg;
   }
-  p {
+  /* p {
     @apply text-red-600;
-  }
+  } */
   ul {
     @apply  marker:text-sky-500;
   }
   a {
     @apply text-sky-500 hover:text-sky-600;
   }
+}
+
+.table-header-base {
+  @apply py-2 px-4 border-b border-gray-300;
 }
 
 @tailwind components;

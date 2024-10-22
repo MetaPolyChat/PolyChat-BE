@@ -1,5 +1,6 @@
 server:
   port: 8000
+  forward-headers-strategy: native
 
 spring:
   config:
@@ -29,18 +30,18 @@ spring:
             client-secret: ${GOOGLE_CLIENT_SECRET}
             scope:
               - email
-              - profile
-              - openid
+#              - profile
+#              - openid
             redirect-uri: "http://localhost:8000/api/auth/google/login"
             authorizationGrantType: authorization_code
         provider:
           google:
-            authorization-uri: https://accounts.google.com/o/oauth2/auth
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
             token-uri: https://oauth2.googleapis.com/token
             user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
 
-jwt:
-  secret: ${JWT_SECRET_KEY}
+#jwt:
+#  secret: ${JWT_SECRET_KEY}
 
 # swagger settings
 #springdoc:
@@ -53,8 +54,21 @@ jwt:
 #    display-request-duration: true
 #    operations-sorter: alpha
 
+logging:
+  pattern:
+    dateformat: "yyyy-MM-dd HH:mm:ss:SSS"
+  level:
+    root: info
+    com.ohgiraffers.r_pakabe.RPakaBeApplication: debug
+
 mybatis:
   mapper-locations: mappers/**/*.xml
   type-aliases-package: com.polychat.polychatbe.interest.command.application.dto
   configuration:
     map-underscore-to-camel-case: true
+
+app:
+  firebase-configuration-file: ${FIREBASE_API_KEY}
+  firebase-bucket: ${FIREBASE_BUCKET_URL}
+
+#debug: true
