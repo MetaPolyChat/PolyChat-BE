@@ -1,4 +1,4 @@
-package com.polychat.polychatbe.login.utils;
+package com.polychat.polychatbe.common.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;

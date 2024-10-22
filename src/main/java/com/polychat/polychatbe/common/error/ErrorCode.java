@@ -1,4 +1,4 @@
-package com.polychat.polychatbe.login.error;
+package com.polychat.polychatbe.common.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
