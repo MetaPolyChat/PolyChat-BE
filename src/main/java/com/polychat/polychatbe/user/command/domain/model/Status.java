@@ -4,5 +4,5 @@ public enum Status {
     ACTIVATED,
     DEACTIVATED,
     SUSPENDED,
-    BEFORE_SIGNUP
+    BEFORE_SIGNUP   //임시 회원
 }

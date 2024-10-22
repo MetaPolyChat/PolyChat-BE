@@ -6,11 +6,13 @@ import com.polychat.polychatbe.friendRequest.command.application.service.FriendR
 import com.polychat.polychatbe.friendRequest.command.domain.model.FriendRequest;
 import com.polychat.polychatbe.friendRequest.command.domain.model.RequestStatus;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 //@RequestMapping("/api/v1")
+@Tag(name = "친구 신청 API", description = "친구 신청에 대한 API")
 public class FriendRequestController {
 
     FriendRequestApplicationService friendRequestApplicationService;
@@ -26,18 +28,17 @@ public class FriendRequestController {
         friendRequestApplicationService.addFriendRequest(friendRequestInfo);
     }
 
-    @Operation(summary = "친구 신청 상태 변경", description = "친구 신청 상태를 변경합니다.")
+    @Operation(summary = "친구 신청 수락", description = "친구 신청 요청을 수락합니다.")
     @ResponseStatus(HttpStatus.CREATED)
-    @PutMapping("friendRequest/{id}")
-    public void updateRequestStats(@PathVariable int id, @RequestBody RequestStatus newStatus){
-        FriendRequestStatusDTO requestInfo = new FriendRequestStatusDTO(id, newStatus);
-        friendRequestApplicationService.updateFriendRequestStatus(requestInfo);
+    @PutMapping("friendRequest/accept/{id}")
+    public void acceptFriendRequest(@PathVariable long id){
+        friendRequestApplicationService.acceptFriendRequest(id);
     }
 
     @Operation(summary = "친구 신청 취소", description = "친구 신청을 취소합니다.")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("friendRequest/{id}")
-    public void cancelFriendRequest(@PathVariable int id){
+    public void cancelFriendRequest(@PathVariable long id){
         FriendRequestStatusDTO requestInfo = new FriendRequestStatusDTO(id, RequestStatus.CANCELED);
         friendRequestApplicationService.updateFriendRequestStatus(requestInfo);
     }

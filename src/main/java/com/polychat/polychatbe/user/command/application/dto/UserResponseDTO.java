@@ -1,97 +1,72 @@
 package com.polychat.polychatbe.user.command.application.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.time.LocalDateTime;
+import com.polychat.polychatbe.user.command.domain.model.LoginType;
 
 public class UserResponseDTO {
 
-    /** 토큰 발급
-     * @param grantType
-     * @param accessToken
-     * @param accessTokenValidTime
-     * @param refreshToken
-     * @param refreshTokenValidTime
-     */
+//    /** 토큰 발급
+//     * @param grantType
+//     * @param accessToken
+//     * @param accessTokenValidTime
+//     * @param refreshToken
+//     * @param refreshTokenValidTime
+//     */
+//
+//    public record authTokenDTO(
+//            String grantType,
+//            String accessToken,
+//            Long accessTokenValidTime,
+//            String refreshToken,
+//            Long refreshTokenValidTime
+//    ) {
+//    }
 
-    public record authTokenDTO(
-            String grantType,
-            String accessToken,
-            Long accessTokenValidTime,
-            String refreshToken,
-            Long refreshTokenValidTime
-    ) {
+    /**
+     * 로그인을 위한 처리
+     * */
+    public record authDTO(
+            Long userId,
+            boolean isSignIn
+    ){
     }
 
     /** 구글 OAuth2 프로필
      * @param email
      */
-    public record GoogleProfile(
-            String email
+    public record GoogleEmailDTO(
+            String email,        // 사용자의 이메일 주소
+            boolean email_verified // 이메일이 검증되었는지 여부
+    ) {
+    }
+
+    public record GoogleTokenDTO(
+            @JsonProperty("access_token")
+            String accessToken,
+            @JsonProperty("expires_in")
+            int expiresIn,
+            @JsonProperty("scope")
+            String scope,
+            @JsonProperty("token_type")
+            String tokenType,
+            @JsonProperty("id_token")
+            String idToken,
+            @JsonProperty("refresh_token")
+            String refreshToken
+    ) {
+    }
+
+
+    /**
+     * 유저 데이터 반환
+     * */
+    public record UserInfoDTO(
+            Long userId,
+            String email,
+            String userName,
+            LoginType loginType,
+            String planet
     ){
     }
 
-    /** Kakao Token
-     * @param tokenType
-     * @param accessToken
-     * @param refreshToken
-     * @param idToken
-     * @param expiresIn
-     * @param refreshTokenExpiresIn
-     * @param scope
-     */
-    public record KakaoTokenDTO(
-            @JsonProperty("token_type")
-            String tokenType,
-            @JsonProperty("access_token")
-            String accessToken,
-            @JsonProperty("refresh_token")
-            String refreshToken,
-            @JsonProperty("id_token")
-            String idToken,
-            @JsonProperty("expires_in")
-            int expiresIn,
-            @JsonProperty("refresh_token_expires_in")
-            int refreshTokenExpiresIn,
-            String scope
-    ) {
-    }
-
-    // Kakao Info
-    public record KakaoInfoDTO(
-            long id,
-            @JsonProperty("has_signed_up")
-            boolean hasSignedUp,
-            @JsonProperty("connected_at")
-            LocalDateTime connectedAt,
-            KakaoProperties properties,
-            @JsonProperty("kakao_account")
-            KakaoAccount kakaoAccount
-    ) {
-        public record KakaoProperties(
-                String nickname
-        ) {
-        }
-
-        public record KakaoAccount(
-                @JsonProperty("profile_nickname_needs_agreement")
-                boolean profileNicknameNeedsAgreement,
-                String nickname,
-                @JsonProperty("email_needs_agreement")
-                boolean emailNeedsAgreement,
-                @JsonProperty("is_email_valid")
-                boolean isEmailValid,
-                @JsonProperty("is_email_verified")
-                boolean isEmailVerified,
-                String email,
-                @JsonProperty("age_range_needs_agreement")
-                boolean ageRangeNeedsAgreement,
-                @JsonProperty("age_range")
-                String age_range,
-                @JsonProperty("gender_needs_agreement")
-                boolean genderNeedsAgreement,
-                String gender
-        ) {
-        }
-    }
 }

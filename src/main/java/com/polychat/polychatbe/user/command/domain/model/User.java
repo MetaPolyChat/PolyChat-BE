@@ -1,14 +1,14 @@
 package com.polychat.polychatbe.user.command.domain.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Entity
 @Table(name="TBL_USER")
 public class User {
@@ -27,9 +27,6 @@ public class User {
     @Column(name="PASSWORD", nullable = false)
     private String password;
 
-//    @Column(length = 100, nullable = false, unique = true)
-//    private String email;
-
     @Column(name="LOGIN_TYPE", nullable = false)
     @Enumerated(value = EnumType.STRING)
     @ColumnDefault("'NONE'")
@@ -45,13 +42,14 @@ public class User {
     @ColumnDefault("'ACTIVATED'")
     private Status status;
 
-    @Column(name = "PLANET", nullable = false)
+    @Column(name = "PLANET", nullable = false, unique = true)
     private String planet;
 
+    @Column(name="CREATED_AT")
+    private LocalDateTime createdAt;
 
     @Builder
-    public User(/*String userId, */String userName, String password, LoginType loginType, Authority authority, Status status, String email, String planet) {
-//        this.userId = userId;
+    public User(String userName, String password, LoginType loginType, Authority authority, Status status, String email, String planet, LocalDateTime createdAt) {
         this.userName = userName;
         this.password = password;
         this.loginType = loginType;
@@ -59,20 +57,37 @@ public class User {
         this.status = status;
         this.email = email;
         this.planet = planet;
+        this.createdAt = createdAt;
+    }
+
+    public void updateStatus(Status status) {
+        this.status = status;
+    }
+
+    public void updateUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void updatePassword(String password) {
+        this.password = password;
+    }
+
+    public void updateAuthority(Authority authority) {
+        this.authority = authority;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "userNo=" + userId +
-//                ", userId='" + userId + '\'' +
+                "userId=" + userId +
+                ", email='" + email + '\'' +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
                 ", loginType=" + loginType +
                 ", authority=" + authority +
                 ", status=" + status +
                 ", planet='" + planet + '\'' +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }

@@ -11,8 +11,8 @@
         <result property="announcementContent" column="announcement_content"/>
         <result property="uploaderNo" column="uploader_id"/>
         <result property="uploaderName" column="uploader_name"/>
-        <result property="uploadTime" column="upload_time"/>
-        <result property="lastUpdatedTime" column="last_updated_time"/>
+        <result property="uploadTime" column="created_at"/>
+        <result property="lastUpdatedTime" column="updated_date"/>
 
     </resultMap>
 
@@ -30,14 +30,17 @@
               , ANNOUNCEMENT_CONTENT
               , A.UPLOADER_ID AS UPLOADER_ID
               , B.USER_NAME AS UPLOADER_NAME
-              , UPLOAD_TIME
-              , LAST_UPDATED_TIME
+              , A.CREATED_AT
+              , A.UPDATED_DATE
           FROM
                 TBL_ANNOUNCEMENT A
           LEFT JOIN
                 TBL_USER B
             ON
                 A.UPLOADER_ID=B.USER_ID
+        <if test="orderCriteriaSnakeCase == null or orderMethod == null">
+            ORDER BY CREATED_AT DESC
+        </if>
         <if test="orderCriteriaSnakeCase != null and orderMethod != null">
             ORDER BY ${orderCriteriaSnakeCase} ${orderMethod}
         </if>
@@ -56,8 +59,8 @@
 <!--              , ANNOUNCEMENT_CONTENT-->
 <!--              , A.UPLOADER_ID AS UPLOADER_ID-->
 <!--              , B.USER_NAME AS UPLOADER_NAME-->
-<!--              , UPLOAD_TIME-->
-<!--              , LAST_UPDATED_TIME-->
+<!--              , CREATED_AT-->
+<!--              , UPDATED_DATE-->
 <!--          FROM-->
 <!--                TBL_ANNOUNCEMENT A-->
 <!--          JOIN-->
@@ -82,8 +85,8 @@
              ,  ANNOUNCEMENT_CONTENT
              ,  A.UPLOADER_ID AS UPLOADER_ID
              ,  B.USER_NAME AS UPLOADER_NAME
-             ,  UPLOAD_TIME
-             ,  LAST_UPDATED_TIME
+             ,  A.CREATED_AT
+             ,  A.UPDATED_DATE
           FROM
                 TBL_ANNOUNCEMENT A
         LEFT JOIN
