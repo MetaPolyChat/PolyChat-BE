@@ -6,6 +6,8 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -30,7 +32,8 @@ public class ItemAddRequest {
                 itemAddRequest.getItemName(),
                 itemAddRequest.getItemDescription(),
                 itemAddRequest.getItemType(),
-                itemAddRequest.getPrice()
+                itemAddRequest.getPrice(),
+                LocalDateTime.now()
         );
     }
 }
