@@ -8,6 +8,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity(name = "TBL_ITEM")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -21,21 +23,25 @@ public class Item {
     private String itemImageUrl;
     private String itemType;
     private int price;
+    private LocalDateTime createdAt;
 
 
-    public Item(String itemName, String itemDescription, String itemType, int price) {
+    public Item(String itemName, String itemDescription, String itemType, int price, LocalDateTime createdAt) {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemType = itemType;
         this.price = price;
+        this.createdAt = createdAt;
     }
 
-    public Item(String itemName, String itemDescription, String itemImageUrl, String itemType, int price) {
+    public Item(String itemName, String itemDescription, String itemImageUrl,
+                String itemType, int price, LocalDateTime createdAt) {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemImageUrl = itemImageUrl;
         this.itemType = itemType;
         this.price = price;
+        this.createdAt = createdAt;
     }
 
     public void update(String itemName, String itemDescription,
