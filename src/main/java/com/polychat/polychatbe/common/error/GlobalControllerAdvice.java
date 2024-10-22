@@ -1,7 +1,8 @@
-package com.polychat.polychatbe.login.error;
+package com.polychat.polychatbe.common.error;
 
 
-import com.polychat.polychatbe.login.utils.ApiUtils;
+import com.polychat.polychatbe.common.PolyTime;
+import com.polychat.polychatbe.common.utils.ApiUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +30,22 @@ public class GlobalControllerAdvice {
         return ResponseEntity.status(e.getErrorCode().getStatus()).body(ApiUtils.error(data));
     }
 
+    @ExceptionHandler(NullfieldException.class)
+    public ResponseEntity<?> applicationHandler(NullfieldException e){
+        log.error("Null field Exception {}", e.getMessage());
+
+        Map<String,Object> data = new HashMap<>();
+        data.put("status",e.getStatus().value());
+        data.put("errorCode", e.getErrorCode());
+        data.put("message",e.getMessage());
+        data.put("timestamp", e.getTimestamp());
+
+        return ResponseEntity.status(e.getStatus()).body(ApiUtils.error(data));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> applicationHandler(Exception e){
-        log.error("Error occurs {}", e.getMessage());
+        log.error("Unexpected Error occurs {}", e.getMessage());
 
         ErrorCode error = ErrorCode.INTERNAL_SERVER_ERROR;
 
@@ -39,7 +53,7 @@ public class GlobalControllerAdvice {
         data.put("status",error.getStatus().value());
         data.put("errorCode", error.getErrorCode());
         data.put("message",e.getMessage());
-        data.put("timestamp", LocalDateTime.now());
+        data.put("timestamp", new PolyTime(LocalDateTime.now()));
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiUtils.error(data));
     }

@@ -1,8 +1,8 @@
-package com.polychat.polychatbe.login.utils;
+package com.polychat.polychatbe.common.utils;
 
 
-import com.polychat.polychatbe.login.error.ApplicationException;
-import com.polychat.polychatbe.login.error.ErrorCode;
+import com.polychat.polychatbe.common.error.ApplicationException;
+import com.polychat.polychatbe.common.error.ErrorCode;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class SecurityUtils {

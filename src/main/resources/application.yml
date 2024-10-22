@@ -54,6 +54,13 @@ spring:
 #    display-request-duration: true
 #    operations-sorter: alpha
 
+logging:
+  pattern:
+    dateformat: "yyyy-MM-dd HH:mm:ss:SSS"
+  level:
+    root: info
+    com.ohgiraffers.r_pakabe.RPakaBeApplication: debug
+
 mybatis:
   mapper-locations: mappers/**/*.xml
   type-aliases-package: com.polychat.polychatbe.interest.command.application.dto
