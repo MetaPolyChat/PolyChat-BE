@@ -88,9 +88,9 @@ public class UserSocialLoginController {
      * 추가 정보 입력 후 회원가입 처리
      */
     @PostMapping("/google/signup")
-    public ResponseEntity<?> googleSignUp(@RequestBody UserRequestDTO.googleSignUpDTO signUpDTO) {
+    public ResponseEntity<?> googleSignUp(UserRequestDTO.googleSignUpDTO signUpDTO) {
         // 클라이언트로부터 추가 정보 수신 후 회원가입 처리
-        System.out.println("회원 가입 시작");
+        System.out.println("회원 가입 시작" + signUpDTO);
         UserResponseDTO.authDTO authDTO = userSocialLoginService.googleSignUp(signUpDTO);
         return ResponseEntity.ok().body(ApiUtils.success(authDTO));
     }
