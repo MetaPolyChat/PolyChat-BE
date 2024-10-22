@@ -1,12 +1,10 @@
 package com.polychat.polychatbe.user.command.application.controller;
 
-import com.polychat.polychatbe.login.utils.ApiUtils;
+import com.polychat.polychatbe.common.utils.ApiUtils;
 import com.polychat.polychatbe.user.command.application.dto.UserRequestDTO;
-import com.polychat.polychatbe.user.command.application.dto.UserResponseDTO;
 import com.polychat.polychatbe.user.command.application.service.UserLoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

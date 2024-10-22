@@ -1,7 +1,7 @@
 package com.polychat.polychatbe.user.command.application.service;
 
-import com.polychat.polychatbe.login.error.ApplicationException;
-import com.polychat.polychatbe.login.error.ErrorCode;
+import com.polychat.polychatbe.common.error.ApplicationException;
+import com.polychat.polychatbe.common.error.ErrorCode;
 import com.polychat.polychatbe.user.command.application.dto.UserRequestDTO;
 import com.polychat.polychatbe.user.command.application.dto.UserResponseDTO;
 import com.polychat.polychatbe.user.command.domain.model.Authority;
