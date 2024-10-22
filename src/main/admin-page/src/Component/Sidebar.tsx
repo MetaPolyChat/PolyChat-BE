@@ -5,14 +5,14 @@ const Sidebar: React.FC = () => {
   return (
     <nav className={styles.sidebar}>
       <ul>
-        <li>
+        {/* <li>
           <NavLink to="/home" className={({isActive}) => isActive? styles.selected: styles.menuItem}>대쉬보드</NavLink>
-        </li>
+        </li> */}
         <li>
           <NavLink to="/account" className={({isActive}) => isActive? styles.selected: styles.menuItem}>회원 관리</NavLink>
         </li>
         <li>
-          <NavLink to="/blockUser" className={({isActive}) => isActive? styles.selected: styles.menuItem}>정지회원</NavLink>
+          <NavLink to="/blockUser" className={({isActive}) => isActive? styles.selected: styles.menuItem}>차단회원</NavLink>
         </li>
         <li>
           <NavLink to="/announcement" className={({isActive}) => isActive? styles.selected: styles.menuItem}>공지사항</NavLink>
@@ -23,9 +23,9 @@ const Sidebar: React.FC = () => {
         {/* <li>
           <Link to="/inquiry" className={styles.menuItem}>문의사항</Link>
         </li> */}
-        <li>
+        {/* <li>
           <NavLink to="/withdrawUser" className={({isActive}) => isActive? styles.selected: styles.menuItem}>탈퇴 회원 관리</NavLink>
-        </li>
+        </li> */}
       </ul>
     </nav>
   );

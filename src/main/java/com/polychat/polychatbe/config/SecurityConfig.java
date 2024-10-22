@@ -29,7 +29,8 @@ public class SecurityConfig {
             "/swagger-ui.html",     // Swagger UI HTML
             "/announcement/**",
             "/admin/user/**",
-            "/admin/blockuser/**"
+            "/admin/blockuser/**",
+            "/item/**"
     };
 
     @Bean
