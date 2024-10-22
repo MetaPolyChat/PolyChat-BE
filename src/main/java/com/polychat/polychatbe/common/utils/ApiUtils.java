@@ -1,4 +1,4 @@
-package com.polychat.polychatbe.login.utils;
+package com.polychat.polychatbe.common.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
