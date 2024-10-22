@@ -1,6 +1,7 @@
 package com.polychat.polychatbe.announcement.application;
 
 import com.polychat.polychatbe.announcement.command.application.dto.AnnounceAddRequest;
+import com.polychat.polychatbe.announcement.command.application.dto.AnnouncementDeleteRequest;
 import com.polychat.polychatbe.announcement.command.application.service.AnnouncementService;
 import com.polychat.polychatbe.announcement.command.domain.aggregate.Announcement;
 import com.polychat.polychatbe.announcement.query.service.AnnouncementSearchService;
@@ -13,10 +14,12 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
+//@ActiveProfiles("local-security")
 @SpringBootTest
 public class AnnouncementTest {
 
@@ -42,15 +45,17 @@ public class AnnouncementTest {
     @MethodSource("addAnnouncementSource")
     @Transactional
     public void addAnnouncementTest (Long uploaderId, String title, String content, LocalDateTime uploadTime){
-        AnnounceAddRequest announceAddRequest = new AnnounceAddRequest(
-                uploaderId, title, content, uploadTime, null
-        );
-
-        Assertions.assertDoesNotThrow(
-                () -> announcementService.addAnnouncement(announceAddRequest)
-        );
-
-        System.out.println(announcementSearchService.findAllAnnouncement());
+//        AnnounceAddRequest announceAddRequest = new AnnounceAddRequest(
+//                uploaderId, title, content
+//        );
+//
+//        announceAddRequest.setUploadTime(uploadTime);
+//
+//        Assertions.assertDoesNotThrow(
+//                () -> announcementService.addAnnouncement(announceAddRequest)
+//        );
+//
+//        System.out.println(announcementSearchService.findAllAnnouncement());
     }
 
     @DisplayName("공지사항 삭제 테스트")
@@ -58,8 +63,9 @@ public class AnnouncementTest {
     @ParameterizedTest
     @CsvSource({"5,1", "6,3"})
     public void deleteAnnouncement (Long announcementId, Long uploaderId) {
+        AnnouncementDeleteRequest announcementDeleteRequest = new AnnouncementDeleteRequest(uploaderId);
         Assertions.assertDoesNotThrow(
-                () -> announcementService.deleteAnnouncement(announcementId, uploaderId)
+                () -> announcementService.deleteAnnouncement(announcementId, announcementDeleteRequest)
         );
 
         System.out.println(announcementSearchService.findAllAnnouncement());
@@ -70,9 +76,11 @@ public class AnnouncementTest {
     @ParameterizedTest
     @CsvSource({"5,2", "6,5"})
     public void deleteAnnouncementNotMatchUser (Long announcementId, Long uploaderId) {
+        AnnouncementDeleteRequest announcementDeleteRequest = new AnnouncementDeleteRequest(uploaderId);
+
         IllegalArgumentException notMatchException=
                 Assertions.assertThrows(IllegalArgumentException.class,
-                () -> announcementService.deleteAnnouncement(announcementId, uploaderId)
+                () -> announcementService.deleteAnnouncement(announcementId, announcementDeleteRequest)
         );
 
         Assertions.assertEquals("삭제 권한이 없습니다.", notMatchException.getMessage());
