@@ -22,9 +22,12 @@ public class UserResponseDTO {
 //    ) {
 //    }
 
+    /**
+     * 로그인을 위한 처리
+     * */
     public record authDTO(
             Long userId,
-            String userEmail
+            boolean isSignIn
     ){
     }
 
@@ -54,6 +57,9 @@ public class UserResponseDTO {
     }
 
 
+    /**
+     * 유저 데이터 반환
+     * */
     public record UserInfoDTO(
             Long userId,
             String email,

@@ -11,20 +11,19 @@ import com.polychat.polychatbe.user.command.domain.model.Authority;
 import com.polychat.polychatbe.user.command.domain.model.LoginType;
 import com.polychat.polychatbe.user.command.domain.model.Status;
 import com.polychat.polychatbe.user.command.domain.model.User;
-import com.polychat.polychatbe.user.command.domain.repository.UserRepository;
 import com.polychat.polychatbe.user.command.domain.service.UserRandomGenerateService;
 import com.polychat.polychatbe.user.command.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.lang.Nullable;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Slf4j
@@ -33,12 +32,8 @@ import java.util.UUID;
 @Service
 public class UserSocialLoginService {
 
-    private final UserRepository userRepository;
     private final UserService userService;
     private final UserRandomGenerateService userRandomGenerateService;
-
-    private final PasswordEncoder passwordEncoder;
-//    private final JWTTokenProvider jwtTokenProvider;
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final GoogleProviderProperties googleProviderProperties;
@@ -49,7 +44,6 @@ public class UserSocialLoginService {
         구글 로그인
      */
     @Transactional
-    @Nullable
     public UserResponseDTO.authDTO googleLogin(String code) {
         System.out.println("Google Login 시작");
 
@@ -63,21 +57,23 @@ public class UserSocialLoginService {
         // 사용자가 이미 존재하는지 확인
         User user = userService.findUserByEmail(emailDTO.email())
                 .orElse(null);
-        //없으면 null 리턴
+        //없으면 임시 코드 리턴
         if (user == null) {
-            this.signUpTemporary(emailDTO);
-            return null;
+            return this.signUpTemporary(emailDTO);
         }
         //있으면 임시 회원인지 체크
         if (Status.BEFORE_SIGNUP.equals(user.getStatus())) {
-            return null;
+            User tempUser =  userService.findUserByEmail(emailDTO.email()).orElse(null);
+            if (tempUser == null) {
+                throw new ApplicationException(ErrorCode.INTERNAL_SERVER_ERROR);
+            }
+            //임시 회원이면 코드 리턴
+            return new UserResponseDTO.authDTO(tempUser.getUserId(), false);
         }
 
         // DTO 생성 및 반환
-        return this.getSocialAuthDTO(user);
+        return new UserResponseDTO.authDTO(user.getUserId(), true);
 
-//        // JWT 토큰 생성 및 반환
-//        return this.getSocialAuthTokenDTO(user);
     }
 
     /**
@@ -141,83 +137,71 @@ public class UserSocialLoginService {
     }
 
 
+
+
     @Transactional
-    public void signUpTemporary(UserResponseDTO.GoogleEmailDTO emailDTO) {
+    public UserResponseDTO.authDTO signUpTemporary(UserResponseDTO.GoogleEmailDTO emailDTO) {
         log.info("임시 회원 생성 : {}", emailDTO.email());
 
         User user = User.builder()
                 .email(emailDTO.email())
                 .userName(userRandomGenerateService.generateGoogleTempUserName())
-                .password(passwordEncoder.encode(UUID.randomUUID().toString()))
+                .password(UUID.randomUUID().toString())
                 .loginType(LoginType.GOOGLE)
                 .authority(Authority.USER)
                 .status(Status.BEFORE_SIGNUP)
                 .planet("Temp")
                 .build();
 
-        userRepository.save(user);
+        userService.saveUser(user);
+        User created = userService.findUserByEmail(emailDTO.email()).orElse(null);
+        if (created == null) {
+            throw new ApplicationException(ErrorCode.INTERNAL_SERVER_ERROR);
+        }
+        return new UserResponseDTO.authDTO(
+                created.getUserId(),
+                false
+        );
     }
+
+
+
+
 
     /**
      구글 회원가입
      */
     @Transactional
     @Nullable
-    public UserResponseDTO.authDTO googleSignUp(UserRequestDTO.signUpDTO signUpDTO) {
-        log.info("구글 회원 생성 : {}", signUpDTO.name());
-        User user = userService.findUserByEmail(signUpDTO.email()).orElse(null);
+    public UserResponseDTO.authDTO googleSignUp(UserRequestDTO.googleSignUpDTO signUpDTO) {
+        log.info("구글 회원 생성 : {}", signUpDTO.userId());
+        User user = userService.findUserById(signUpDTO.userId());
         if (user == null) {
             throw new ApplicationException(ErrorCode.INTERNAL_SERVER_ERROR);
         }
 
         if (Status.BEFORE_SIGNUP.equals(user.getStatus())) {
             this.signUpNewUserWithID(user, signUpDTO);
-            return this.getSocialAuthDTO(user);
-//            return this.getSocialAuthTokenDTO(user);
+            return new UserResponseDTO.authDTO(user.getUserId(), true);
         }
 
         throw new ApplicationException(ErrorCode.SAME_EMAIL);
     }
 
-    private void signUpNewUserWithID(User user, UserRequestDTO.signUpDTO signUpDTO) {
+
+    public void signUpNewUserWithID(User user, UserRequestDTO.googleSignUpDTO signUpDTO) {
         user = new User(
                 user.getUserId(),
-                signUpDTO.email(),
-                signUpDTO.name(),
-                passwordEncoder.encode(UUID.randomUUID().toString()),
+                user.getEmail(),
+                signUpDTO.nickname(),
+                UUID.randomUUID().toString(),
                 LoginType.GOOGLE,
                 Authority.USER,
                 Status.ACTIVATED,
-                userRandomGenerateService.generatePlanetCode()
+                userRandomGenerateService.generatePlanetCode(),
+                LocalDateTime.now()
         );
 
-        userRepository.save(user);
+        userService.saveUser(user);
     }
-
-
-    /**
-     소셜 로그인 DTO 생성
-     */
-    private UserResponseDTO.authDTO getSocialAuthDTO(User user) {
-        return new UserResponseDTO.authDTO(
-                user.getUserId(),
-                user.getEmail()
-        );
-    }
-
-
-//    /**
-//     소셜 로그인 회원 토큰 생성
-//     */
-//    private UserResponseDTO.authTokenDTO getSocialAuthTokenDTO(User user) {
-//        System.out.println("email 기반으로 jwt 토큰 생성");
-//        UserDetails userDetails =
-//                new org.springframework.security.core.userdetails.User(user.getEmail(), "",
-//                Collections.singletonList(new SimpleGrantedAuthority(user.getAuthority().toString())));
-//
-//        Authentication authentication =
-//                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//
-//        return jwtTokenProvider.generateToken(authentication);
-//    }
 }

@@ -33,7 +33,7 @@ const Layout: React.FC = () => {
     return (
         <>
             <Header>
-                <h1>Admin Dashboard</h1>
+                <h1>Admin Page</h1>
                 <nav>
                     <Link to="/">Login</Link> | <Link to="/account">Account</Link>
                 </nav>

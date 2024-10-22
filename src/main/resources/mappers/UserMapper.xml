@@ -19,10 +19,10 @@
         <id property="userId" column="user_id"/>
         <result property="email" column="email"/>
         <result property="userName" column="user_name"/>
-        <result property="planet" column="planet"/>
         <result property="loginType" column="login_type"/>
         <result property="authority" column="authority"/>
         <result property="status" column="status"/>
+        <result property="planet" column="planet"/>
         <result property="createdAt" column="created_at"/>
     </resultMap>
 
@@ -62,7 +62,7 @@
         </if>
     </select>
 
-    <select id = "findUserById" resultType="userDetailMap" parameterType="_long">
+    <select id = "findUserById" resultMap="userDetailMap" parameterType="_long">
         SELECT
                 USER_ID
               , EMAIL

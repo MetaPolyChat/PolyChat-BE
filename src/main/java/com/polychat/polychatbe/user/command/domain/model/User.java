@@ -45,9 +45,8 @@ public class User {
     @Column(name = "PLANET", nullable = false, unique = true)
     private String planet;
 
-    @Column(name = "CREATED_AT")
+    @Column(name="CREATED_AT")
     private LocalDateTime createdAt;
-
 
     @Builder
     public User(String userName, String password, LoginType loginType, Authority authority, Status status, String email, String planet, LocalDateTime createdAt) {
