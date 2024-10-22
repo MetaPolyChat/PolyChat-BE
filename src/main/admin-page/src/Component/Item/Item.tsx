@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
+import { getItemList } from '../../AxiosRequest/ItemApi';
+import { Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableHeaderNormalCell, TableRow } from '../Table';
 
-interface ItemInfo{
+interface ItemInfo {
     itemId: number;
     itemName: string;
     itemType: string;
@@ -18,17 +20,19 @@ const Item: React.FC = () => {
     const [sortingMethod, setSortingMethod] = useState<'ASC' | 'DESC' | null>(null);
     const [page, setPage] = useState<number>(1);
     const [totalCount, setTotalCount] = useState<number>(0);
-    
+
+    const [limit, setLimit] = useState<number>(5);
+
+
     const navigate = useNavigate();
 
-    function detailAnnouncement(id:number) {
+    function detailItem(id: number) {
         navigate(`${id}`);
     }
 
 
     const handleSort = (column: string) => {
         if (sortingColumn === column) {
-            // 정렬 순서를 'ASC'와 'DESC' 사이에서 토글
             setSortingMethod(sortingMethod === 'ASC' ? 'DESC' : 'ASC');
         } else {
             // 새로운 정렬 열로 설정하고 정렬 순서를 'ASC'로 초기화
@@ -43,110 +47,112 @@ const Item: React.FC = () => {
         setPage(newPage);
         try {
             console.log("페이지 전환 시도");
-            // const itemList = await getItem({ sortingColumn, sortingMethod }, newPage);
-            // setItem(itemList.data.elements);
-            // setTotalCount(itemList.data.totalCount);
+            const itemList = await getItemList({ sortingColumn, sortingMethod }, newPage, limit);
+            setItemList(itemList.data.elements);
+            setTotalCount(itemList.data.totalCount);
         } catch (error) {
             console.error("에러 발생:", error);
         }
     }
 
-    const onDeleteBtnClicked = async (id:number, uploaderNo:number)=> {
+    const onDeleteBtnClicked = async (id: number, uploaderNo: number) => {
         console.log(`삭제시도, id:${id}`)
-        try{
+        try {
             // deleteItem(id, uploaderNo);
             // const newItem:ItemInfo[] = item.filter(element=>element.itemId!==id); 
             // setItem(newItem);
-        } catch(error) {
+        } catch (error) {
             alert(`삭제에 실패했습니다. 에러: ${error}`)
         }
     }
 
     useEffect(() => {
         async function fetchItems() {
-            // try {
-            //     const itemList = await getItem({ sortingColumn, sortingMethod }, page);
-            //     setItem(itemList.data.elements);
-            //     setTotalCount(itemList.data.totalCount);
-            //     console.log(itemList.data);
-            // } catch (error) {
-            //     console.error("에러 발생:", error);
-            // }
+            try {
+                const itemList = await getItemList({ sortingColumn, sortingMethod }, page, limit);
+                setItemList(itemList.data.elements);
+                setTotalCount(itemList.data.totalCount);
+                console.log(itemList.data);
+            } catch (error) {
+                console.error("에러 발생:", error);
+            }
         }
-        //fetchItems();
+        fetchItems();
     }, [sortingColumn, sortingMethod]);
 
     return (
         <>
             <h1 className="text-center my-3">아이템 관리</h1>
-            <table className="min-w-full bg-white border border-gray-300 my-2">
-                <thead>
-                    <tr className="bg-gray-200">
-                        <th
-                            className="py-2 px-4 border-b border-gray-300 cursor-pointer"
-                            onClick={() => handleSort('itemId')}
-                        >
-                            번호 {sortingColumn === 'itemId' && (sortingMethod === 'ASC' ? '▲' : '▼')}
-                        </th>
-                        <th
-                            className="py-2 px-4 border-b border-gray-300 cursor-pointer"
-                            onClick={() => handleSort('itemTitle')}
-                        >
-                            아이템 이름 {sortingColumn === 'itemTitle' && (sortingMethod === 'ASC' ? '▲' : '▼')}
-                        </th>
-                        <th
-                            className="py-2 px-4 border-b border-gray-300 cursor-pointer"
-                            onClick={() => handleSort('itemTitle')}
-                        >
-                            아이템 유형 {/* {sortingColumn === 'itemTitle' && (sortingMethod === 'ASC' ? '▲' : '▼')} */}
-                        </th>
-                        <th
-                            className="py-2 px-4 border-b border-gray-300 cursor-pointer"
-                            onClick={() => handleSort('itemTitle')}
-                        >
-                            아이템 가격 {/* {sortingColumn === 'itemTitle' && (sortingMethod === 'ASC' ? '▲' : '▼')} */}
-                        </th>
-                        <th
-                            className="py-2 px-4 border-b border-gray-300 cursor-pointer"
-                            onClick={() => handleSort('uploadTime')}
-                        >
-                            등록 날짜 {sortingColumn === 'uploadTime' && (sortingMethod === 'ASC' ? '▲' : '▼')}
-                        </th>
-                        <th
-                            className="py-2 px-4 border-b border-gray-300 cursor-pointer"
-                        >
-                            상세 사항
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
+            <Table>
+                <TableHeader>
+                        <TableHeaderCell
+                            columnKey="itemId"
+                            sortingColumn={sortingColumn}
+                            sortingMethod={sortingMethod}
+                            handleSort={handleSort}
+                        >번호
+                        </TableHeaderCell>
+                        <TableHeaderCell
+                            columnKey="itemName"
+                            sortingColumn={sortingColumn}
+                            sortingMethod={sortingMethod}
+                            handleSort={handleSort}
+                        >아이템 이름
+                        </TableHeaderCell>
+                        <TableHeaderCell
+                            columnKey="itemType"
+                            sortingColumn={sortingColumn}
+                            sortingMethod={sortingMethod}
+                            handleSort={handleSort}
+                        >아이템 유형
+                        </TableHeaderCell>
+                        <TableHeaderCell
+                            columnKey="price"
+                            sortingColumn={sortingColumn}
+                            sortingMethod={sortingMethod}
+                            handleSort={handleSort}
+                        >아이템 가격
+                        </TableHeaderCell>
+                        <TableHeaderCell
+                            columnKey="uploadTime"
+                            sortingColumn={sortingColumn}
+                            sortingMethod={sortingMethod}
+                            handleSort={handleSort}
+                        >등록 날짜
+                        </TableHeaderCell>
+                        <TableHeaderNormalCell>
+                            관리
+                        </TableHeaderNormalCell>
+                </TableHeader>
+                <tbody >
+                    {/* 예시데이터 */}
 
-{/* 예시데이터 */}
-                        {/* <tr className="hover:bg-gray-100 cursor-pointer" key={item.itemId}> */}
-                        <tr className="hover:bg-gray-100 cursor-pointer">
-                            <td className="py-2 px-4 border-b border-gray-300 text-center">
-                                {/* 아이템 번호 */}33
-                            </td>
-                            <td className="py-2 px-4 border-b border-gray-300 text-center" >
-                                {/* 아이템 이름 */}대왕의자
-                            </td>
-                            <td className="py-2 px-4 border-b border-gray-300 text-center">
-                                {/* 아이템 유형 */}의자
-                            </td>
-                            <td className="py-2 px-4 border-b border-gray-300 text-center">
-                                {/* 아이템 가격 */}10000
-                            </td>
-                            <td className="py-2 px-4 border-b border-gray-300 text-center">
-                                {/* 업로드 시간 */}2024.9.24 10:22:33
-                            </td>
-                            <td className="py-2 px-4 border-b border-gray-300 text-center">
-                                {/* 상세사항 */}보기
-                            </td>
-                            
-                        </tr>
-                        {/* item 목록에 대한 행 추가 예정 */}
+                    {/* item 목록에 대한 행 추가 예정 */}
+                    {itemList.map((item: ItemInfo) => (
+                        <TableRow key={item.itemId}>
+                            <TableCell cellKey="itemId" asLink onClick={() => detailItem(item.itemId)}>
+                                {item.itemId}
+                            </TableCell>
+                            <TableCell cellKey="itemName" asLink onClick={() => detailItem(item.itemId)}>
+                                {item.itemName}
+                            </TableCell>
+                            <TableCell cellKey="itemType" asLink onClick={() => detailItem(item.itemId)}>
+                                {item.itemType}
+                            </TableCell>
+                            <TableCell cellKey="price" asLink onClick={() => detailItem(item.itemId)}>
+                                {item.price}
+                            </TableCell>
+                            <TableCell cellKey="uploadDate" asLink onClick={() => detailItem(item.itemId)}>
+                                {item.createdAt}
+                            </TableCell>
+                            <TableCell cellKey="detail">
+                            <button className="border px-2 round-10">삭제</button>
+                            </TableCell>
+                        </TableRow>
+                    )
+                    )}
                 </tbody>
-            </table>
+            </Table>
             <div>
                 <Link to="add">아이템 추가하기</Link>
             </div>
@@ -159,7 +165,7 @@ const Item: React.FC = () => {
                 pageRangeDisplayed={3}
                 containerClassName="flex justify-center space-x-2 align-middle my-1"
                 pageClassName="bg-white border rounded size-8 text-center py-0.5"
-                pageCount={(Math.ceil)(totalCount/3)}
+                pageCount={(Math.ceil)(totalCount / limit)}
                 previousLabel="< prev"
                 previousClassName="bg-white border rounded px-3 py-0.5"
                 renderOnZeroPageCount={null}
