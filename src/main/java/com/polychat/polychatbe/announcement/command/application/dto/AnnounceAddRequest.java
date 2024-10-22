@@ -24,23 +24,14 @@ public class AnnounceAddRequest {
     @Size(min = 10, message = "내용은 10글자 이상 입력해야 합니다.")
     private String content;
 
-    @Past
-    private LocalDateTime uploadTime;
-
     private Long announcementId;
 
     public static Announcement announcementFromDto(AnnounceAddRequest announceAddRequest){
 
-        if(announceAddRequest.getUploadTime() ==null ){
-            announceAddRequest.setUploadTime(LocalDateTime.now());
-        }
-
         return new Announcement(
                 announceAddRequest.getUploaderId(),
                 announceAddRequest.getTitle(),
-                announceAddRequest.getContent(),
-                announceAddRequest.getUploadTime(),
-                LocalDateTime.now()
+                announceAddRequest.getContent()
         );
     }
 }

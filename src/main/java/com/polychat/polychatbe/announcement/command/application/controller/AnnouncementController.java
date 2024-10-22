@@ -3,12 +3,15 @@ package com.polychat.polychatbe.announcement.command.application.controller;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.polychat.polychatbe.announcement.command.application.dto.AnnounceAddRequest;
 import com.polychat.polychatbe.announcement.command.application.dto.AnnouncementDeleteRequest;
+import com.polychat.polychatbe.announcement.command.application.dto.AnnouncementUpdateDTO;
 import com.polychat.polychatbe.announcement.command.application.service.AnnouncementService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 
 @RestController
@@ -39,11 +42,11 @@ public class AnnouncementController {
     @Operation(summary = "공지사항 수정", description = "공지사항을 수정합니다.")
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping("/announcement/{id}")
-    public void updateAnnouncement(@PathVariable long id, AnnounceAddRequest announceAddRequest) {
+    public void updateAnnouncement(@PathVariable long id, AnnouncementUpdateDTO announceAddRequest) {
         log.info("Updating announcement. AnnouncementId:{} Title:{} UploaderId:{}",
                 announceAddRequest.getAnnouncementId(), announceAddRequest.getTitle(),
                 announceAddRequest.getUploaderId());
-        announceAddRequest.setAnnouncementId(id);
+        //announceAddRequest.setLastUpdateTime(LocalDateTime.now());
         announcementService.updateAnnouncement(announceAddRequest);
         log.info("Update Successful.");
     }
