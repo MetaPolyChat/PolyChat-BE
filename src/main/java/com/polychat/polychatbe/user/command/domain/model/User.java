@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -43,9 +45,11 @@ public class User {
     @Column(name = "PLANET", nullable = false, unique = true)
     private String planet;
 
+    @Column(name="CREATED_AT")
+    private LocalDateTime createdAt;
 
     @Builder
-    public User(String userName, String password, LoginType loginType, Authority authority, Status status, String email, String planet) {
+    public User(String userName, String password, LoginType loginType, Authority authority, Status status, String email, String planet, LocalDateTime createdAt) {
         this.userName = userName;
         this.password = password;
         this.loginType = loginType;
@@ -53,6 +57,7 @@ public class User {
         this.status = status;
         this.email = email;
         this.planet = planet;
+        this.createdAt = createdAt;
     }
 
     public void updateStatus(Status status) {
@@ -74,15 +79,15 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "userNo=" + userId +
+                "userId=" + userId +
+                ", email='" + email + '\'' +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
                 ", loginType=" + loginType +
                 ", authority=" + authority +
                 ", status=" + status +
                 ", planet='" + planet + '\'' +
+                ", createdAt=" + createdAt +
                 '}';
     }
-
 }

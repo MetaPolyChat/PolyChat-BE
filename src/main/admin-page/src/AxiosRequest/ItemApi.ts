@@ -1,12 +1,13 @@
 
 import { request } from "./Axios";
 
-export const getItemList = async (params: undefined | null | { sortingColumn: string|null; sortingMethod: 'ASC' | 'DESC'|null; }, page: number = 1) => {
+export const getItemList = async (params: undefined | null | { sortingColumn: string|null; sortingMethod: 'ASC' | 'DESC'|null; }
+    , page: number = 1, limit:number=5) => {
     const response = await request.get('/item', {
         params: {
-            pageNum: page,
             orderCriteria: params?.sortingColumn,
             orderMethod: params?.sortingMethod,
+            limit: limit
         },
         headers: { 'Content-Type': 'application/json' }
     });

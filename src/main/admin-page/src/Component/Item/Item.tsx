@@ -21,6 +21,9 @@ const Item: React.FC = () => {
     const [page, setPage] = useState<number>(1);
     const [totalCount, setTotalCount] = useState<number>(0);
 
+    const [limit, setLimit] = useState<number>(5);
+
+
     const navigate = useNavigate();
 
     function detailItem(id: number) {
@@ -44,7 +47,7 @@ const Item: React.FC = () => {
         setPage(newPage);
         try {
             console.log("페이지 전환 시도");
-            const itemList = await getItemList({ sortingColumn, sortingMethod }, newPage);
+            const itemList = await getItemList({ sortingColumn, sortingMethod }, newPage, limit);
             setItemList(itemList.data.elements);
             setTotalCount(itemList.data.totalCount);
         } catch (error) {
@@ -66,7 +69,7 @@ const Item: React.FC = () => {
     useEffect(() => {
         async function fetchItems() {
             try {
-                const itemList = await getItemList({ sortingColumn, sortingMethod }, page);
+                const itemList = await getItemList({ sortingColumn, sortingMethod }, page, limit);
                 setItemList(itemList.data.elements);
                 setTotalCount(itemList.data.totalCount);
                 console.log(itemList.data);
@@ -162,7 +165,7 @@ const Item: React.FC = () => {
                 pageRangeDisplayed={3}
                 containerClassName="flex justify-center space-x-2 align-middle my-1"
                 pageClassName="bg-white border rounded size-8 text-center py-0.5"
-                pageCount={(Math.ceil)(totalCount / 3)}
+                pageCount={(Math.ceil)(totalCount / limit)}
                 previousLabel="< prev"
                 previousClassName="bg-white border rounded px-3 py-0.5"
                 renderOnZeroPageCount={null}
