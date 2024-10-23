@@ -5,13 +5,13 @@
 <mapper namespace="com.polychat.polychatbe.interest.query.repository.InterestMapper">
 
     <resultMap id="interestMap" type="InterestDTO">
-        <id property="interestNo" column="interest_no"/>
+        <id property="interestId" column="interest_id"/>
         <result property="interestName" column="interest_name"/>
     </resultMap>
 
     <select id="findAllInterests" resultMap="interestMap">
         SELECT
-            interest_no,
+            interest_id,
             interest_name
         FROM
             tbl_interest
@@ -19,17 +19,17 @@
 
     <select id="findInterestByNo" resultMap="interestMap" parameterType="long">
         SELECT
-            interest_no,
+            interest_id,
             interest_name
         FROM
             tbl_interest
         WHERE
-            interest_no = #{ interestNo }
+            interest_id = #{ interestId }
     </select>
 
     <select id="findInterestByName" resultMap="interestMap" parameterType="string">
         SELECT
-            interest_no,
+            interest_id,
             interest_name
         FROM
             tbl_interest
@@ -37,9 +37,9 @@
             interest_name = #{ interestName }
     </select>
 
-    <select id="findInterestNoByName" parameterType="string">
+    <select id="findinterestIdByName" parameterType="string">
         SELECT
-            interest_no
+            interest_id
         FROM
             tbl_interest
         WHERE
@@ -52,7 +52,7 @@
         FROM
             tbl_interest
         WHERE
-            interest_no = #{ interestNo }
+            interest_id = #{ interestId }
     </select>
 
 </mapper>
