@@ -1,27 +1,46 @@
 package com.polychat.polychatbe.friendBoard.service;
 
+import com.polychat.polychatbe.common.PolyTime;
+import com.polychat.polychatbe.friendBoard.dto.friendBoardDTO;
 import com.polychat.polychatbe.friendBoard.entity.friendBoard;
-import com.polychat.polychatbe.friendBoard.repository.friendBoardRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.polychat.polychatbe.friendBoard.repository.FriendBoardRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class friendBoardService {
-    final friendBoardRepository repository;
 
-    @Autowired
-    public friendBoardService(friendBoardRepository repository)
-    {
-        this.repository = repository;
+    private final FriendBoardRepository re;
+
+    public friendBoardService(FriendBoardRepository re) {
+        this.re = re;
     }
 
-    public friendBoard save(friendBoard fb){
-        return repository.save(fb);
+    public void createFirendBoard(friendBoardDTO dto){
+        friendBoard insertPost = friendBoard.builder()
+                .title(dto.getTitle())
+                .bodyText(dto.getBodyText())
+                .userId(dto.userId)
+                .build();
+        re.save(insertPost);
     }
 
-    public List<friendBoard> findAll(){
-        return repository.findAll();
+    public List<friendBoardDTO> getAllFriendBoardPosts(){
+        List<friendBoard> friendBoardList = re.findAll();
+        List<friendBoardDTO> friendBoardDTOList = new ArrayList<>();
+        for (friendBoard post : friendBoardList) {
+            friendBoardDTO dto = new friendBoardDTO(
+                    post.getTitle(),
+                    post.getBodyText(),
+                    new PolyTime(post.getCreatedAt()).get(),
+                    post.getUserId()
+            );
+            friendBoardDTOList.add(dto);
+        }
+        return friendBoardDTOList;
     }
 }

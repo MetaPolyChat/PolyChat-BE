@@ -1,74 +1,56 @@
 package com.polychat.polychatbe.friendBoard.dto;
 
-import com.polychat.polychatbe.friendBoard.entity.friendBoard;
-import lombok.Getter;
+import com.polychat.polychatbe.common.PolyTime;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class friendBoardDTO {
 
-    private String writer;
-    private String board_title;
-    private String board_content;
-    private String interest_id;
+
+    public String title;
+    public String bodyText;
+    public String date;
+    public String userId;
+
     public friendBoardDTO(){}
 
-    public friendBoardDTO(String writer, String board_title, String board_content, String interest_id) {
-        this.writer = writer;
-        this.board_title = board_title;
-        this.board_content = board_content;
-        this.interest_id = interest_id;
+    public friendBoardDTO(String title, String bodyText, String date, String userId ) {
+        this.title = title;
+        this.bodyText = bodyText;
+        this.date = date;
+        this.userId = userId;
     }
 
-    public String getWriter() {
-        return writer;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setWriter(String writer) {
-        this.writer = writer;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getBoard_title() {
-        return board_title;
+    public String getTitle() {
+        return title;
     }
 
-    public void setBoard_title(String board_title) {
-        this.board_title = board_title;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getBoard_content() {
-        return board_content;
+    public String getBodyText() {
+        return bodyText;
     }
 
-    public void setBoard_content(String board_content) {
-        this.board_content = board_content;
+    public void setBodyText(String bodyText) {
+        this.bodyText = bodyText;
     }
 
-    public String getInterest_id() {
-        return interest_id;
+    public String getDate() {
+        return date;
     }
 
-    public void setInterest_id(String interest_id) {
-        this.interest_id = interest_id;
-    }
-
-    @Override
-    public String toString() {
-        return "friendBoardDTO{" +
-                "writer='" + writer + '\'' +
-                ", board_title='" + board_title + '\'' +
-                ", board_content='" + board_content + '\'' +
-                ", interest_id='" + interest_id + '\'' +
-                '}';
-    }
-
-    public friendBoard toEntity(){
-        friendBoard fb = new friendBoard();
-        fb.setBoard_title(this.board_title);
-        fb.setBoard_context(this.board_content);
-        fb.setWriter(Long.parseLong(this.writer));
-        fb.setInterest_Id(Long.parseLong(this.interest_id));
-
-        return fb;
+    public void setDate(String date) {
+        this.date = date;
     }
 }
