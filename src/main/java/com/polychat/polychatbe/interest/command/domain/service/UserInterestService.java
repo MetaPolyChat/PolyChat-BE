@@ -26,9 +26,9 @@ public class UserInterestService {
     }
 
     @Transactional  // 유저의 관심사 등록
-    public UserInterest registUserInterest(User user, Interest interest) {
-        UserInterest uInter = new UserInterest(user.getUserId(), interest.getInterestId());
-        if(userInterestRepository.findByUserIdAndInterestId(user.getUserId(), interest.getInterestId()) == null) {
+    public UserInterest registUserInterest(Long userId, Long interestId) {
+        UserInterest uInter = new UserInterest(userId, interestId);
+        if(userInterestRepository.findByUserIdAndInterestId(userId, interestId) == null) {
             uInter = userInterestRepository.save(uInter);
             return uInter;
         }
