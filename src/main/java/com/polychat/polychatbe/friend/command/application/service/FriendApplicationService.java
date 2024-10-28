@@ -23,7 +23,7 @@ public class FriendApplicationService {
     @Transactional
     public void addFriend(FriendUserDTO friendRegistInfo) throws Exception {
         if(friendSearchService.findFriendByUserInfo(friendRegistInfo)!=null) {
-            throw new Exception("이미 존재하는 친구");
+            throw new RuntimeException("이미 존재하는 친구입니다");
         }
 
         friendService.addFriend(friendRegistInfo);
