@@ -1,5 +1,7 @@
 package com.polychat.polychatbe.interest.command.application.dto;
 
+import java.util.List;
+
 public class UserInterestDTO {
 
     private Long refInterestNo;
@@ -46,4 +48,11 @@ public class UserInterestDTO {
                 ", interestNo=" + interestNo +
                 '}';
     }
+
+    /**
+     * @param interests
+     */
+    public record newUserInterestDTO(Long userId, List<String> interests) {}
+
+    public record updatedUserInterestDTO(Long userId, List<String> interests) {}
 }

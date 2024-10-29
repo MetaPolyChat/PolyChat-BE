@@ -1,5 +1,6 @@
 package com.polychat.polychatbe.interest.query.service;
 
+import com.polychat.polychatbe.interest.command.application.dto.InterestDTO;
 import com.polychat.polychatbe.interest.command.domain.model.Interest;
 import com.polychat.polychatbe.interest.command.domain.model.UserInterest;
 import com.polychat.polychatbe.interest.query.repository.InterestMapper;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 @Service
@@ -31,7 +33,7 @@ public class InterestFindService {
     *   Interest Query
     * */
     // 관심사 전체 목록 호출
-    public List<Interest> findAllInterests() {
+    public List<InterestDTO> findAllInterests() {
         return interestMapper.findAllInterests();
     }
 

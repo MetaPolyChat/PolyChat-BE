@@ -30,7 +30,8 @@ public class SecurityConfig {
             "/announcement/**",
             "/admin/user/**",
             "/admin/blockuser/**",
-            "/item/**"
+            "/item/**",
+            "/interest/**"
     };
 
     @Bean
