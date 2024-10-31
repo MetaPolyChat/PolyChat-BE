@@ -36,6 +36,12 @@ public class UserSocialLoginController {
     @Value("${spring.security.oauth2.client.provider.google.authorization-uri}")
     private String googleAuthorizationUri;
 
+    @Value("${nginx.url.backend}")
+    private String backendUrl;
+
+    @Value("${nginx.url.react}")
+    private String reactUrl;
+
     /**
      * 구글 로그인 리디렉션
      */
@@ -69,11 +75,11 @@ public class UserSocialLoginController {
         if (authDTO.isSignIn()) {
             System.out.println("로그인 : " + authDTO);
 //        return ResponseEntity.status(HttpStatus.OK).body(authDTO);
-            response.sendRedirect("http://localhost:3000/public/Unity_WebGL.html"); //확정 아님
+            response.sendRedirect(reactUrl + "/unity-build");
         }
 
         //없으면 회원가입으로
-        response.sendRedirect("http://localhost:3000/createAccount?userId=" + authDTO.userId());
+        response.sendRedirect(reactUrl + "/create-account?userId=" + authDTO.userId());
 //            return ResponseEntity.status(HttpStatus.ACCEPTED).body("go to sign in page");
 
     }
