@@ -1,7 +1,5 @@
 package com.polychat.polychatbe.userAchievement.command.application.controller;
 
-import com.polychat.polychatbe.friendRequest.command.application.dto.FriendRequestDTO;
-import com.polychat.polychatbe.friendRequest.command.application.dto.FriendRequestStatusDTO;
 import com.polychat.polychatbe.friendRequest.command.domain.model.RequestStatus;
 import com.polychat.polychatbe.userAchievement.command.application.dto.UserAchievementModifyDTO;
 import com.polychat.polychatbe.userAchievement.command.application.dto.UserAchievementRegistDTO;
@@ -29,7 +27,6 @@ public class UserAchievementController {
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping("userAchievement/{id}")
     public void updateRequestStats(@PathVariable long id, @RequestBody UserAchievementModifyDTO newUserAchievementInfo){
-
 
         userAchievementService.modifyOneUserAchievement(newUserAchievementInfo);
     }

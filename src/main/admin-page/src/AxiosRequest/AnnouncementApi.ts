@@ -8,12 +8,13 @@ interface updateAnnouncementInfo{
     announcementId:number
 }
 
-export const getAnnouncement = async (params: undefined | null | { sortingColumn: string|null; sortingMethod: 'ASC' | 'DESC' |null; }, page: number = 1) => {
+export const getAnnouncement = async (params: undefined | null | { sortingColumn: string|null; sortingMethod: 'ASC' | 'DESC' |null; }, page: number = 1, limit:number=5) => {
     const response = await request.get('/announcement/page', {
         params: {
             pageNum: page,
             orderCriteria: params?.sortingColumn,
             orderMethod: params?.sortingMethod,
+            limit: limit
         },
         headers: { 'Content-Type': 'application/json' }
     });

@@ -19,6 +19,8 @@ const Announcement: React.FC = () => {
     const [sortingMethod, setSortingMethod] = useState<'ASC' | 'DESC' | null>(null);
     const [page, setPage] = useState<number>(1);
     const [totalCount, setTotalCount] = useState<number>(0);
+    const [limit, setLimit] = useState<number>(5);
+
     
     const navigate = useNavigate();
 
@@ -52,6 +54,12 @@ const Announcement: React.FC = () => {
         }
     }
 
+    const onLimitChange = (e:any)=>{
+        //console.log(e.target.value);
+        setLimit(e.target.value);
+        console.log(limit);
+    }
+
     const onDeleteBtnClicked = async (id:number, uploaderNo:number)=> {
         console.log(`삭제시도, id:${id}`)
         try{
@@ -77,11 +85,24 @@ const Announcement: React.FC = () => {
             }
         }
         fetchAnnouncements();
-    }, [sortingColumn, sortingMethod]);
+    }, [sortingColumn, sortingMethod, limit]);
 
     return (
         <>
             <h1 className="text-center my-3">공지사항</h1>
+            
+            <div>
+                <label>표시 갯수</label>
+                <select onChange={onLimitChange} value={limit}>
+                    <option value={5}>5</option>
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                    <option value={50}>50</option>
+
+                </select>
+            </div>
+
+
             <table className="min-w-full bg-white border border-gray-300 my-2">
                 <thead>
                     <tr className="bg-gray-200">
@@ -99,9 +120,9 @@ const Announcement: React.FC = () => {
                         </th>
                         <th
                             className="py-2 px-4 border-b border-gray-300 cursor-pointer"
-                            onClick={() => handleSort('uploadTime')}
+                            onClick={() => handleSort('createdAt')}
                         >
-                            등록 날짜 {sortingColumn === 'uploadTime' && (sortingMethod === 'ASC' ? '▲' : '▼')}
+                            등록 날짜 {sortingColumn === 'createdAt' && (sortingMethod === 'ASC' ? '▲' : '▼')}
                         </th>
                         <th
                             className="py-2 px-4 border-b border-gray-300 cursor-pointer"
@@ -141,7 +162,7 @@ const Announcement: React.FC = () => {
                 pageRangeDisplayed={3}
                 containerClassName="flex justify-center space-x-2 align-middle my-1"
                 pageClassName="bg-white border rounded size-8 text-center py-0.5"
-                pageCount={(Math.ceil)(totalCount/3)}
+                pageCount={(Math.ceil)(totalCount/limit)}
                 previousLabel="< prev"
                 previousClassName="bg-white border rounded px-3 py-0.5"
                 renderOnZeroPageCount={null}
