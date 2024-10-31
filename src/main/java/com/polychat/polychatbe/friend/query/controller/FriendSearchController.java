@@ -46,7 +46,7 @@ public class FriendSearchController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 
-        List<FriendUserInfoDTO> friendUsers = friendSearchService.findUserFriend(userId);
+        List<FriendUserInfoDTO> friendUsers = friendSearchService.findOneUserFriend(userId);
 
         OneUserFriendResponseDTO friendResponse =
                 new OneUserFriendResponseDTO(userId, friendUsers);

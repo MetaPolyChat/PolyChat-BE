@@ -14,9 +14,9 @@ public class SearchCriteriaInfo {
     private final String orderCriteria;
     private final OrderMethod orderMethod;
 
-    @Positive(message = "페이지 번호는 0보다 커야합니다.")
+    @Positive(message = "페이지 번호는 0보다 커야 합니다.")
     private final Integer pageNum;
-    @Positive(message = "표시할 갯수는 0보다 커야합니다.")
+    @Positive(message = "표시할 갯수는 0보다 커야 합니다.")
     private final Integer limit;
     private final Integer offset;
 

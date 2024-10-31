@@ -12,6 +12,7 @@ interface UserInfo {
     loginType: string;
     authority: string;
     status: string;
+    createdAt:string;
 }
 
 
@@ -60,6 +61,12 @@ const AccountPage: React.FC = () => {
         }
     }
 
+    const onLimitChange = (e:any)=>{
+        //console.log(e.target.value);
+        setLimit(e.target.value);
+        console.log(limit);
+    }
+
     useEffect(() => {
         loadAccountInfo({
             pageNum: 1,
@@ -67,11 +74,21 @@ const AccountPage: React.FC = () => {
             orderMethod: sortingMethod,
             limit: limit
         });
-    }, [sortingColumn, sortingMethod]);
+    }, [sortingColumn, sortingMethod, limit]);
 
     return (
         <>
             <h1 className="text-center my-3">유저 관리</h1>
+            <div>
+                <label>표시 갯수</label>
+                <select onChange={onLimitChange} value={limit}>
+                    <option value={5}>5</option>
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                    <option value={50}>50</option>
+
+                </select>
+            </div>
             <Table>
                 <TableHeader>
                     <TableHeaderCell columnKey="userId"
@@ -126,7 +143,7 @@ const AccountPage: React.FC = () => {
                                 <td className="py-2 px-4 border-b border-gray-300">{userInfo.userName}</td>
                                 {/* <td className="py-2 px-4 border-b border-gray-300">{userInfo.planet}</td> */}
                                 <td className="py-2 px-4 border-b border-gray-300">{userInfo.loginType}</td>
-                                <td className="py-2 px-4 border-b border-gray-300">2024.09.23:17:00</td>
+                                <td className="py-2 px-4 border-b border-gray-300">{userInfo.createdAt}</td>
                                 <td className="py-2 px-4 border-b border-gray-300">{userInfo.authority}</td>
                                 <td className="py-2 px-4 border-b border-gray-300 text-center">{userInfo.status == "DEACTIVATED" ? "Y" : "N"}</td>
                                 {/* <td className="py-2 px-4 border-b border-gray-300 text-center">1</td> */}
