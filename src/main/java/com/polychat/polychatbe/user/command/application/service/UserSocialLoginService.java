@@ -174,6 +174,7 @@ public class UserSocialLoginService {
     @Transactional
     @Nullable
     public UserResponseDTO.authDTO googleSignUp(UserRequestDTO.googleSignUpDTO signUpDTO) {
+        log.info("signUpDTO : {}", signUpDTO);
         log.info("구글 회원 생성 : {}", signUpDTO.userId());
         User user = userService.findUserById(signUpDTO.userId());
         if (user == null) {
