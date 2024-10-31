@@ -1,73 +1,49 @@
 package com.polychat.polychatbe.friendBoard.entity;
 
 import com.polychat.polychatbe.common.BaseTimeEntity;
+import com.polychat.polychatbe.common.PolyTime;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Getter
+@Setter
 @Entity
 @Table(name = "tbl_friend_board")
 public class friendBoard extends BaseTimeEntity {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name ="writer")
-    private Long writer;
+    @Column(name = "BOARD_TITLE", nullable = false)
+    private String title;
 
-    @Column(name ="board_title")
-    private String board_title;
+    @Column(name = "BOARD_TEXT", nullable = false)
+    private String bodyText;
 
-    @Column(name ="board_context")
-    private String board_context;
+//    @Column(name = "POST_DATA", nullable = false)
+//    private LocalDateTime date;
 
-    @Column(name ="interest_id")
-    private Long interest_Id;
+    @Column(name = "USER_ID", nullable = false)
+    private String userId;
 
     public friendBoard() {}
 
-    public Long getId() {
-        return id;
-    }
+    // 필요하다면 생성자 추가 가능
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public Long getWriter() {
-        return writer;
-    }
-
-    public void setWriter(Long writer) {
-        this.writer = writer;
-    }
-
-    public String getBoard_title() {
-        return board_title;
-    }
-
-    public void setBoard_title(String board_title) {
-        this.board_title = board_title;
-    }
-
-    public String getBoard_context() {
-        return board_context;
-    }
-
-    public void setBoard_context(String board_context) {
-        this.board_context = board_context;
-    }
-
-    public Long getInterest_Id() {
-        return interest_Id;
-    }
-
-    public void setInterest_Id(Long interest_Id) {
-        this.interest_Id = interest_Id;
+    @Builder
+    public friendBoard(String title, String bodyText, String userId) {
+        this.title = title;
+        this.bodyText = bodyText;
+        this.userId = userId;
     }
 }

@@ -45,6 +45,3 @@ out/
 /docker/polychatdb
 /docker/nginx/certs
 /docker/nginx/private
-
-### log ###
-*.log

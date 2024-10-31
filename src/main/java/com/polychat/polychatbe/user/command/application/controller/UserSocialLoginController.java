@@ -69,11 +69,11 @@ public class UserSocialLoginController {
         if (authDTO.isSignIn()) {
             System.out.println("로그인 : " + authDTO);
 //        return ResponseEntity.status(HttpStatus.OK).body(authDTO);
-            response.sendRedirect("http://localhost:3000/public/Unity_WebGL.html"); //확정 아님
+            response.sendRedirect("http://localhost:3000/friend-board"); //확정 아님
         }
 
         //없으면 회원가입으로
-        response.sendRedirect("http://localhost:3000/createAccount?userId=" + authDTO.userId());
+        response.sendRedirect("http://localhost:3000/create-account?userId=" + authDTO.userId());
 //            return ResponseEntity.status(HttpStatus.ACCEPTED).body("go to sign in page");
 
     }
