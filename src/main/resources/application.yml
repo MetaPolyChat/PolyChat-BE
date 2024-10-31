@@ -71,4 +71,12 @@ app:
   firebase-configuration-file: ${FIREBASE_API_KEY}
   firebase-bucket: ${FIREBASE_BUCKET_URL}
 
+nginx:
+  url:
+    react: https://polychat.fun:18000
+    backend: https://polychat.fun:18000/api
+    admin-page: https://polychat.fun:18000/admin
+    webrtc: https://polychat.fun:18000/webrtc
+
+
 #debug: true
