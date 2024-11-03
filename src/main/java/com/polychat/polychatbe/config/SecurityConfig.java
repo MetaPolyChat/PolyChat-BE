@@ -62,12 +62,14 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowCredentials(true);
+       //config.setAllowCredentials(true);
         config.setAllowedOrigins(Arrays.asList(
                 "http://localhost:3000",
                 "http://localhost:8000",
                 "http://localhost:3030",
                 "http://localhost:4172",
+                "http://192.168.0.64:4172",
+                "http://125.132.216.190:4172",
                 "http://localhost:8080" // Swagger UI를 위한 추가
         ));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
