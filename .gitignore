@@ -46,5 +46,5 @@ out/
 /docker/nginx/certs
 /docker/nginx/private
 
-### log ###
+### logs ###
 *.log
