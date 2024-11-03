@@ -31,7 +31,7 @@ public class AnnouncementController {
     @Operation(summary = "공지사항 등록", description = "공지사항을 등록합니다.")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/announcement")
-    public void addAnnouncement(@ModelAttribute AnnounceAddRequest announceAddRequest){
+    public void addAnnouncement(@RequestBody AnnounceAddRequest announceAddRequest){
         log.info("Creating new announcement. Title:{}, UploaderId:{}",
                 announceAddRequest.getTitle(), announceAddRequest.getUploaderId());
         //System.out.println("announceAddRequest = " + announceAddRequest);
@@ -41,13 +41,13 @@ public class AnnouncementController {
 
     @Operation(summary = "공지사항 수정", description = "공지사항을 수정합니다.")
     @ResponseStatus(HttpStatus.CREATED)
-    @PutMapping("/announcement/{id}")
-    public void updateAnnouncement(@PathVariable long id, AnnouncementUpdateDTO announceAddRequest) {
-        log.info("Updating announcement. AnnouncementId:{} Title:{} UploaderId:{}",
-                announceAddRequest.getAnnouncementId(), announceAddRequest.getTitle(),
-                announceAddRequest.getUploaderId());
+    @PutMapping("/announcement/{announcementId}")
+    public void updateAnnouncement(@PathVariable long announcementId, @RequestBody AnnouncementUpdateDTO announceUpdateRequest) {
+        log.info("Updating announcement. AnnouncementId:{} Title:{} uploaderId:{}",
+                announcementId, announceUpdateRequest.getTitle(),
+                announceUpdateRequest.getUploaderId());
         //announceAddRequest.setLastUpdateTime(LocalDateTime.now());
-        announcementService.updateAnnouncement(announceAddRequest);
+        announcementService.updateAnnouncement(announcementId, announceUpdateRequest);
         log.info("Update Successful.");
     }
 

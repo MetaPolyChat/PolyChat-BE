@@ -11,12 +11,8 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @Getter
 public class AnnouncementUpdateDTO {
-
     @NotBlank(message = "부적절한 접근입니다.")
-    private final Long announcementId;
-
-    @NotBlank(message = "부적절한 접근입니다.")
-    private final long uploaderId;
+    private final Long uploaderId;
 
     @NotBlank(message = "제목을 입력해주세요.")
     private final String title;

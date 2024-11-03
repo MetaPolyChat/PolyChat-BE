@@ -118,6 +118,8 @@ const Announcement: React.FC = () => {
                         >
                             제목 {sortingColumn === 'announcementTitle' && (sortingMethod === 'ASC' ? '▲' : '▼')}
                         </th>
+                        <th  className="py-2 px-4 border-b border-gray-300 cursor-pointer"                            
+                        >작성자</th>
                         <th
                             className="py-2 px-4 border-b border-gray-300 cursor-pointer"
                             onClick={() => handleSort('createdAt')}
@@ -132,19 +134,22 @@ const Announcement: React.FC = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {announcement.map((item: AnnouncementInfo) => (
-                        <tr className="hover:bg-gray-100 cursor-pointer" key={item.announcementId}>
-                            <td className="py-2 px-4 border-b border-gray-300 text-center" onClick={()=>detailAnnouncement(item.announcementId)}>
-                                {item.announcementId}
+                    {announcement.map((announce: AnnouncementInfo) => (
+                        <tr className="hover:bg-gray-100 cursor-pointer" key={announce.announcementId}>
+                            <td className="py-2 px-4 border-b border-gray-300 text-center" onClick={()=>detailAnnouncement(announce.announcementId)}>
+                                {announce.announcementId}
                             </td>
-                            <td className="py-2 px-4 border-b border-gray-300" onClick={()=>detailAnnouncement(item.announcementId)}>
-                                {item.announcementTitle}
+                            <td className="py-2 px-4 border-b border-gray-300" onClick={()=>detailAnnouncement(announce.announcementId)}>
+                                {announce.announcementTitle}
                             </td>
-                            <td className="py-2 px-4 border-b border-gray-300 text-center" onClick={()=>detailAnnouncement(item.announcementId)}>
-                                {item.uploadTime}
+                            <td className="py-2 px-4 border-b border-gray-300 text-center" onClick={()=>detailAnnouncement(announce.announcementId)}>
+                                {announce.uploaderName}
+                            </td>
+                            <td className="py-2 px-4 border-b border-gray-300 text-center" onClick={()=>detailAnnouncement(announce.announcementId)}>
+                                {announce.uploadTime}
                             </td>
                             <td className="py-2 px-4 border-b border-gray-300 text-center">
-                                <button className="border px-2 round-10" onClick={()=>onDeleteBtnClicked(item.announcementId, item.uploaderNo)}>삭제</button>
+                                <button className="border px-2 round-10" onClick={()=>onDeleteBtnClicked(announce.announcementId, announce.uploaderNo)}>삭제</button>
                             </td>
                         </tr>
                     ))}

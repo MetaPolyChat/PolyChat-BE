@@ -29,11 +29,7 @@ public class AnnouncementService {
     }
 
     @Transactional
-    public void updateAnnouncement(AnnouncementUpdateDTO updateRequest) {
-        Long requestAnnouncementId = updateRequest.getAnnouncementId();
-        if (requestAnnouncementId == null) {
-            throw new IllegalArgumentException("업데이트할 대상을 지정해 주세요");
-        }
+    public void updateAnnouncement(long requestAnnouncementId, AnnouncementUpdateDTO updateRequest) {
 
         Announcement foundAnnouncement = announcementRepository.findById(requestAnnouncementId).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 아이디"));
