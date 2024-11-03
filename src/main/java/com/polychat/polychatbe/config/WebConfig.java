@@ -9,7 +9,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     String[] allowCorsUrl = {
             "http://localhost:3000",
-            "http://localhost:61981"
+            "http://localhost:61981",
+            "http://125.132.216.190:4172"
     };
 
     @Override

@@ -25,7 +25,8 @@
 
     <select id="findAllAnnouncement" resultMap="announcementMap"
             parameterType="com.polychat.polychatbe.common.SearchCriteriaInfo">
-        SELECT  ANNOUNCEMENT_ID
+        SELECT
+                ANNOUNCEMENT_ID
               , ANNOUNCEMENT_TITLE
               , ANNOUNCEMENT_CONTENT
               , A.UPLOADER_ID AS UPLOADER_ID
@@ -37,18 +38,35 @@
           LEFT JOIN
                 TBL_USER B
             ON
-                A.UPLOADER_ID=B.USER_ID
+                A.UPLOADER_ID = B.USER_ID
+        <!-- 조건절 -->
+         WHERE
+                1=1
+        <if test="searchCriteriaSnakeCase != null and searchValue != null">
+            <choose>
+                <when test="searchCriteriaSnakeCase == 'uploader_name'">
+                    AND B.USER_NAME LIKE CONCAT('%', #{searchValue}, '%')
+                </when>
+                <otherwise>
+                    AND ${searchCriteriaSnakeCase} LIKE CONCAT('%', #{searchValue}, '%')
+                </otherwise>
+            </choose>
+        </if>
+
+        <!-- 정렬 조건 -->
         <if test="orderCriteriaSnakeCase == null or orderMethod == null">
             ORDER BY CREATED_AT DESC
         </if>
         <if test="orderCriteriaSnakeCase != null and orderMethod != null">
             ORDER BY ${orderCriteriaSnakeCase} ${orderMethod}
         </if>
-        <if test="limit!=null">
-            limit #{limit}
+
+        <!-- 페이징 조건 -->
+        <if test="limit != null">
+            LIMIT #{limit}
         </if>
-        <if test="offset!=null">
-            offset #{offset}
+        <if test="offset != null">
+            OFFSET #{offset}
         </if>
     </select>
 

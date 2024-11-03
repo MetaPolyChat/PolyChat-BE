@@ -1,4 +1,3 @@
-import Announcement from "../Component/HomePage";
 import { request } from "./Axios";
 
 interface updateAnnouncementInfo{
@@ -7,14 +6,19 @@ interface updateAnnouncementInfo{
     content:string,
 }
 
-export const getAnnouncement = async (params: undefined | null | { sortingColumn: string|null; sortingMethod: 'ASC' | 'DESC' |null; }, page: number = 1, limit:number=5) => {
+interface SearchParam{
+    orderCriteria:string|null,
+    orderMethod:'ASC'|'DESC'|null,
+    pageNum:number|null,
+    limit:number|null,
+    searchCriteria:string|null,
+    searchValue:string|null
+}
+
+
+export const getAnnouncement = async (searchParam:SearchParam) => {
     const response = await request.get('/announcement/page', {
-        params: {
-            pageNum: page,
-            orderCriteria: params?.sortingColumn,
-            orderMethod: params?.sortingMethod,
-            limit: limit
-        }
+        params: searchParam
     });
 
     return response;
