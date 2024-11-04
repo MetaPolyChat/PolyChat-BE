@@ -152,7 +152,7 @@ const Announcement: React.FC = () => {
                     <select
                         id="searchCriteria"
                         onChange={onSearchCriteriaChange}
-                        className="rounded-md border p-1 h-8 w-full sm:w-48"
+                        className="rounded-md border p-1 h-8 w-full sm:w-32"
                         value={searchCriteria ?? ""}
                     >
                         <option value="">선택</option>

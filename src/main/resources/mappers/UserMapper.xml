@@ -26,6 +26,11 @@
         <result property="createdAt" column="created_at"/>
     </resultMap>
 
+    <resultMap id="registerDayMap" type="com.polychat.polychatbe.user.query.dto.RegistPerDayDTO">
+        <result property="date" column="date"/>
+        <result property="registerCount" column="register_count"/>
+    </resultMap>
+
     <select id="findAllUser" resultMap="userMap">
         SELECT
                 USER_ID
@@ -50,7 +55,14 @@
               , AUTHORITY
               , STATUS
           FROM
-        TBL_USER
+                TBL_USER
+
+        <!-- 조건절 -->
+         WHERE
+                1=1
+        <if test="searchCriteriaSnakeCase != null and searchValue != null">
+            AND ${searchCriteriaSnakeCase} LIKE CONCAT('%', #{searchValue}, '%')
+        </if>
         <if test="orderCriteriaSnakeCase != null and orderMethod != null">
             ORDER BY ${orderCriteriaSnakeCase} ${orderMethod}
         </if>
@@ -84,6 +96,21 @@
                 COUNT(*)
           FROM
                 TBL_USER
+    </select>
+
+    <select id="registerCountPerDay" resultMap="registerDayMap">
+        SELECT DATE(created_at) AS DATE
+        ,  COUNT(user_id) AS REGISTER_COUNT
+        FROM TBL_USER
+        GROUP BY DATE;
+    </select>
+
+    <select id="registerCountDayRange" resultMap="registerDayMap" parameterType="_int">
+        SELECT DATE(created_at) AS DATE,
+        COUNT(user_id) AS REGISTER_COUNT
+        FROM TBL_USER
+        WHERE created_at BETWEEN DATE_SUB(DATE_ADD(CURDATE(), INTERVAL 1 DAY), INTERVAL #{range} DAY) AND DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+        GROUP BY DATE(created_at);
     </select>
 
 </mapper>

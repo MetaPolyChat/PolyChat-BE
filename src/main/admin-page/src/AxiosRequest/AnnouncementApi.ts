@@ -1,20 +1,11 @@
 import { request } from "./Axios";
+import { SearchParam } from "./searchInterface";
 
 interface updateAnnouncementInfo{
     uploaderId:number|undefined,
     title:string,
     content:string,
 }
-
-interface SearchParam{
-    orderCriteria:string|null,
-    orderMethod:'ASC'|'DESC'|null,
-    pageNum:number|null,
-    limit:number|null,
-    searchCriteria:string|null,
-    searchValue:string|null
-}
-
 
 export const getAnnouncement = async (searchParam:SearchParam) => {
     const response = await request.get('/announcement/page', {

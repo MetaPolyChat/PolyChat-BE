@@ -37,7 +37,7 @@ public class UserSearchController {
     @GetMapping("/admin/user/some")
     public ResponseEntity<PageItemResponse<UserResponseDTO>> findAllUserWithCriteria(
             @Valid @ModelAttribute SearchCriteriaInfo searchCriteria) {
-        System.out.println(searchCriteria);
+        //System.out.println(searchCriteria);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
         return new ResponseEntity<>(

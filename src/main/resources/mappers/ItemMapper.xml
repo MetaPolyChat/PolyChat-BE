@@ -45,11 +45,19 @@
               , CREATED_AT
           FROM
                 TBL_ITEM
+        <!-- 조건절 -->
+         WHERE
+                1=1
+        <if test="searchCriteriaSnakeCase != null and searchValue != null">
+            AND ${searchCriteriaSnakeCase} LIKE CONCAT('%', #{searchValue}, '%')
+        </if>
 
-
+        <!-- 정렬 조건 -->
         <if test="orderCriteriaSnakeCase != null and orderMethod != null">
             ORDER BY ${orderCriteriaSnakeCase} ${orderMethod}
         </if>
+
+        <!-- 페이징 조건 -->
         <if test="limit!=null">
             limit #{limit}
         </if>

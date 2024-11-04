@@ -29,13 +29,13 @@ const BlockUser: React.FC = () => {
 
     return (
         <>
-            <h1 className="text-center my-3">차단 정보 목록 조회</h1>
+            <h1 className="text-center my-3">유저간 차단 정보</h1>
             <table className="min-w-full bg-white border border-gray-300">
                 <thead>
                     <tr className="bg-gray-200">
-                        <th className="py-2 px-4 border-b border-gray-300">번호</th>
-                        <th className="py-2 px-4 border-b border-gray-300">차단 유저 id</th>
-                        <th className="py-2 px-4 border-b border-gray-300">차단 대상 id</th>
+                        <th className="py-2 px-4 border-b border-gray-300">차단번호</th>
+                        <th className="py-2 px-4 border-b border-gray-300">차단 유저 번호</th>
+                        <th className="py-2 px-4 border-b border-gray-300">차단 대상 번호</th>
                         <th className="py-2 px-4 border-b border-gray-300">차단 날짜</th>
                     </tr>
                 </thead>

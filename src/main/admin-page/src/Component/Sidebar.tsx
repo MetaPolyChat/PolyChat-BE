@@ -12,7 +12,7 @@ const Sidebar: React.FC = () => {
           <NavLink to="/account" className={({isActive}) => isActive? styles.selected: styles.menuItem}>회원 관리</NavLink>
         </li>
         <li>
-          <NavLink to="/blockUser" className={({isActive}) => isActive? styles.selected: styles.menuItem}>차단회원</NavLink>
+          <NavLink to="/blockUser" className={({isActive}) => isActive? styles.selected: styles.menuItem}>유저 간 차단 정보</NavLink>
         </li>
         <li>
           <NavLink to="/announcement" className={({isActive}) => isActive? styles.selected: styles.menuItem}>공지사항</NavLink>
