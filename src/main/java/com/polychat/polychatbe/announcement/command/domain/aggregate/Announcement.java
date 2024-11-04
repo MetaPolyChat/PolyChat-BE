@@ -8,7 +8,9 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
-@Table(name = "TBL_ANNOUNCEMENT")
+@Table(name = "TBL_ANNOUNCEMENT", indexes = {
+        @Index(name = "idx_announcement_createdAt", columnList = "createdAt")
+})
 public class Announcement extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +19,7 @@ public class Announcement extends BaseTimeEntity {
     private long uploaderId;
     private String announcementTitle;
     private String announcementContent;
+
 //    private LocalDateTime createdAt;
 //    private LocalDateTime updatedDate;
 

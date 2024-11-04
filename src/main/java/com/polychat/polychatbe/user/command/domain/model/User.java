@@ -10,7 +10,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
-@Table(name="TBL_USER")
+@Table(name="TBL_USER" ,
+        indexes = {
+                @Index(name = "idx_user_createdAt", columnList = "createdAt"),
+                @Index(name = "idx_user_userName", columnList = "userName")
+        })
 public class User {
 
     @Id
