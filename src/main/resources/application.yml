@@ -32,7 +32,7 @@ spring:
               - email
 #              - profile
 #              - openid
-            redirect-uri: "${DEFAULT_URL}/api/api/auth/google/login"
+            redirect-uri: "${DEFAULT_URL}/api/auth/google/login"
             authorizationGrantType: authorization_code
         provider:
           google:
