@@ -50,3 +50,4 @@ out/
 *.log
 /mysql_data/
 /logs/
+/private/private.key
