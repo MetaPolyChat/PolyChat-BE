@@ -47,12 +47,12 @@ public class UserSocialLoginController {
      */
     @GetMapping("/google/redirect")
     public void redirectToGoogle(HttpServletResponse response) throws IOException {
-        System.out.println("redirectToGoogle");
         String redirectUri = googleAuthorizationUri + "?"
                 + "client_id=" + googleClientId
                 + "&redirect_uri=" + googleRedirectUri
                 + "&response_type=code"
                 + "&scope=" + scope;
+        System.out.println("redirectUri : " + redirectUri);
         response.sendRedirect(redirectUri);
     }
 

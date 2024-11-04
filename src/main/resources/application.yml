@@ -32,7 +32,7 @@ spring:
               - email
 #              - profile
 #              - openid
-            redirect-uri: "http://localhost:8000/api/auth/google/login"
+            redirect-uri: "${DEFAULT_URL}/api/api/auth/google/login"
             authorizationGrantType: authorization_code
         provider:
           google:
@@ -73,10 +73,10 @@ app:
 
 nginx:
   url:
-    react: https://polychat.fun:18000
-    backend: https://polychat.fun:18000/api
-    admin-page: https://polychat.fun:18000/admin
-    webrtc: https://polychat.fun:18000/webrtc
+    react: ${DEFAULT_URL}
+    backend: ${DEFAULT_URL}/api
+    admin-page: ${DEFAULT_URL}/admin
+    webrtc: ${DEFAULT_URL}/webrtc
 
 
 #debug: true
