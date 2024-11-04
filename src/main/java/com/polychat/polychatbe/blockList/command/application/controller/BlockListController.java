@@ -28,7 +28,7 @@ public class BlockListController {
             @ApiResponse(responseCode = "400", description = "이미 블락된 유저"),
             @ApiResponse(responseCode = "500", description = "서버 에러")
     })
-    @PostMapping(value = "/api/block", produces = "application/json; charset=UTF-8")
+    @PostMapping(value = "/block", produces = "application/json; charset=UTF-8")
     //Todo : 로그인 유저 id 받기 -> currentUser
     public ResponseEntity<String> blockUser(@RequestBody Long blockedUserId, Long currentUser) {
         if (blockedUserId.longValue() == currentUser.longValue()) {
@@ -52,7 +52,7 @@ public class BlockListController {
             @ApiResponse(responseCode = "204", description = "블락 되지 않은 유저"),
             @ApiResponse(responseCode = "500", description = "서버 에러")
     })
-    @PostMapping(value = "/api/unblock", produces = "application/json; charset=UTF-8")
+    @PostMapping(value = "/unblock", produces = "application/json; charset=UTF-8")
     //Todo : 로그인 유저 id 받기 -> currentUser
     public ResponseEntity<String> unblockUser(@RequestBody Long blockedUserId, Long currentUser) {
         BlockUserDTO blockUserDTO =  blockListAppService.getBlockById(currentUser, blockedUserId);
