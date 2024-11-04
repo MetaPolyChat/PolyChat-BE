@@ -5,7 +5,7 @@ import com.polychat.polychatbe.user.command.application.service.UserLoginService
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/api/user")
+@RestController("/user")
 public class UserApiController {
 
     private final UserLoginService userLoginService;

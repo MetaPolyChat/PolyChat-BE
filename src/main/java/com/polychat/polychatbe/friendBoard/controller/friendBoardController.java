@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/friendBoard")
+@RequestMapping("/friendBoard")
 @Slf4j
 @Tag(name = "친구 게시판 API", description = "친구를 모집하는 글을 올리는 게시판 API")
 public class friendBoardController {
