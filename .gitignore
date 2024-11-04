@@ -48,3 +48,5 @@ out/
 
 ### logs ###
 *.log
+
+/private/private.key
