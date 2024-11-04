@@ -9,13 +9,12 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -24,7 +23,7 @@ public class SecurityConfig {
 
 
     private static final String[] WHITE_LIST = {
-            "/api/auth/**",
+            "/auth/**",
             "/v3/api-docs/**",       // Swagger 문서
             "/swagger-ui/**",        // Swagger UI
             "/swagger-ui.html",     // Swagger UI HTML
@@ -33,7 +32,7 @@ public class SecurityConfig {
             "/admin/blockuser/**",
             "/item/**",
             "/interest/**",
-            "/api/friendBoard/**"
+            "/friendBoard/**"
     };
 
     @Bean
@@ -65,15 +64,18 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList(
-                "http://localhost:3000",
-                "http://localhost:8000",
-                "http://localhost:3030",
-                "http://localhost:4172",
-                "http://localhost:8080" // Swagger UI를 위한 추가
-        ));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("*"));
+        config.setAllowedOrigins(Collections.singletonList("*"));   //모두 허용
+//        config.setAllowedOrigins(Arrays.asList(
+//        config.setAllowedOriginPatterns(Arrays.asList(
+//                "https://polychat.fun:18000",
+//                "http://192.168.0.*:*",     //swagger
+//                "http://localhost:3000",
+//                "http://localhost:8000",
+//                "http://localhost:3030",
+//                "http://localhost:4172"
+//        ));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);

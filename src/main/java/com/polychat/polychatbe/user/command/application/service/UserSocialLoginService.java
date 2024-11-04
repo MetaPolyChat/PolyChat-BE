@@ -150,7 +150,7 @@ public class UserSocialLoginService {
                 .loginType(LoginType.GOOGLE)
                 .authority(Authority.USER)
                 .status(Status.BEFORE_SIGNUP)
-                .planet("Temp")
+                .planet(userRandomGenerateService.generatePlanetCode())
                 .build();
 
         userService.saveUser(user);
@@ -199,7 +199,7 @@ public class UserSocialLoginService {
                 LoginType.GOOGLE,
                 Authority.USER,
                 Status.ACTIVATED,
-                userRandomGenerateService.generatePlanetCode(),
+                user.getPlanet(),
                 LocalDateTime.now()
         );
 

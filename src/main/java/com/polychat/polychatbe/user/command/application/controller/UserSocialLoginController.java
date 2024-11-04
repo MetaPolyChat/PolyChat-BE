@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 @Tag(name = "구글 로그인 API", description = "구글 로그인 및 회원가입 기능을 제공하는 API")
 public class UserSocialLoginController {
 
@@ -47,12 +47,12 @@ public class UserSocialLoginController {
      */
     @GetMapping("/google/redirect")
     public void redirectToGoogle(HttpServletResponse response) throws IOException {
-        System.out.println("redirectToGoogle");
         String redirectUri = googleAuthorizationUri + "?"
                 + "client_id=" + googleClientId
                 + "&redirect_uri=" + googleRedirectUri
                 + "&response_type=code"
                 + "&scope=" + scope;
+        System.out.println("redirectUri : " + redirectUri);
         response.sendRedirect(redirectUri);
     }
 
