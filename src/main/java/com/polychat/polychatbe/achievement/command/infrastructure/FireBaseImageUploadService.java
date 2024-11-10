@@ -15,7 +15,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
-@Service
 public class FireBaseImageUploadService implements ImageUploadService {
 
 //    private String firebaseBucket;
@@ -43,13 +42,14 @@ public class FireBaseImageUploadService implements ImageUploadService {
     }
 
     @Override
-    public String uploadImage(String fileName, MultipartFile file) throws IOException {
+    public String uploadImage(String filePath, MultipartFile file) throws IOException {
         try {
             InputStream content = new ByteArrayInputStream(file.getBytes());
-            Blob blob = bucket.create(fileName, content, file.getContentType());
-            return blob.getMediaLink();
+            Blob blob = bucket.create(filePath, content, file.getContentType());
+            return getFileUrl(filePath);
+            //return blob.getMediaLink();
         } catch (IOException e) {
-            log.warn("파일 업로드 중 오류 발생, 파일 이름 : {}", fileName);
+            log.warn("파일 업로드 중 오류 발생, 파일 이름 : {}", filePath);
             throw new IOException("파일 업로드 중 오류가 발생했습니다.");
         }
     }

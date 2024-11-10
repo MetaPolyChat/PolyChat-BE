@@ -7,7 +7,7 @@ import java.io.IOException;
 public interface ImageUploadService {
 
     String getFileUrl(String filePath);
-    String uploadImage(String fileName, MultipartFile file) throws IOException;
+    String uploadImage(String filePath, MultipartFile file) throws IOException;
     void deleteImage(String filePath);
 
 }
