@@ -5,8 +5,8 @@ import com.google.cloud.storage.Bucket;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.StorageClient;
-import com.polychat.polychatbe.achievement.command.domain.service.ImageUploadService;
-import com.polychat.polychatbe.achievement.command.infrastructure.FireBaseImageUploadService;
+import com.polychat.polychatbe.common.fileStorage.FileStorageService;
+import com.polychat.polychatbe.common.fileStorage.FireBaseFileStorageService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,9 +49,11 @@ public class FileUploadConfig {
         return StorageClient.getInstance(firebaseApp()).bucket();
     }
 
+
     @Bean
-    public ImageUploadService FirebaseImageUploadService() throws IOException {
-        return new FireBaseImageUploadService(bucket());
+    public FileStorageService FirebaseFileStorageService() throws IOException{
+        return new FireBaseFileStorageService(bucket());
     }
+
 
 }

@@ -36,7 +36,7 @@ public class ItemController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("item/{id}")
     public void deleteItem(@PathVariable long id){
-        itemService.removeItem(id);
+        itemService.deleteItem(id);
     }
 
 }
