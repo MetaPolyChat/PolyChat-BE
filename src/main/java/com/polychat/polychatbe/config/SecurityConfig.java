@@ -32,7 +32,8 @@ public class SecurityConfig {
             "/admin/blockuser/**",
             "/item/**",
             "/interest/**",
-            "/friendBoard/**"
+            "/friendBoard/**",
+            "/test/**"
     };
 
     @Bean
