@@ -39,15 +39,6 @@ public class FriendRequestService {
     }
 
     @Transactional
-    public void approveFriendRequest(FriendRequest request) {
-        request.setStatus(RequestStatus.ACCEPTED);
-        friendRequestRepository.save(request);
-
-        // 이벤트 발행
-        eventPublisher.publishEvent(new FriendRequestApprovedEvent(request.getSender(), request.getReceiver()));
-    }
-
-    @Transactional
     public void updateFriendRequestStatus(FriendRequestStatusDTO friendRequestStatusDTO){
 
         FriendRequest friendRequest = friendRequestRepository.findById(friendRequestStatusDTO.getFriendRequestId())

@@ -1,7 +1,6 @@
 package com.polychat.polychatbe.friend.command.domain;
 
 import com.polychat.polychatbe.friend.query.dto.FriendResponseDTO;
-import com.polychat.polychatbe.friend.command.domain.service.FriendRequestAcceptService;
 import com.polychat.polychatbe.friend.command.domain.service.FriendService;
 import com.polychat.polychatbe.friend.query.service.FriendSearchService;
 import com.polychat.polychatbe.friendRequest.command.domain.model.FriendRequest;
@@ -21,9 +20,6 @@ public class FriendTest {
     private FriendService friendService;
     @Autowired
     FriendSearchService friendSearchService;
-    @Autowired
-    FriendRequestAcceptService friendRequestAcceptService;
-
 
     @DisplayName("친구 찾기 테스트")
     @ParameterizedTest
