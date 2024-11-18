@@ -22,15 +22,17 @@ import java.util.List;
 @RequestMapping("/interest")
 public class UserInterestController {
 
+    private final UserInterestService userInterestService;
     private InterestFindService interestFindService;
     private InterestService interestService;
 
     private InterestUserService interestUserService;
 
-    public UserInterestController(InterestService interestService, InterestUserService interestUserService, InterestFindService interestFindService) {
+    public UserInterestController(InterestService interestService, InterestUserService interestUserService, InterestFindService interestFindService, UserInterestService userInterestService) {
         this.interestService = interestService;
         this.interestUserService = interestUserService;
         this.interestFindService = interestFindService;
+        this.userInterestService = userInterestService;
     }
 
     // 최초 로그인 시 관심사 등록 화면
@@ -45,7 +47,7 @@ public class UserInterestController {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "전체 관심사 조회", description = "DB에 저장된 전체 api")
+    @Operation(summary = "전체 유저 관심사 조회", description = "DB에 저장된 전체 api")
     @GetMapping("/find-all")
     public ResponseEntity<?> listInterest() {
         log.info("listInterest");
@@ -53,6 +55,28 @@ public class UserInterestController {
         System.out.println(interestFindService.findAllInterests());
         return ResponseEntity.ok().body(interestFindService.findAllInterests());
     }
+
+    @Operation(summary = "유저의 관심사 목록 조회", description = "유저의 관심사 id를 리스트 형태로 반환")
+    @GetMapping("/user-list")
+    public ResponseEntity<?> listUserInterest(@RequestParam Long userId) {
+        log.info("listUserInterest");
+
+        List<Long> result = interestUserService.findInterestByUserId(userId);
+
+        if (result.size() == 0) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok().body(result);
+    }
+
+//    @Operation(summary = "유저 관심사 조회", description = "유저의 관심사 조회 api")
+//    @GetMapping("/find-by-user/")
+//    public ResponseEntity<?> findInterestByUser(@RequestParam String userId) {
+//
+//        InterestUserService
+//        return ResponseEntity.ok().build();
+//    }
 
 //    @Operation(summary = "관심사 수정", description = "관심사 수정 api")
 //    @PutMapping("/update")
