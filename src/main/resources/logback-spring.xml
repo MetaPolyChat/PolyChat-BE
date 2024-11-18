@@ -9,7 +9,6 @@
 
     <!-- 파일 롤링을 위한 File Appender 설정 -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-<!--        <file>${LOG_PATH}/app.log</file>-->
         <append>false</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 일별로 로그 파일 생성 -->

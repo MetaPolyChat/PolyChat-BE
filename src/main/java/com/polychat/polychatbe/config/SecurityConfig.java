@@ -49,8 +49,9 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)    // CSRF 보호 비활성화
                 // 요청에 대한 권한 설정
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(WHITE_LIST).permitAll()
-                        .anyRequest().authenticated()
+//                        .requestMatchers(WHITE_LIST).permitAll()
+//                        .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
                 // OAuth2 로그인 설정
                 .oauth2Login(oauth2 -> oauth2

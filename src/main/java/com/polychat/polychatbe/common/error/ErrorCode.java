@@ -16,7 +16,7 @@ public enum ErrorCode {
     INVALID_EMAIL_CODE(HttpStatus.CONFLICT, "USER-005", "이메일 인증 코드가 일치하지 않습니다."),
     INVALID_EMAIL(HttpStatus.CONFLICT, "USER-006", "이메일이 인증되지 않았습니다."),
     EMAIL_NON_EXIST(HttpStatus.CONFLICT, "USER-007", "해당 이메일의 회원을 찾을 수 없습니다."),
-    NOT_EXIST_MEMBER(HttpStatus.NOT_FOUND, "USER-008", "해당 유저는 존재하지 않습니다."),
+    NO_SUCH_USER(HttpStatus.NOT_FOUND, "USER-008", "해당 유저는 존재하지 않습니다."),
     NO_SUCH_ALGORITHM(HttpStatus.INTERNAL_SERVER_ERROR, "EMAIL-001", "사용 가능한 암호화 알고리즘을 찾을 수 없습니다."),
     FAILED_VALIDATE_ACCESS_TOKEN(HttpStatus.EXPECTATION_FAILED, "TOKEN-001", "유효하지 않은 Access Token 입니다."),
     FAILED_VALIDATE__REFRESH_TOKEN(HttpStatus.EXPECTATION_FAILED, "TOKEN-002", "유효하지 않은 Refresh Token 입니다."),
