@@ -4,14 +4,18 @@ import com.polychat.polychatbe.interest.command.domain.model.Interest;
 import com.polychat.polychatbe.interest.command.domain.model.UserInterest;
 import com.polychat.polychatbe.interest.command.domain.repository.InterestRepository;
 import com.polychat.polychatbe.interest.command.domain.repository.UserInterestRepository;
+import com.polychat.polychatbe.interest.query.service.InterestFindService;
 import com.polychat.polychatbe.user.command.domain.model.User;
 import com.polychat.polychatbe.user.command.domain.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class UserInterestService {
 
+    private final InterestFindService interestFindService;
     private UserInterestRepository userInterestRepository;
     private InterestRepository interestRepository;
     private UserRepository userRepository;
@@ -19,10 +23,11 @@ public class UserInterestService {
     public UserInterestService(
             UserInterestRepository userInterestRepository,
             InterestRepository interestRepository,
-            UserRepository userRepository ) {
+            UserRepository userRepository, InterestFindService interestFindService) {
         this.userInterestRepository = userInterestRepository;
         this.interestRepository = interestRepository;
         this.userRepository = userRepository;
+        this.interestFindService = interestFindService;
     }
 
     @Transactional  // 유저의 관심사 등록
@@ -45,5 +50,9 @@ public class UserInterestService {
         if (userInterest != null) {
             userInterestRepository.delete(userInterest);
         }
+    }
+
+    public List<Long> getUserInterests(Long userId) {
+        return interestFindService.findAllInterestIdsByUserId(userId);
     }
 }

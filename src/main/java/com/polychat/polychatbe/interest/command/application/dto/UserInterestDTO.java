@@ -4,48 +4,48 @@ import java.util.List;
 
 public class UserInterestDTO {
 
-    private Long refInterestNo;
-    private Long userNo;
-    private Long interestNo;
+    private Long refInterestId;
+    private Long userId;
+    private Long interestId;
 
     public UserInterestDTO() {}
 
-    public UserInterestDTO(Long refInterestNo, Long userNo, Long interestNo) {
-        this.refInterestNo = refInterestNo;
-        this.userNo = userNo;
-        this.interestNo = interestNo;
+    public UserInterestDTO(Long refInterestId, Long userId, Long interestId) {
+        this.refInterestId = refInterestId;
+        this.userId = userId;
+        this.interestId = interestId;
     }
 
-    public Long getRefInterestNo() {
-        return refInterestNo;
+    public Long getrefInterestId() {
+        return refInterestId;
     }
 
-    public void setRefInterestNo(Long refInterestNo) {
-        this.refInterestNo = refInterestNo;
+    public void setrefInterestId(Long refInterestId) {
+        this.refInterestId = refInterestId;
     }
 
-    public Long getUserNo() {
-        return userNo;
+    public Long getuserId() {
+        return userId;
     }
 
-    public void setUserNo(Long userNo) {
-        this.userNo = userNo;
+    public void setuserId(Long userId) {
+        this.userId = userId;
     }
 
-    public Long getInterestNo() {
-        return interestNo;
+    public Long getinterestId() {
+        return interestId;
     }
 
-    public void setInterestNo(Long interestNo) {
-        this.interestNo = interestNo;
+    public void setinterestId(Long interestId) {
+        this.interestId = interestId;
     }
 
     @Override
     public String toString() {
         return "UserInterestDTO{" +
-                "refInterestNo=" + refInterestNo +
-                ", userNo=" + userNo +
-                ", interestNo=" + interestNo +
+                "refInterestId=" + refInterestId +
+                ", userId=" + userId +
+                ", interestId=" + interestId +
                 '}';
     }
 

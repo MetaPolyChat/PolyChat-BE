@@ -9,4 +9,6 @@ import java.util.List;
 public interface UserInterestRepository extends JpaRepository<UserInterest, Long> {
     UserInterest findByUserIdAndInterestId(Long userId, Long interestId);
     List<UserInterest> findAllByInterestId(Long interestId);
+    List<UserInterest> findUserInterestByUserId(Long userId);
+//    List<Long> findInterestIdsByUserId(Long userId);    // mybatis로 처리
 }

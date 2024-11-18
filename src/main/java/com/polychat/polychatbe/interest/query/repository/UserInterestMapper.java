@@ -9,11 +9,13 @@ import java.util.List;
 public interface UserInterestMapper {
 
     List<UserInterest> findInterestsByUserId(String userId);
-    List<UserInterest> findInterestByInterestName(String interestName);
+    List<UserInterest> findUserInterestsByUserId(String interestName);
 
     // 값 안 들어오는 경우 혹은 빈문자열 인 경우 예외처리
 //    UserInterest findByUserIdAndInterestName(String userId, String interestName);
 
     // find User(No) list by InterestNo
-    List<Long> findUserNoByInterestName(String interestName);
+    List<Long> findUserIdByInterestName(String interestName);
+    List<Long> findUsersAllInterestIdByUserId(Long userId);
+    List<Long> findAllUserByInterestId(Long interestId);
 }
