@@ -9,7 +9,7 @@ public class UserInterest {
     @Id
     @Column(name = "REF_INTEREST_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long refInterestNo;
+    private Long refInterestId;
 
     @Column(name = "USER_ID", nullable = false)
     private Long userId;
@@ -24,8 +24,8 @@ public class UserInterest {
         this.interestId = interestId;
     }
 
-    public Long getRefInterestNo() {
-        return refInterestNo;
+    public Long getRefInterestId() {
+        return refInterestId;
     }
 
     public Long getUserId() {
@@ -39,7 +39,7 @@ public class UserInterest {
     @Override
     public String toString() {
         return "UserInterest{" +
-                "refInterestNo=" + refInterestNo +
+                "refInterestId=" + refInterestId +
                 ", userId=" + userId +
                 ", interestId=" + interestId +
                 '}';

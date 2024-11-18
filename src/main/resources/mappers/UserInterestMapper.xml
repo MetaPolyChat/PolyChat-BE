@@ -6,21 +6,27 @@
     <resultMap id="userInterestMap" type="UserInterestDTO">
         <id property="refInterestId" column="ref_interest_id"/>
         <result property="userId" column="user_id"/>
-        <result property="interestId" column="interest_id"/>
+        <result property="interestNo" column="interest_id"/>
     </resultMap>
 
-    <select id="findInterestsByUserId" resultMap="userInterestMap" parameterType="string">
+    <select id="findUserInterestsByUserId" resultMap="userInterestMap" parameterType="string">
         SELECT
             A.ref_interest_id,
             A.user_id,
             A.interest_id
         FROM
             tbl_user_interest as A
+        WHERE
+            A.user_id = #{ userId }
+    </select>
 
-        <if test="userName != null and userName != ''">
-            WHERE
-                A.user_id = (SELECT B.user_id FROM tbl_user as B WHERE B.user_id = #{ userId })
-        </if>
+    <select id="findUsersAllInterestIdByUserId" resultType="long" parameterType="long">
+        SELECT
+            interest_id
+        FROM
+            tbl_user_interest
+        WHERE
+            user_id = #{ userId }
     </select>
 
     <select id="findInterestByInterestName" resultMap="userInterestMap" parameterType="string">
@@ -50,7 +56,7 @@
 <!--                A.interest_id = (SELECT C.interest_id FROM tbl_interest as C WHERE C.interest_name = #{ interestName })-->
 <!--    </select>-->
 
-    <select id="findUserNoByInterestName" resultType="long" parameterType="string">
+    <select id="findUserIdByInterestName" resultType="long" parameterType="string">
         SELECT
             A.user_id
         FROM
@@ -58,4 +64,14 @@
         WHERE
             A.interest_id = (SELECT B.interest_id FROM tbl_interest as B WHERE B.interest_name = #{ interestName })
     </select>
+
+    <select id="findAllUserByInterestId" resultType="long" parameterType="long">
+        SELECT
+            user_id
+        FROM
+            tbl_user_interest
+        WHERE
+            interest_id = #{ interestId }
+    </select>
+
 </mapper>

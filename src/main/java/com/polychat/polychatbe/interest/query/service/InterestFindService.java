@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 @Service
@@ -67,7 +66,7 @@ public class InterestFindService {
 
     // interestName 으로 유저-관심사 관계 찾기
     public List<UserInterest> findUserInterestByInterestName(String interestName) {
-        return userInterestMapper.findInterestByInterestName(interestName);
+        return userInterestMapper.findUserInterestsByUserId(interestName);
     }
 
     // userName, interestName 으로 유저-관심사 관계 찾기
@@ -83,13 +82,21 @@ public class InterestFindService {
         List<Long> userNos = new ArrayList<>();
         List<User> users = new ArrayList<>();
 
-        userNos = userInterestMapper.findUserNoByInterestName(interestName);
+        userNos = userInterestMapper.findUserIdByInterestName(interestName);
         for(Long userNo : userNos) {
             // 이 부분 user Mapper 만들면 대치 예정
             users.add(userRepository.findById(userNo).orElseThrow(()
                     -> new NoSuchElementException("findUsersByInterestName: User not found")));
         }
         return users;
+    }
+
+    public List<Long> findAllInterestIdsByUserId(Long userId) {
+        return userInterestMapper.findUsersAllInterestIdByUserId(userId);
+    }
+
+    public List<Long> findAllUserByInterestId(Long interestId) {
+        return userInterestMapper.findAllUserByInterestId(interestId);
     }
 
 }
