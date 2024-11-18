@@ -1,6 +1,7 @@
 package com.polychat.polychatbe;
 
 import com.polychat.polychatbe.achievement.command.domain.service.ImageUploadService;
+import com.polychat.polychatbe.common.fileStorage.FileStorageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,10 +17,10 @@ import java.text.Normalizer;
 @Slf4j
 public class uploadTestController {
 
-    private ImageUploadService imageUploadService;
+    private FileStorageService fileStorageService;
 
-    public uploadTestController(ImageUploadService imageUploadService) {
-        this.imageUploadService = imageUploadService;
+    public uploadTestController(FileStorageService fileStorageService) {
+        this.fileStorageService = fileStorageService;
     }
 
     @PostMapping("upload")
@@ -27,6 +28,6 @@ public class uploadTestController {
         String fileName=
                 Normalizer.normalize(file.getOriginalFilename(), Normalizer.Form.NFC);
         log.info("파일 이름 : {}", fileName);
-        return imageUploadService.uploadImage("test/"+fileName, file);
+        return fileStorageService.uploadFile("test/"+fileName, file);
     }
 }

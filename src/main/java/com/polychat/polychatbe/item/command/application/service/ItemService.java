@@ -7,46 +7,37 @@ import com.polychat.polychatbe.item.command.domain.service.ItemFileUploadService
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.util.NoSuchElementException;
 
 @Service
 @Slf4j
 public class ItemService {
 
+    private final ItemBoardService itemBoardService;
     private ItemRepository itemRepository;
     private ItemFileUploadService itemFileUploadService;
 
-    public ItemService(ItemRepository itemRepository, ItemFileUploadService itemFileUploadService) {
+    public ItemService(ItemBoardService itemBoardService, ItemRepository itemRepository, ItemFileUploadService itemFileUploadService) {
+        this.itemBoardService = itemBoardService;
         this.itemRepository = itemRepository;
         this.itemFileUploadService = itemFileUploadService;
     }
 
-    @Transactional
-    public void setItemImage(Item item, MultipartFile image) {
-        String uploadedUrl=null;
-        try{
-            uploadedUrl = itemFileUploadService.uploadImage(image);
-        } catch (Exception e) {
-            log.warn("Fail to upload Image, itemId: {}", item.getItemId());
-        }
-
-        if(uploadedUrl!=null){
-            item.setItemImageUrl(uploadedUrl);
-            log.info("Successfully save Image, itemId: {}", item.getItemId());
-        }
-    }
-
-    @Transactional
     public void addItem(ItemAddRequest itemAddRequest) {
         Item item = ItemAddRequest.toItem(itemAddRequest);
-        if (itemAddRequest.getItemImage()!=null){
-            setItemImage(item, itemAddRequest.getItemImage());
+        String imageUrl=null;
+        if (itemAddRequest.getItemImage()==null){
+            log.warn("there is no image to make item");
+        } else{
+            imageUrl = itemFileUploadService.uploadImage(
+                    itemAddRequest.getItemImage()
+            );
         }
-        itemRepository.save(item);
+        itemBoardService.addItem(item, null, imageUrl);
     }
 
+    @Transactional
     public void modifyItem(ItemAddRequest itemAddRequest, long itemId) {
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(()-> new RuntimeException("해당하는 아이템을 찾을 수 없습니다"));
@@ -59,14 +50,23 @@ public class ItemService {
         );
 
         if (itemAddRequest.getItemImage()!=null){
-            setItemImage(item, itemAddRequest.getItemImage());
+            String itemImageUrl = itemFileUploadService.uploadImage(
+                    itemAddRequest.getItemImage()
+            );
+            item.setItemImageUrl(itemImageUrl);
         }
 
     }
 
-    @Transactional
-    public void removeItem(long itemId) {
-        itemRepository.deleteById(itemId);
+    public void deleteItem(long itemId) {
+        String fileUrl = itemRepository.findById(itemId)
+                        .orElseThrow(()->new NoSuchElementException("해당 아이템을 찾을 수 없습니다"))
+                                .getItemImageUrl();
+
+        itemFileUploadService.deleteImage(fileUrl);
+        
+        // 파일 업로드나 삭제 부분은 트랜잭션에 포함되지 않게 함
+        itemBoardService.deleteItem(itemId);
     }
 
 }
