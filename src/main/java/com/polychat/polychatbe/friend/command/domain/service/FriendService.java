@@ -56,11 +56,4 @@ public class FriendService {
         );
     }
 
-    public void addFriend(FriendUserDTO friendUserDTO) {
-        this.addFriend(friendUserDTO.getUser1(), friendUserDTO.getUser2());
-    }
-
-    public void deleteFriendByUserId(FriendUserDTO friendUserDTO) {
-        this.deleteFriendByUserId(friendUserDTO.getUser1(), friendUserDTO.getUser2());
-    }
 }

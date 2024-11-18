@@ -23,6 +23,14 @@ public class CheckFriendRequestImpl implements CheckFriendRequest {
             // 이미 친구상태로 등록됨
             throw new IllegalStateException("이미 친구 상태로 등록되어 있습니다.");
         }
+        
+        if(blockListQueryService.findSingleBlockList(
+                friendRequest.getSender(), friendRequest.getReceiver()
+        )!=null || blockListQueryService.findSingleBlockList(
+                friendRequest.getReceiver(), friendRequest.getSender()) !=null  
+        ) { //차단 목록에 있음
+            throw new IllegalStateException("차단된 유저들끼리 친구 신청을 할 수 없습니다.");
+        }
 
     }
 }

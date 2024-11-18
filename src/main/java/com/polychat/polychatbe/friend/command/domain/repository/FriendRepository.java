@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FriendRepository extends JpaRepository<Friend, Long> {
 
-    public void deleteByUser1AndUser2(FriendUserId user1, FriendUserId user2);
+    void deleteByUser1AndUser2(FriendUserId user1, FriendUserId user2);
+    Friend findByUser1AndUser2(FriendUserId user1, FriendUserId user2);
 }

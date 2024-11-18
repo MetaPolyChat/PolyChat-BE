@@ -44,7 +44,7 @@ public class FriendSearchService {
 
         FriendResponseDTO friendResponse = friendMyBatisRepository.findByTwoUser(
                 new TwoFriendUserVO(new FriendUserId(user1), new FriendUserId(user2))
-        ).orElseThrow(()->new NoSuchElementException("두 유저는 친구 관계가 아닙니다."));
+        ).orElse(null);//.orElseThrow(()->new NoSuchElementException("두 유저는 친구 관계가 아닙니다."));
 
         return friendResponse;
     }

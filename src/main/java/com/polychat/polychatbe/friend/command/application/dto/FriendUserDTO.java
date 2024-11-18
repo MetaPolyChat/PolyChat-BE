@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 public class FriendUserDTO {
 
     @NotBlank(message = "친구 정보가 유효한지 확인해주세요.")
-    private final int user1;
+    private final long user1;
 
     @NotBlank(message = "친구 정보가 유효한지 확인해주세요.")
-    private final int user2;
+    private final long user2;
 }
