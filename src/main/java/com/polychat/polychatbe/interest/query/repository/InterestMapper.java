@@ -10,8 +10,8 @@ import java.util.Map;
 @Mapper
 public interface InterestMapper {
     List<InterestDTO> findAllInterests();
-    Interest findInterestByNo(Long interestNo);
+    Interest findInterestByNo(Long interestId);
     Interest findInterestByName(String interestName);
     Long findInterestNoByName(String interestName);
-    String findInterestNameByNo(Long interestNo);
+    String findInterestNameByNo(Long interestId);
 }

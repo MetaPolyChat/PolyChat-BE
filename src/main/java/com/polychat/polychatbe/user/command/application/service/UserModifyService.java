@@ -21,7 +21,7 @@ public class UserModifyService {
 
     public User findByUserId(long userId){
         return  userRepository.findById(userId).orElseThrow(
-                ()-> new ApplicationException(ErrorCode.NOT_EXIST_MEMBER)
+                ()-> new ApplicationException(ErrorCode.NO_SUCH_USER)
         );
     }
 
