@@ -1,13 +1,16 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8000";
+const API_URL = "http://125.132.216.190:8613";
 
 export const request = axios.create({
     baseURL: API_URL
 });
 
+axios.defaults.withCredentials=true;
+
 request.interceptors.request.use(
     config => {
+        
         //console.log("인터셉터를 거침");
         return config;
     },

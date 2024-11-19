@@ -1,14 +1,12 @@
 
 import { request } from "./Axios";
+import { SearchParam } from "./SearchInterface";
 
-export const getItemList = async (params: undefined | null | { sortingColumn: string|null; sortingMethod: 'ASC' | 'DESC'|null; }
-    , page: number = 1, limit:number=5) => {
+
+
+export const getItemList = async (searchParam:SearchParam) => {
     const response = await request.get('/item', {
-        params: {
-            orderCriteria: params?.sortingColumn,
-            orderMethod: params?.sortingMethod,
-            limit: limit
-        },
+        params: searchParam,
         headers: { 'Content-Type': 'application/json' }
     });
 

@@ -22,6 +22,10 @@ const Item: React.FC = () => {
     const [totalCount, setTotalCount] = useState<number>(0);
 
     const [limit, setLimit] = useState<number>(5);
+    const [searchCriteria, setSearchCriteria] = useState<string | null>(null);
+    const [searchTerm, setSearchTerm] = useState<string | null>(null);
+    const [searchValue, setSearchValue] = useState<string | null>(null);
+
 
 
     const navigate = useNavigate();
@@ -47,13 +51,46 @@ const Item: React.FC = () => {
         setPage(newPage);
         try {
             console.log("페이지 전환 시도");
-            const itemList = await getItemList({ sortingColumn, sortingMethod }, newPage, limit);
+            const itemList = await getItemList({
+                orderCriteria: sortingColumn,
+                orderMethod: sortingMethod,
+                pageNum: page,
+                limit,
+                searchCriteria,
+                searchValue
+            });
             setItemList(itemList.data.elements);
             setTotalCount(itemList.data.totalCount);
         } catch (error) {
             console.error("에러 발생:", error);
         }
     }
+
+    const onLimitChange = (e: any) => {
+        let newLimit: number = e.target.value;
+        setLimit(newLimit);
+        //console.log(newLimit);
+    }
+
+    const onSearchCriteriaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = e.target.value === "" ? null : e.target.value;
+        setSearchCriteria(value);
+        console.log(`searchCriteria:${value}`);
+    }
+
+    const handleEnterKey = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        //console.log(event.key);
+        if (event.key === 'Enter') {
+            executeSearch();
+        }
+    };
+
+    const executeSearch = () => {
+        // 원하는 동작을 여기에 추가
+        console.log('검색 실행:', searchTerm);
+        setPage(1);
+        setSearchValue(searchTerm);
+    };
 
     const onDeleteBtnClicked = async (id: number, uploaderNo: number) => {
         console.log(`삭제시도, id:${id}`)
@@ -69,7 +106,14 @@ const Item: React.FC = () => {
     useEffect(() => {
         async function fetchItems() {
             try {
-                const itemList = await getItemList({ sortingColumn, sortingMethod }, page, limit);
+                const itemList = await getItemList({
+                    orderCriteria: sortingColumn,
+                    orderMethod: sortingMethod,
+                    pageNum: page,
+                    limit,
+                    searchCriteria,
+                    searchValue
+                });
                 setItemList(itemList.data.elements);
                 setTotalCount(itemList.data.totalCount);
                 console.log(itemList.data);
@@ -78,51 +122,91 @@ const Item: React.FC = () => {
             }
         }
         fetchItems();
-    }, [sortingColumn, sortingMethod]);
+    }, [sortingColumn, sortingMethod, limit ,searchValue]);
 
     return (
         <>
             <h1 className="text-center my-3">아이템 관리</h1>
+            <div className="flex flex-col sm:flex-row justify-between gap-4 bg-white rounded-md">
+                {/* 표시 갯수 */}
+                <div className="flex items-center gap-2 sm:w-auto w-full">
+                    <label htmlFor="limit" className="font-semibold">표시 갯수</label>
+                    <select
+                        onChange={onLimitChange}
+                        value={limit}
+                        id="limit"
+                        className="rounded-md border p-1 h-8"
+                    >
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
+                        <option value={20}>20</option>
+                        <option value={50}>50</option>
+                    </select>
+                </div>
+
+                {/* 검색 입력란 */}
+                <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+                    <label htmlFor="searchCriteria" className="font-semibold">검색 기준</label>
+                    <select
+                        id="searchCriteria"
+                        onChange={onSearchCriteriaChange}
+                        className="rounded-md border p-1 h-8 w-full sm:w-32"
+                        value={searchCriteria ?? ""}
+                    >
+                        <option value="">선택</option>
+                        <option value="itemName">이름</option>
+                        <option value="itemType">유형</option>
+                    </select>
+                    <input
+                        type="text"
+                        placeholder="검색어를 입력하세요"
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onKeyDown={handleEnterKey}  // 엔터 키 이벤트 핸들러
+                        className="rounded-md border p-1 w-full sm:w-64 h-8"
+                    />
+                </div>
+            </div>
+
             <Table>
                 <TableHeader>
-                        <TableHeaderCell
-                            columnKey="itemId"
-                            sortingColumn={sortingColumn}
-                            sortingMethod={sortingMethod}
-                            handleSort={handleSort}
-                        >번호
-                        </TableHeaderCell>
-                        <TableHeaderCell
-                            columnKey="itemName"
-                            sortingColumn={sortingColumn}
-                            sortingMethod={sortingMethod}
-                            handleSort={handleSort}
-                        >아이템 이름
-                        </TableHeaderCell>
-                        <TableHeaderCell
-                            columnKey="itemType"
-                            sortingColumn={sortingColumn}
-                            sortingMethod={sortingMethod}
-                            handleSort={handleSort}
-                        >아이템 유형
-                        </TableHeaderCell>
-                        <TableHeaderCell
-                            columnKey="price"
-                            sortingColumn={sortingColumn}
-                            sortingMethod={sortingMethod}
-                            handleSort={handleSort}
-                        >아이템 가격
-                        </TableHeaderCell>
-                        <TableHeaderCell
-                            columnKey="uploadTime"
-                            sortingColumn={sortingColumn}
-                            sortingMethod={sortingMethod}
-                            handleSort={handleSort}
-                        >등록 날짜
-                        </TableHeaderCell>
-                        <TableHeaderNormalCell>
-                            관리
-                        </TableHeaderNormalCell>
+                    <TableHeaderCell
+                        columnKey="itemId"
+                        sortingColumn={sortingColumn}
+                        sortingMethod={sortingMethod}
+                        handleSort={handleSort}
+                    >번호
+                    </TableHeaderCell>
+                    <TableHeaderCell
+                        columnKey="itemName"
+                        sortingColumn={sortingColumn}
+                        sortingMethod={sortingMethod}
+                        handleSort={handleSort}
+                    >아이템 이름
+                    </TableHeaderCell>
+                    <TableHeaderCell
+                        columnKey="itemType"
+                        sortingColumn={sortingColumn}
+                        sortingMethod={sortingMethod}
+                        handleSort={handleSort}
+                    >아이템 유형
+                    </TableHeaderCell>
+                    <TableHeaderCell
+                        columnKey="price"
+                        sortingColumn={sortingColumn}
+                        sortingMethod={sortingMethod}
+                        handleSort={handleSort}
+                    >아이템 가격
+                    </TableHeaderCell>
+                    <TableHeaderCell
+                        columnKey="createdAt"
+                        sortingColumn={sortingColumn}
+                        sortingMethod={sortingMethod}
+                        handleSort={handleSort}
+                    >등록 날짜
+                    </TableHeaderCell>
+                    <TableHeaderNormalCell>
+                        관리
+                    </TableHeaderNormalCell>
                 </TableHeader>
                 <tbody >
                     {/* 예시데이터 */}
@@ -146,7 +230,7 @@ const Item: React.FC = () => {
                                 {item.createdAt}
                             </TableCell>
                             <TableCell cellKey="detail">
-                            <button className="border px-2 round-10">삭제</button>
+                                <button className="border px-2 round-10">삭제</button>
                             </TableCell>
                         </TableRow>
                     )

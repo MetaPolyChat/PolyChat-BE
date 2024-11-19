@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { getUser } from "../AxiosRequest/UserInfoApi";
 import ReactPaginate from "react-paginate";
 import { Table, TableHeader, TableHeaderCell, TableHeaderNormalCell } from "./Table";
+import { useNavigate } from "react-router-dom";
 
 interface UserInfo {
     userId: number;
@@ -30,11 +31,22 @@ const AccountPage: React.FC = () => {
 
     const [userList, setUserList] = useState<UserInfo[]>([]);
     const [totalCount, setTotalCount] = useState<number>(0);
-    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [page, setPage] = useState<number>(1);
     const [sortingColumn, setSortingColumn] = useState<string | null>(null);
     const [sortingMethod, setSortingMethod] = useState<'ASC' | 'DESC' | null>(null);
 
     const [limit, setLimit] = useState<number>(10);
+    const [searchCriteria, setSearchCriteria] = useState<string | null>(null);
+    const [searchTerm, setSearchTerm] = useState<string | null>(null);
+    const [searchValue, setSearchValue] = useState<string | null>(null);
+
+
+    const navigate = useNavigate();
+
+    function detailItem(id: number) {
+        navigate(`${id}`);
+    }
+
 
     const handleSort = (column: string) => {
         if (sortingColumn === column) {
@@ -48,18 +60,21 @@ const AccountPage: React.FC = () => {
 
     const onPageChange = async (event: any) => {
         const newPage: number = event.selected + 1;
-        setCurrentPage(newPage);
+        setPage(newPage);
         try {
             loadAccountInfo({
                 pageNum: newPage,
                 orderCriteria: sortingColumn,
                 orderMethod: sortingMethod,
-                limit: limit
+                limit,
+                searchCriteria,
+                searchValue
             });
         } catch (error) {
             console.error("에러 발생:", error);
         }
     }
+
 
     const onLimitChange = (e:any)=>{
         //console.log(e.target.value);
@@ -67,27 +82,80 @@ const AccountPage: React.FC = () => {
         console.log(limit);
     }
 
+    const onSearchCriteriaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = e.target.value === "" ? null : e.target.value;
+        setSearchCriteria(value);
+        console.log(`searchCriteria:${value}`);
+    }
+
+    const handleEnterKey = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        //console.log(event.key);
+        if (event.key === 'Enter') {
+            executeSearch();
+        }
+    };
+
+    const executeSearch = () => {
+        // 원하는 동작을 여기에 추가
+        console.log('검색 실행:', searchTerm);
+        setPage(1);
+        setSearchValue(searchTerm);
+    };
+
+
     useEffect(() => {
         loadAccountInfo({
             pageNum: 1,
             orderCriteria: sortingColumn,
             orderMethod: sortingMethod,
-            limit: limit
+            limit,
+            searchCriteria,
+            searchValue
         });
-    }, [sortingColumn, sortingMethod, limit]);
+    }, [sortingColumn, sortingMethod, limit, searchValue]);
 
     return (
         <>
             <h1 className="text-center my-3">유저 관리</h1>
-            <div>
-                <label>표시 갯수</label>
-                <select onChange={onLimitChange} value={limit}>
-                    <option value={5}>5</option>
-                    <option value={10}>10</option>
-                    <option value={20}>20</option>
-                    <option value={50}>50</option>
+            <div className="flex flex-col sm:flex-row justify-between gap-4 bg-white rounded-md">
+                {/* 표시 갯수 */}
+                <div className="flex items-center gap-2 sm:w-auto w-full">
+                    <label htmlFor="limit" className="font-semibold">표시 갯수</label>
+                    <select
+                        onChange={onLimitChange}
+                        value={limit}
+                        id="limit"
+                        className="rounded-md border p-1 h-8"
+                    >
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
+                        <option value={20}>20</option>
+                        <option value={50}>50</option>
+                    </select>
+                </div>
 
-                </select>
+                {/* 검색 입력란 */}
+                <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+                    <label htmlFor="searchCriteria" className="font-semibold">검색 기준</label>
+                    <select
+                        id="searchCriteria"
+                        onChange={onSearchCriteriaChange}
+                        className="rounded-md border p-1 h-8 w-full sm:w-32"
+                        value={searchCriteria ?? ""}
+                    >
+                        <option value="">선택</option>
+                        <option value="userName">닉네임</option>
+                        <option value="email">이메일</option>
+                        <option value="authority">권한</option>
+                    </select>
+                    <input
+                        type="text"
+                        placeholder="검색어를 입력하세요"
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onKeyDown={handleEnterKey}  // 엔터 키 이벤트 핸들러
+                        className="rounded-md border p-1 w-full sm:w-64 h-8"
+                    />
+                </div>
             </div>
             <Table>
                 <TableHeader>

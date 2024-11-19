@@ -14,6 +14,7 @@ const AddItem = ()=> {
 
         console.log("제출할 데이터");
         console.log(formData);
+        
 
         // try {
         //   // 여기서 Axios로 데이터 추가 로직을 별도의 함수에서 처리하세요.

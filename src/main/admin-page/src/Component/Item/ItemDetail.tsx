@@ -24,7 +24,7 @@ export default function ItemDetailPage() {
             try {
                 const itemInfo = await getItemById(Number(itemId));
                 if (itemInfo && itemInfo.data) {
-                    setItem(itemInfo.data);  // 데이터 업데이트
+                    setItem(itemInfo.data.response);  // 데이터 업데이트
                 } else {
                     console.log("데이터가 없습니다.");
                 }

@@ -1,22 +1,15 @@
-import Announcement from "../Component/HomePage";
 import { request } from "./Axios";
+import { SearchParam } from "./SearchInterface";
 
 interface updateAnnouncementInfo{
-    uploaderId:number,
+    uploaderId:number|undefined,
     title:string,
     content:string,
-    announcementId:number
 }
 
-export const getAnnouncement = async (params: undefined | null | { sortingColumn: string|null; sortingMethod: 'ASC' | 'DESC' |null; }, page: number = 1, limit:number=5) => {
+export const getAnnouncement = async (searchParam:SearchParam) => {
     const response = await request.get('/announcement/page', {
-        params: {
-            pageNum: page,
-            orderCriteria: params?.sortingColumn,
-            orderMethod: params?.sortingMethod,
-            limit: limit
-        },
-        headers: { 'Content-Type': 'application/json' }
+        params: searchParam
     });
 
     return response;
@@ -31,17 +24,19 @@ export const getAnnouncementById = async (announcementId: number) => {
 };
 
 export const addAnnouncement = async (formData: any) => {
-    const response = await request.post("/announcement", {
-        body: formData,
+    const response = await request.post("/announcement", formData ,{
+        headers: { 'Content-Type': 'application/json' }
     });
 
     return response
 }
 
 export const updateAnnouncement = async (announcementId:number, formData: updateAnnouncementInfo) => {
-    const response = await request.put(`/announcement/${announcementId}`, {
-        body: formData,
-    });
+    console.log(`formData:${formData.uploaderId}`)
+    const response = await request.put(`/announcement/${announcementId}`, formData,
+        {
+            headers: { 'Content-Type': 'application/json' }}
+    );
 
     return response
 }
