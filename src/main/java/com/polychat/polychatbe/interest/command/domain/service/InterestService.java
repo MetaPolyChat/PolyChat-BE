@@ -44,6 +44,10 @@ public class InterestService {
         return interestName;
     }
 
+    public List<Interest> findInterestNameByInterestIdIn(List<Long> interestIds){
+        return interestRepository.findInterestNameByInterestIdIn(interestIds);
+    }
+
     // 관심사 업데이트 수정 필요
 //    @Transactional
 //    public void updateInterest(String targetInterestName, String interestName) {

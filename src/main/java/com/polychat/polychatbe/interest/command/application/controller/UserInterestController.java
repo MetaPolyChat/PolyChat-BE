@@ -56,7 +56,7 @@ public class UserInterestController {
         return ResponseEntity.ok().body(interestFindService.findAllInterests());
     }
 
-    @Operation(summary = "유저의 관심사 목록 조회", description = "유저의 관심사 id를 리스트 형태로 반환")
+    @Operation(summary = "유저의 관심사 목록 id 조회", description = "유저의 관심사 id를 리스트 형태로 반환")
     @GetMapping("/user-list")
     public ResponseEntity<?> listUserInterest(@RequestParam Long userId) {
         log.info("listUserInterest");
@@ -66,6 +66,16 @@ public class UserInterestController {
         if (result.size() == 0) {
             return ResponseEntity.badRequest().build();
         }
+
+        return ResponseEntity.ok().body(result);
+    }
+
+    @Operation(summary = "유저의 관심사 불러오기", description = "유저의 관심사를 리스트 형태로 반환")
+    @GetMapping("/user")
+    public ResponseEntity<?> listUserInterestName(@RequestParam Long userId) {
+        log.info("listUserInterest string");
+
+        List<String> result = interestUserService.findInterestNamesByUserId(userId);
 
         return ResponseEntity.ok().body(result);
     }
