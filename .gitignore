@@ -49,6 +49,7 @@ logs/
 
 ### logs ###
 *.log
+.log
 
 /mysql_data
 

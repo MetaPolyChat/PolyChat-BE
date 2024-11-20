@@ -70,6 +70,13 @@ public class UserInterestController {
         return ResponseEntity.ok().body(result);
     }
 
+    @Operation(summary="모든 관심사 ID 조회", description = "DB에 있는 모든 관심ID를 조회하는 기능")
+    @GetMapping("find-all-ids")
+    public ResponseEntity<?> findAllInterestIds() {
+        log.info("request findAllInterestIds");
+        return ResponseEntity.ok().body(interestService.findAllInterestIds());
+    }
+
 //    @Operation(summary = "유저 관심사 조회", description = "유저의 관심사 조회 api")
 //    @GetMapping("/find-by-user/")
 //    public ResponseEntity<?> findInterestByUser(@RequestParam String userId) {
