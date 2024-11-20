@@ -22,7 +22,7 @@ import java.util.Optional;
 @Service
 public class UserLoginService {
 
-    public UserService userService;
+    public final UserService userService;
     //    private final UserRepository userRepository;
 //    private final RefreshTokenRepository refreshTokenRepository;
 
@@ -49,6 +49,10 @@ public class UserLoginService {
     @Transactional
     public UserResponseDTO.UserInfoDTO findUserById(Long id) {
         User user = userService.findUserById(id);
+        if (user == null) {
+            throw new ApplicationException(ErrorCode.NO_SUCH_USER);
+        }
+
         if (Authority.ADMIN.equals(user.getAuthority())){
             throw new ApplicationException(ErrorCode.INTERNAL_SERVER_ERROR);
         } else {

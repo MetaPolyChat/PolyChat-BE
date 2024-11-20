@@ -1,57 +1,34 @@
 package com.polychat.polychatbe.matchingHistory.command.domain.model;
 
+import com.polychat.polychatbe.common.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
+@ToString
+@Builder
+@NoArgsConstructor (access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Getter
 @Entity
 @Table(name = "tbl_matching_history")
-public class MatchingHistory {
+public class MatchingHistory extends BaseTimeEntity {
 
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long matchingId;
 
-    @Getter
     @Column
     private Long userNumFoo;
 
-    @Getter
     @Column
     private Long userNumBar;
 
-    @Getter
     @Column
-    private LocalDateTime matchTime;
+    private Boolean isAiMatch;
 
-    @Column
-    private boolean isAiMatch;
 
-    public MatchingHistory() {
-    }
-
-    public MatchingHistory(Long userNumFoo, Long userNumBar, LocalDateTime matchTime, boolean isAiMatch) {
-        this.userNumFoo = userNumFoo;
-        this.userNumBar = userNumBar;
-        this.matchTime = matchTime;
-        this.isAiMatch = isAiMatch;
-    }
-
-    public boolean isAiMatch() {
-        return isAiMatch;
-    }
-
-    @Override
-    public String toString() {
-        return "MatchingHistory{" +
-                "matchingId=" + matchingId +
-                ", userNumFoo=" + userNumFoo +
-                ", userNumBar=" + userNumBar +
-                ", matchTime=" + matchTime +
-                ", isAiMatch=" + isAiMatch +
-                '}';
-    }
 }

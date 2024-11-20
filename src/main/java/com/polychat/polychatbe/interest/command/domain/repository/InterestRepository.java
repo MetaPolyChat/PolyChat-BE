@@ -10,4 +10,6 @@ import java.util.List;
 public interface InterestRepository extends JpaRepository<Interest, Long> {
     // JPA repository
     Interest findByInterestName(String interestName);
+
+    List<Interest> findInterestNameByInterestIdIn(List<Long> interestIds);
 }
