@@ -66,18 +66,9 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
+        config.setAllowedOriginPatterns(Collections.singletonList("*")); // 모든 출처 허용 (패턴 사용)
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("*"));
-        config.setAllowedOrigins(Collections.singletonList("*"));   //모두 허용
-//        config.setAllowedOrigins(Arrays.asList(
-//        config.setAllowedOriginPatterns(Arrays.asList(
-//                "https://polychat.fun:18000",
-//                "http://192.168.0.*:*",     //swagger
-//                "http://localhost:3000",
-//                "http://localhost:8000",
-//                "http://localhost:3030",
-//                "http://localhost:4172"
-//        ));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
