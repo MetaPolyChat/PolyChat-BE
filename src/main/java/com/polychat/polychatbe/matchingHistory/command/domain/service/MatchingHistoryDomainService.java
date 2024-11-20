@@ -2,23 +2,21 @@ package com.polychat.polychatbe.matchingHistory.command.domain.service;
 
 import com.polychat.polychatbe.matchingHistory.command.domain.model.MatchingHistory;
 import com.polychat.polychatbe.matchingHistory.command.domain.repository.MatchingHistoryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@RequiredArgsConstructor
 @Service
 public class MatchingHistoryDomainService {
 
     private final MatchingHistoryRepository matchingHistoryRepository;
 
-    public MatchingHistoryDomainService(MatchingHistoryRepository matchingHistoryRepository) {
-        this.matchingHistoryRepository = matchingHistoryRepository;
-    }
 
-    //create
-    public void createNewMatchingHistory(MatchingHistory matchingHistory) {
-        matchingHistoryRepository.save(matchingHistory);
+    public List<MatchingHistory> findAllMatchingHistory() {
+        return matchingHistoryRepository.findAll();
     }
 
     //read
@@ -32,16 +30,17 @@ public class MatchingHistoryDomainService {
         );
     }
 
-    public List<MatchingHistory> findAllMatchingHistory() {
-        return matchingHistoryRepository.findAll();
+    //create
+    public MatchingHistory createNewMatchingHistory(MatchingHistory matchingHistory) {
+        return matchingHistoryRepository.save(matchingHistory);
     }
 
-    //update
-    @Deprecated
-    public void updateMatchingHistory(MatchingHistory matchingHistory) {
-        throw new IllegalStateException("히스토리는 업데이트 될 수 없습니다.");
-
-    }
+//    //update
+//    @Deprecated
+//    public void updateMatchingHistory(MatchingHistory matchingHistory) {
+//        throw new IllegalStateException("히스토리는 업데이트 될 수 없습니다.");
+//
+//    }
 
     //delete
     public void deleteMatchingHistory(Long matchingId) {

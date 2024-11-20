@@ -1,50 +1,45 @@
 package com.polychat.polychatbe.matchingHistory.command.application.service;
 
+import com.polychat.polychatbe.matchingHistory.command.application.dto.CreateMatchingHistoryDTO;
 import com.polychat.polychatbe.matchingHistory.command.application.dto.MatchingHistoryDTO;
+import com.polychat.polychatbe.matchingHistory.command.application.dto.MatchingHistoryMapper;
+import com.polychat.polychatbe.matchingHistory.command.application.dto.ReadMatchingHistoryDTO;
 import com.polychat.polychatbe.matchingHistory.command.domain.model.MatchingHistory;
 import com.polychat.polychatbe.matchingHistory.command.domain.service.MatchingHistoryDomainService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class MatchingHistoryAppService {
 
-    private final MatchingHistoryDomainService matchingHistoryDomainService;
+    private final MatchingHistoryDomainService domainService;
+    private final MatchingHistoryMapper mapper;
 
-    public MatchingHistoryAppService(MatchingHistoryDomainService matchingHistoryDomainService) {
-        this.matchingHistoryDomainService = matchingHistoryDomainService;
+
+    public List<MatchingHistoryDTO> findAllHistory(){
+        List<MatchingHistory> allEntity = domainService.findAllMatchingHistory();
+        return mapper.toDtoList(allEntity);
     }
 
     //create
-    public void createNewMatchingHistory(MatchingHistoryDTO matchingHistoryDTO) {
-        MatchingHistory matchingHistory = new MatchingHistory(
-                matchingHistoryDTO.getUserNumFoo(),
-                matchingHistoryDTO.getUserNumBar(),
-                matchingHistoryDTO.getMatchTime(),
-                matchingHistoryDTO.isAiMatch()
-        );
-        matchingHistoryDomainService.createNewMatchingHistory(matchingHistory);
+    public MatchingHistoryDTO createNewMatchingHistory(CreateMatchingHistoryDTO createDto) {
+        MatchingHistory entity = mapper.createToEntity(createDto);
+        entity = domainService.createNewMatchingHistory(entity);
+        return mapper.toDto(entity);
     }
 
     //read
-    public List<MatchingHistoryDTO> findMatchingHistory(Long userId) {
-        return matchingHistoryDomainService.findMatchingHistory(userId)
-                .stream()
-                .map(MatchingHistoryDTO::new)
-                .toList();
-    }
-
-    public List<MatchingHistoryDTO> findAllHistory(){
-        return matchingHistoryDomainService.findAllMatchingHistory()
-                .stream()
-                .map(MatchingHistoryDTO::new)
-                .toList();
+    public List<ReadMatchingHistoryDTO> findMatchingHistory(Long userId) {
+        List<MatchingHistory> entities= domainService.findMatchingHistory(userId);
+        return mapper.entityToDto(entities);
     }
 
     //delete
-    public void deleteMatchingHistory(Long userId) {
-        matchingHistoryDomainService.deleteMatchingHistory(userId);
+    public void deleteMatchingHistory(Long matchingId) {
+        domainService.deleteMatchingHistory(matchingId);
     }
 
 }
