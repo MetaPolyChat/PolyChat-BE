@@ -64,23 +64,17 @@ public class UserSocialLoginController {
     public void  googleLogin(HttpServletResponse response, HttpServletRequest request, @RequestParam(name = "code") String code) throws IOException {
         System.out.println("Google login started with code: " + code);
         System.out.println("Current Url : " + request.getRequestURL());
-//        String redirectUrl = request.getRequestURL()
-//                .substring(0,request.getRequestURL().toString().lastIndexOf("/"))
-//                + "/signup";
-//        System.out.println("redirectUrl: " + redirectUrl);
 
         // 구글 인증 코드 수신 후 로그인 처리
         UserResponseDTO.authDTO authDTO = userSocialLoginService.googleLogin(code);
 
         if (authDTO.isSignIn()) {
             System.out.println("로그인 : " + authDTO);
-//        return ResponseEntity.status(HttpStatus.OK).body(authDTO);
-            response.sendRedirect(reactUrl + "/unity-build");
+            response.sendRedirect(reactUrl + "/unity-build?userId=" + authDTO.userId());
+        }else {
+            //없으면 회원가입으로
+            response.sendRedirect(reactUrl + "/create-account?userId=" + authDTO.userId());
         }
-
-        //없으면 회원가입으로
-        response.sendRedirect(reactUrl + "/create-account?userId=" + authDTO.userId());
-//            return ResponseEntity.status(HttpStatus.ACCEPTED).body("go to sign in page");
 
     }
 

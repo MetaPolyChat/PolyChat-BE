@@ -17,7 +17,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @Tag(name = "공지사항 조회 API", description = "공지사항을 조회하기 위한 API")
 public class AnnouncementSearchController {
