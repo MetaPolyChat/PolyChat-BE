@@ -71,7 +71,7 @@ public class UserInterestController {
     }
 
     @Operation(summary="모든 관심사 ID 조회", description = "DB에 있는 모든 관심ID를 조회하는 기능")
-    @GetMapping("find-all-ids")
+    @GetMapping("/find-all-ids")
     public ResponseEntity<?> findAllInterestIds() {
         log.info("request findAllInterestIds");
         return ResponseEntity.ok().body(interestService.findAllInterestIds());
