@@ -15,5 +15,4 @@ public interface InterestMapper {
     Long findInterestNoByName(String interestName);
     String findInterestNameByNo(Long interestNo);
     List<Long> findAllInterestIds();
-    String findIn=terestNameByNo(Long interestId);
 }
