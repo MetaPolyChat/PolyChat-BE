@@ -17,6 +17,13 @@
             tbl_interest
     </select>
 
+    <select id="findAllInterestIds" resultType="long">
+        SELECT
+            interest_id
+        FROM
+            tbl_interest
+    </select>
+
     <select id="findInterestByNo" resultMap="interestMap" parameterType="long">
         SELECT
             interest_id,

@@ -99,4 +99,7 @@ public class InterestFindService {
         return userInterestMapper.findAllUserByInterestId(interestId);
     }
 
+    public List<Long> findAllInterestIds() {
+        return interestMapper.findAllInterestIds();
+    }
 }

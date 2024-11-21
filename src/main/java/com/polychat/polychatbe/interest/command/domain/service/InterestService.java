@@ -4,6 +4,7 @@ import com.polychat.polychatbe.interest.command.domain.model.Interest;
 import com.polychat.polychatbe.interest.command.domain.model.UserInterest;
 import com.polychat.polychatbe.interest.command.domain.repository.InterestRepository;
 import com.polychat.polychatbe.interest.command.domain.repository.UserInterestRepository;
+import com.polychat.polychatbe.interest.query.service.InterestFindService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,13 +14,15 @@ import java.util.List;
 @Service
 public class InterestService {
 
+    private final InterestFindService interestFindService;
     private InterestRepository interestRepository;
     private UserInterestRepository userInterestRepository;
 
     @Autowired
-    public InterestService(InterestRepository interestRepository, UserInterestRepository userInterestRepository) {
+    public InterestService(InterestRepository interestRepository, UserInterestRepository userInterestRepository, InterestFindService interestFindService) {
         this.interestRepository = interestRepository;
         this.userInterestRepository = userInterestRepository;
+        this.interestFindService = interestFindService;
     }
 
 
@@ -42,6 +45,10 @@ public class InterestService {
         }
         interestRepository.deleteById(findInterest.getInterestId());
         return interestName;
+    }
+
+    public List<Long> findAllInterestIds() {
+        return interestFindService.findAllInterestIds();
     }
 
     public List<Interest> findInterestNameByInterestIdIn(List<Long> interestIds){
