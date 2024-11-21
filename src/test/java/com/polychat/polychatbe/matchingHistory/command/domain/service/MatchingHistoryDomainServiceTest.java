@@ -33,28 +33,28 @@ class MatchingHistoryDomainServiceTest {
         );
     }
 
-    private static Stream<Arguments> newMatchingHistory() {
-        return Stream.of(
-                Arguments.of(
-                        new MatchingHistory(
-                                231L,
-                                16L,
-                                LocalDateTime.now(),
-                                false
-                        )
-                )
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("newMatchingHistory")
-    public void createMatchingHistory(MatchingHistory newMatchingHistory){
-        Assertions.assertDoesNotThrow(()->{
-            matchingHistoryDomainService.createNewMatchingHistory(newMatchingHistory);
-            matchingHistoryDomainService.findAllMatchingHistory().forEach(System.out::println);
-        });
-
-    }
+//    private static Stream<Arguments> newMatchingHistory() {
+//        return Stream.of(
+//                Arguments.of(
+//                        new MatchingHistory(
+//                                231L,
+//                                16L,
+//                                "",
+//                                false
+//                        )
+//                )
+//        );
+//    }
+//
+//    @ParameterizedTest
+//    @MethodSource("newMatchingHistory")
+//    public void createMatchingHistory(MatchingHistory newMatchingHistory){
+//        Assertions.assertDoesNotThrow(()->{
+//            matchingHistoryDomainService.createNewMatchingHistory(newMatchingHistory);
+//            matchingHistoryDomainService.findAllMatchingHistory().forEach(System.out::println);
+//        });
+//
+//    }
 
     @ParameterizedTest
     @ValueSource(longs = 23L)

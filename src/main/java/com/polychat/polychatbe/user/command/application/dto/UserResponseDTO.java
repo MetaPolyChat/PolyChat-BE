@@ -68,5 +68,8 @@ public class UserResponseDTO {
             String planet
     ){
     }
+    public record nickNameDTO(
+            String userName
+    ){}
 
 }
