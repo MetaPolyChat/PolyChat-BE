@@ -6,6 +6,8 @@ import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
+@ToString
+@Builder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -48,18 +50,6 @@ public class User {
     @Column(name="CREATED_AT")
     private LocalDateTime createdAt;
 
-    @Builder
-    public User(String userName, String password, LoginType loginType, Authority authority, Status status, String email, String planet, LocalDateTime createdAt) {
-        this.userName = userName;
-        this.password = password;
-        this.loginType = loginType;
-        this.authority = authority;
-        this.status = status;
-        this.email = email;
-        this.planet = planet;
-        this.createdAt = createdAt;
-    }
-
     public void updateStatus(Status status) {
         this.status = status;
     }
@@ -76,18 +66,5 @@ public class User {
         this.authority = authority;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", email='" + email + '\'' +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", loginType=" + loginType +
-                ", authority=" + authority +
-                ", status=" + status +
-                ", planet='" + planet + '\'' +
-                ", createdAt=" + createdAt +
-                '}';
-    }
+
 }

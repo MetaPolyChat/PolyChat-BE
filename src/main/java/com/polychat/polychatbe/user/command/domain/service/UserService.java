@@ -26,6 +26,11 @@ public class UserService {
     }
 
 
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
+
+
     @Transactional
     public boolean saveUser(UserRequestDTO.signUpDTO user) {
 
@@ -96,5 +101,9 @@ public class UserService {
 
     public User findUserById(Long id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    public Boolean findExistUserById(Long id) {
+        return userRepository.existsById(id);
     }
 }

@@ -52,5 +52,12 @@ public class UserRequestDTO {
             String nickname
     ){}
 
+    /**
+     * 닉네임 수정
+     * */
+    public record UpdateNameDTO(
+            Long userId,
+            String userName
+    ){}
 
 }

@@ -1,7 +1,12 @@
 package com.polychat.polychatbe.user.command.application.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.polychat.polychatbe.user.command.domain.model.Authority;
 import com.polychat.polychatbe.user.command.domain.model.LoginType;
+import com.polychat.polychatbe.user.command.domain.model.Status;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class UserResponseDTO {
 
@@ -66,7 +71,25 @@ public class UserResponseDTO {
             String userName,
             LoginType loginType,
             String planet
-    ){
-    }
+    ){}
+
+    public record nickNameDTO(
+            String userName
+    ){}
+
+    public record UserMyProfileDTO(
+            String email,
+            String userName,
+            String planet,
+            LocalDateTime createdAt,
+            List<String> interests
+    ){}
+
+    public record UserProfileDTO(
+            String userName,
+            String planet,
+            List<String> interests
+    ){}
+
 
 }

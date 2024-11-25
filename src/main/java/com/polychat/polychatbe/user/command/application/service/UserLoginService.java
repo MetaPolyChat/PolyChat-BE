@@ -46,26 +46,6 @@ public class UserLoginService {
 
     }
 
-    @Transactional
-    public UserResponseDTO.UserInfoDTO findUserById(Long id) {
-        User user = userService.findUserById(id);
-        if (user == null) {
-            throw new ApplicationException(ErrorCode.NO_SUCH_USER);
-        }
-
-        if (Authority.ADMIN.equals(user.getAuthority())){
-            throw new ApplicationException(ErrorCode.INTERNAL_SERVER_ERROR);
-        } else {
-            return new UserResponseDTO.UserInfoDTO(
-                    user.getUserId(),
-                    user.getEmail(),
-                    user.getUserName(),
-                    user.getLoginType(),
-                    user.getPlanet()
-            );
-        }
-    }
-
     /*
         기본 로그인
      */
