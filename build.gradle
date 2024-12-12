@@ -13,6 +13,11 @@ java {
     }
 }
 
+// jar file name setting
+bootJar {
+    archiveFileName = 'polychat-server.jar'
+}
+
 repositories {
     mavenCentral()
 }

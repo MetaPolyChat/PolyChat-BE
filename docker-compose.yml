@@ -1,29 +1,29 @@
 services:
-  db:
-    container_name: mysqldb
-    image: mysql:latest
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: polychatdb
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_SSL_CA: ""
-      MYSQL_SSL_CERT: ""
-      MYSQL_SSL_KEY: ""
-      TZ: "Asia/Seoul"
-    ports:
-      - "13306:3306"
-    volumes:
-      - ./docker/polychatdb/mysql_data:/var/lib/mysql
-      - ./docker/polychatdb/my.cnf:/etc/mysql/my.cnf
+  #  db:
+  # container_name: mysqldb
+  # image: mysql:latest
+  # restart: always
+  # environment:
+  #   MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  #   MYSQL_DATABASE: polychatdb
+  #   MYSQL_USER: ${MYSQL_USER}
+  #   MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  #   MYSQL_SSL_CA: ""
+  #   MYSQL_SSL_CERT: ""
+  #   MYSQL_SSL_KEY: ""
+  #   TZ: "Asia/Seoul"
+  # ports:
+  #   - "13306:3306"
+  # volumes:
+  #   - ./docker/polychatdb/mysql_data:/var/lib/mysql
+  #   - ./docker/polychatdb/my.cnf:/etc/mysql/my.cnf
 
   nginx:
     image: nginx:latest
     container_name: nginx-polychat
     ports:
       - "80:80"
-      - "18000:18000"
+      - "443:443"
     volumes:
       - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./docker/nginx/certs:/etc/ssl/certs:ro

@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class PolychatBeApplication {
 
     public static void main(String[] args) {
+	Dotenv.configure().load();
         Dotenv dotenv = Dotenv.load();
         dotenv.entries().forEach(entry ->
             System.setProperty(entry.getKey(), entry.getValue())
