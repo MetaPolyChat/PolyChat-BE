@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# log file name
+log_file="$(date '+%Y-%m-%d_%H-%M-%S').log"
+
+# server start in background
+echo "서버를 실행합니다..."
+nohup java -jar ./build/libs/polychat-server.jar > ./logs/"$log_file" 2>&1 &
+
+# print logs realtime
+tail -f ./logs/"$log_file"

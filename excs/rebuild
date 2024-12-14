@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# 기존의 프로세스를 종료하고 Java를 다시 빌드
+
+# 실행 중인 Java 서버 프로세스 찾기 및 종료
+pid=$(pgrep -f 'polychat-server.jar')
+if [ -n "$pid" ]; then
+    echo "기존 서버 프로세스 종료 중... (PID: $pid)"
+    kill -9 "$pid"
+    echo "서버가 종료되었습니다."
+else
+    echo "실행 중인 서버 프로세스가 없습니다."
+fi
+
+# Gradle로 프로젝트 빌드
+echo "프로젝트 빌드 중..."
+./gradlew bootJar -x test

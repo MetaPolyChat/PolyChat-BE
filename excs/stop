@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Java 서버 프로세스를 확인하고 종료
+
+# 실행 중인 Java 서버 프로세스 찾기 및 종료
+pid=$(pgrep -f 'polychat-server.jar')
+if [ -n "$pid" ]; then
+    echo "기존 서버 프로세스 종료 중... (PID: $pid)"
+    kill -9 "$pid"
+    echo "서버가 종료되었습니다."
+else
+    echo "실행 중인 서버 프로세스가 없습니다."
+fi
