@@ -9,7 +9,7 @@ Create Database server and WebRTC server
 
 The following tools were used in this project:
 
-[![My Skills](https://skillicons.dev/icons?i=spring,nodejs,mysql)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=spring,nodejs,mysql,docker,nginx)](https://skillicons.dev)
 
 
 ## :white_check_mark: Requirements ##
@@ -38,6 +38,7 @@ JWT_SECRET_KEY=your_key
 ```
 ## :building_construction: Architecture ##
 
+<img width="600" alt="architecture image" src="https://github.com/user-attachments/assets/020275ee-47d2-4ea6-9388-8788303450d2">
 
 ## Login ##
 
