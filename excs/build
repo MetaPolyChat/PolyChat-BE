@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Gradle로 프로젝트 빌드
+echo "프로젝트 빌드 중..."
+./gradlew bootJar -x test
